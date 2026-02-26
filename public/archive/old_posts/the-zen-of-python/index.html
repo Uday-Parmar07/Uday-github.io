@@ -1,0 +1,2055 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>The Zen of Python | Uday Parmar</title>
+<meta name="keywords" content="Python">
+<meta name="description" content="
+Beautiful is better than ugly.
+
+Code should be written in a clean, elegant, and aesthetically pleasing manner.
+Example:
+
+
+
+# Ugly
+def find_max(list_of_nums): 
+    max=list_of_nums[0]
+    for x in list_of_nums:
+        if x&gt;max:
+            max=x
+    return max
+
+# Beautiful
+def find_max(numbers):
+    return max(numbers)
+
+Explicit is better than implicit.
+
+Code should be explicit and avoid relying on implicit behavior, which can lead to confusion and bugs.
+Example:
+
+
+
+# Implicit
+name = &#34;Alice&#34;
+print(&#34;Hello, &#34; &#43; name)  # Requires mental concatenation
+
+# Explicit
+name = &#34;Alice&#34;
+print(f&#34;Hello, {name}&#34;)  # Clear string formatting
+        
+
+Simple is better than complex.
+
+Code should be as simple as possible, avoiding unnecessary complexity.
+Example:
+
+
+
+# Complex
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n - 1)
+
+# Simple
+from math import factorial	
+
+Complex is better than complicated.
+
+While simplicity is preferred, some level of complexity is better than convoluted, hard-to-understand code.
+Example:
+
+
+
+# Complicated
+result = 1 &#43; 2 * 3 - 4 / 5 ** 6 % 7 &#43; 8 * 9
+
+# Complex but clear
+a = 1
+b = 2
+c = 3
+d = 4
+e = 5
+f = 6
+g = 7
+h = 8
+i = 9
+result = a &#43; (b * c) - ((d / (e ** f)) % g) &#43; (h * i)
+
+Flat is better than nested.
+
+Code should favor flat structures over deeply nested ones, which can be harder to read and maintain.
+Example:
+
+
+
+# Nested
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+flat_matrix = []
+for row in matrix:
+    for num in row:
+        flat_matrix.append(num)
+
+# Flat
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+flat_matrix = [num for row in matrix for num in row]
+
+Sparse is better than dense.
+
+Code should be sparse and well-formatted, with proper spacing and indentation, for better readability.
+Example:
+
+
+
+# Dense
+def func(arg1,arg2):return arg1&#43;arg2
+
+# Sparse
+def func(arg1, arg2):
+    result = arg1 &#43; arg2
+    return result
+
+Readability counts.
+
+Writing readable code should be a top priority, as it facilitates collaboration, maintenance, and understanding.
+Example:
+
+
+
+# Unreadable
+def f(l): return sum(x**2 for x in l)
+
+# Readable
+def calculate_sum_of_squares(numbers):
+    squared_numbers = [num ** 2 for num in numbers]
+    return sum(squared_numbers)
+
+Special cases aren&rsquo;t special enough to break the rules.
+
+While exceptions exist, they shouldn&rsquo;t be used as an excuse to break established coding guidelines and best practices.
+Example:
+
+
+
+# Breaking rules for a special case
+if user.is_admin:
+    admin_actions()  # Poorly named function
+else:
+    normal_actions()
+
+# Following best practices
+if user.is_admin:
+    perform_admin_actions()
+else:
+    perform_normal_actions()
+
+Although practicality beats purity.
+
+Python favors pragmatic solutions over pure academic approaches when the latter would unnecessarily complicate or hinder development.
+Example:
+
+
+
+# Theoretical purity
+def sort_list(lst):
+    if len(lst) &lt;= 1:
+        return lst
+    else:
+        pivot = lst[0]
+        lesser = sort_list([x for x in lst[1:] if x &lt; pivot])
+        greater = sort_list([x for x in lst[1:] if x &gt;= pivot])
+        return lesser &#43; [pivot] &#43; greater
+
+# Pragmatic solution
+lst = [3, 1, 4, 1, 5, 9, 2, 6]
+lst.sort()  # Built-in sort method
+
+Errors should never pass silently.
+
+Errors and exceptions should be handled explicitly, providing clear feedback and avoiding silent failures.
+Example:
+
+
+
+# Silent error
+result = 1 / 0  # ZeroDivisionError, but no feedback
+
+# Explicit error handling
+try:
+    result = 1 / 0
+except ZeroDivisionError:
+    print(&#34;Error: Division by zero is not allowed.&#34;)	
+
+Unless explicitly silenced.
+
+However, there may be cases where silencing errors is necessary, but this should be an explicit decision, not an oversight.
+Example:
+
+
+
+# Explicitly silenced error
+try:
+    result = 1 / 0
+except ZeroDivisionError:
+    pass  # Intentionally ignored
+
+In the face of ambiguity, refuse the temptation to guess.
+
+When faced with ambiguous situations, Python developers should avoid making assumptions and instead seek clarification or explicit handling.
+Example:
+
+
+
+# Guessing
+try:
+    value = int(user_input)
+except ValueError:
+    value = 0  # Guessing a default value
+
+# Explicit handling
+try:
+    value = int(user_input)
+except ValueError:
+    print(&#34;Invalid input. Please enter an integer.&#34;)
+    value = None  # Explicit handling
+
+There should be one&ndash; and preferably only one &ndash;obvious way to do it.
+
+Python aims to provide a single, clear way to accomplish a given task, avoiding multiple equally viable but potentially confusing alternatives.
+Example:
+
+
+
+# Multiple ways to reverse a string
+string = &#34;hello&#34;
+reversed_string = &#34;&#34;.join(reversed(string))
+reversed_string = string[::-1]
+
+# One obvious way using a slice
+string = &#34;hello&#34;
+reversed_string = string[::-1]
+
+Although that way may not be obvious at first unless you&rsquo;re Dutch.
+
+A tongue-in-cheek acknowledgment that the &ldquo;obvious way&rdquo; may not be immediately apparent to everyone, especially those unfamiliar with Python&rsquo;s design principles (a reference to Python&rsquo;s Dutch creator, Guido van Rossum).
+
+
+Now is better than never.
+
+It&rsquo;s better to start implementing solutions now rather than procrastinating indefinitely.
+Example:
+
+
+
+# Procrastinating
+todo_list = [&#34;Task 1&#34;, &#34;Task 2&#34;, &#34;Task 3&#34;]
+
+# Starting now
+todo_list = [&#34;Task 1&#34;, &#34;Task 2&#34;, &#34;Task 3&#34;]
+for task in todo_list:
+    perform_task(task)
+
+Although never is often better than right now.
+
+However, it&rsquo;s sometimes better to delay implementation and carefully consider the best approach, rather than rushing into premature or suboptimal solutions.
+Example:
+
+
+
+# Rushing into a solution
+data = fetch_data_from_source()
+process_data(data)  # Without considering data quality
+
+# Delayed implementation with consideration
+data = fetch_data_from_source()
+if data_is_valid(data):
+    process_data(data)
+else:
+    handle_invalid_data(data)
+
+If the implementation is hard to explain, it&rsquo;s a bad idea.
+
+If a proposed implementation is difficult to explain clearly and concisely, it may be an indication that the idea itself is flawed or overly complex.
+Example:
+
+
+
+# Hard to explain
+def get_word_scores(text):
+    word_scores = {}
+    for word in text.split():
+        score = sum(ord(char) - 96 for char in word.lower())
+        word_scores[word] = score
+    return word_scores
+
+# Easy to explain
+import string
+
+def get_word_score(word):
+    score = sum(ord(char) - ord(&#39;a&#39;) &#43; 1 for char in word.lower())
+    return score
+
+def get_word_scores(text):
+    word_scores = {}
+    for word in text.split():
+        word_scores[word] = get_word_score(word)
+    return word_scores
+
+If the implementation is easy to explain, it may be a good idea.
+
+Conversely, if an implementation can be easily explained, it&rsquo;s likely a good sign that the underlying idea is sound and well-designed.
+Example:
+
+
+
+# Easy to explain
+def is_palindrome(string):
+    &#34;&#34;&#34;
+    Check if a given string is a palindrome.
+    A palindrome is a word, phrase, number, or other sequence of characters
+    that reads the same backward as forward.
+    &#34;&#34;&#34;
+    normalized = &#39;&#39;.join(char.lower() for char in string if char.isalnum())
+    return normalized == normalized[::-1]
+
+Namespaces are one honking great idea &ndash; let&rsquo;s do more of those!
+
+This final line endorses the use of namespaces, which help to organize code and prevent naming conflicts, promoting modular and maintainable codebases.
+Example:
+
+
+
+# Without namespaces
+def calculate_area(length, width):
+    return length * width
+
+def calculate_volume(length, width, height):
+    return length * width * height
+
+# With namespaces
+class Rectangle:
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+
+    def area(self):
+        return self.length * self.width
+
+class Box:
+    def __init__(self, length, width, height):
+        self.length = length
+        self.width = width
+        self.height = height
+
+    def volume(self):
+        return self.length * self.width * self.height
+">
+<meta name="author" content="map[name:Uday]">
+<link rel="canonical" href="http://localhost:1313/archive/old_posts/the-zen-of-python/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e4ab7bca89e92a434b6ee0659c4052124b24f15cc9bbfa80e5b5201587388aba.css" integrity="sha256-5Kt7yonpKkNLbuBlnEBSEksk8VzJu/qA5bUgFYc4iro=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/archive/old_posts/the-zen-of-python/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript> 
+
+</head>
+
+<body class=" dark" id="top">
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Uday Parmar (Alt + H)">Uday Parmar</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/projects/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/musings/" title="Essays">
+                    <span>Essays</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/search/" title="🔍 (Alt &#43; /)" accesskey=/>
+                    <span>🔍</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    
+    
+</header>
+<main class="main">
+<article class="post-single">
+    <header class="post-header">
+        
+        <h1 class="post-title entry-hint-parent">
+            The Zen of Python
+            <span class="entry-hint" title="Draft">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     height="35"
+                     viewBox="0 -960 960 960"
+                     fill="currentColor">
+                    <path d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+                </svg>
+            </span>
+        </h1>
+        <div class="post-meta"><span title='2024-06-14 20:33:20 +0530 IST'>June 14, 2024</span>&nbsp;·&nbsp;6 min&nbsp;·&nbsp;map[name:Uday]
+
+</div>
+    </header> 
+    <div class="post-content"><ol>
+<li><strong>Beautiful is better than ugly.</strong>
+<ul>
+<li>Code should be written in a clean, elegant, and aesthetically pleasing manner.</li>
+<li>Example:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Ugly</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">find_max</span><span class="p">(</span><span class="n">list_of_nums</span><span class="p">):</span> 
+</span></span><span class="line"><span class="cl">    <span class="nb">max</span><span class="o">=</span><span class="n">list_of_nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">list_of_nums</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">x</span><span class="o">&gt;</span><span class="nb">max</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">max</span><span class="o">=</span><span class="n">x</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">max</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Beautiful</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">find_max</span><span class="p">(</span><span class="n">numbers</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
+</span></span></code></pre></div><ol start="2">
+<li><strong>Explicit is better than implicit.</strong>
+<ul>
+<li>Code should be explicit and avoid relying on implicit behavior, which can lead to confusion and bugs.</li>
+<li>Example:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Implicit</span>
+</span></span><span class="line"><span class="cl"><span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;Alice&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Hello, &#34;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>  <span class="c1"># Requires mental concatenation</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Explicit</span>
+</span></span><span class="line"><span class="cl"><span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;Alice&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Hello, </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>  <span class="c1"># Clear string formatting</span>
+</span></span><span class="line"><span class="cl">        
+</span></span></code></pre></div><ol start="3">
+<li><strong>Simple is better than complex.</strong>
+<ul>
+<li>Code should be as simple as possible, avoiding unnecessary complexity.</li>
+<li>Example:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Complex</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Simple</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">factorial</span>	
+</span></span></code></pre></div><ol start="4">
+<li><strong>Complex is better than complicated.</strong>
+<ul>
+<li>While simplicity is preferred, some level of complexity is better than convoluted, hard-to-understand code.</li>
+<li>Example:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Complicated</span>
+</span></span><span class="line"><span class="cl"><span class="n">result</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">**</span> <span class="mi">6</span> <span class="o">%</span> <span class="mi">7</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">*</span> <span class="mi">9</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Complex but clear</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span> <span class="o">=</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="n">c</span> <span class="o">=</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl"><span class="n">d</span> <span class="o">=</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl"><span class="n">e</span> <span class="o">=</span> <span class="mi">5</span>
+</span></span><span class="line"><span class="cl"><span class="n">f</span> <span class="o">=</span> <span class="mi">6</span>
+</span></span><span class="line"><span class="cl"><span class="n">g</span> <span class="o">=</span> <span class="mi">7</span>
+</span></span><span class="line"><span class="cl"><span class="n">h</span> <span class="o">=</span> <span class="mi">8</span>
+</span></span><span class="line"><span class="cl"><span class="n">i</span> <span class="o">=</span> <span class="mi">9</span>
+</span></span><span class="line"><span class="cl"><span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span> <span class="o">*</span> <span class="n">c</span><span class="p">)</span> <span class="o">-</span> <span class="p">((</span><span class="n">d</span> <span class="o">/</span> <span class="p">(</span><span class="n">e</span> <span class="o">**</span> <span class="n">f</span><span class="p">))</span> <span class="o">%</span> <span class="n">g</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">h</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span>
+</span></span></code></pre></div><ol start="5">
+<li><strong>Flat is better than nested.</strong>
+<ul>
+<li>Code should favor flat structures over deeply nested ones, which can be harder to read and maintain.</li>
+<li>Example:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Nested</span>
+</span></span><span class="line"><span class="cl"><span class="n">matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl"><span class="n">flat_matrix</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">flat_matrix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Flat</span>
+</span></span><span class="line"><span class="cl"><span class="n">matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl"><span class="n">flat_matrix</span> <span class="o">=</span> <span class="p">[</span><span class="n">num</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
+</span></span></code></pre></div><ol start="6">
+<li><strong>Sparse is better than dense.</strong>
+<ul>
+<li>Code should be sparse and well-formatted, with proper spacing and indentation, for better readability.</li>
+<li>Example:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Dense</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span><span class="n">arg2</span><span class="p">):</span><span class="k">return</span> <span class="n">arg1</span><span class="o">+</span><span class="n">arg2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Sparse</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="n">arg1</span> <span class="o">+</span> <span class="n">arg2</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">result</span>
+</span></span></code></pre></div><ol start="7">
+<li><strong>Readability counts.</strong>
+<ul>
+<li>Writing readable code should be a top priority, as it facilitates collaboration, maintenance, and understanding.</li>
+<li>Example:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Unreadable</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">l</span><span class="p">):</span> <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">l</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Readable</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_sum_of_squares</span><span class="p">(</span><span class="n">numbers</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">squared_numbers</span> <span class="o">=</span> <span class="p">[</span><span class="n">num</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">squared_numbers</span><span class="p">)</span>
+</span></span></code></pre></div><ol start="8">
+<li><strong>Special cases aren&rsquo;t special enough to break the rules.</strong>
+<ul>
+<li>While exceptions exist, they shouldn&rsquo;t be used as an excuse to break established coding guidelines and best practices.</li>
+<li>Example:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Breaking rules for a special case</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">is_admin</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">admin_actions</span><span class="p">()</span>  <span class="c1"># Poorly named function</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">normal_actions</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Following best practices</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">is_admin</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">perform_admin_actions</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">perform_normal_actions</span><span class="p">()</span>
+</span></span></code></pre></div><ol start="9">
+<li><strong>Although practicality beats purity.</strong>
+<ul>
+<li>Python favors pragmatic solutions over pure academic approaches when the latter would unnecessarily complicate or hinder development.</li>
+<li>Example:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Theoretical purity</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">sort_list</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">lst</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pivot</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">lesser</span> <span class="o">=</span> <span class="n">sort_list</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">pivot</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">greater</span> <span class="o">=</span> <span class="n">sort_list</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">pivot</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">lesser</span> <span class="o">+</span> <span class="p">[</span><span class="n">pivot</span><span class="p">]</span> <span class="o">+</span> <span class="n">greater</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Pragmatic solution</span>
+</span></span><span class="line"><span class="cl"><span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">lst</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>  <span class="c1"># Built-in sort method</span>
+</span></span></code></pre></div><ol start="10">
+<li><strong>Errors should never pass silently.</strong>
+<ul>
+<li>Errors and exceptions should be handled explicitly, providing clear feedback and avoiding silent failures.</li>
+<li>Example:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Silent error</span>
+</span></span><span class="line"><span class="cl"><span class="n">result</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span>  <span class="c1"># ZeroDivisionError, but no feedback</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Explicit error handling</span>
+</span></span><span class="line"><span class="cl"><span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Error: Division by zero is not allowed.&#34;</span><span class="p">)</span>	
+</span></span></code></pre></div><ol start="11">
+<li><strong>Unless explicitly silenced.</strong>
+<ul>
+<li>However, there may be cases where silencing errors is necessary, but this should be an explicit decision, not an oversight.</li>
+<li>Example:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Explicitly silenced error</span>
+</span></span><span class="line"><span class="cl"><span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">pass</span>  <span class="c1"># Intentionally ignored</span>
+</span></span></code></pre></div><ol start="12">
+<li><strong>In the face of ambiguity, refuse the temptation to guess.</strong>
+<ul>
+<li>When faced with ambiguous situations, Python developers should avoid making assumptions and instead seek clarification or explicit handling.</li>
+<li>Example:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Guessing</span>
+</span></span><span class="line"><span class="cl"><span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Guessing a default value</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Explicit handling</span>
+</span></span><span class="line"><span class="cl"><span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Invalid input. Please enter an integer.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Explicit handling</span>
+</span></span></code></pre></div><ol start="13">
+<li><strong>There should be one&ndash; and preferably only one &ndash;obvious way to do it.</strong>
+<ul>
+<li>Python aims to provide a single, clear way to accomplish a given task, avoiding multiple equally viable but potentially confusing alternatives.</li>
+<li>Example:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Multiple ways to reverse a string</span>
+</span></span><span class="line"><span class="cl"><span class="n">string</span> <span class="o">=</span> <span class="s2">&#34;hello&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">reversed_string</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">string</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">reversed_string</span> <span class="o">=</span> <span class="n">string</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># One obvious way using a slice</span>
+</span></span><span class="line"><span class="cl"><span class="n">string</span> <span class="o">=</span> <span class="s2">&#34;hello&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">reversed_string</span> <span class="o">=</span> <span class="n">string</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span></code></pre></div><ol start="14">
+<li><strong>Although that way may not be obvious at first unless you&rsquo;re Dutch.</strong>
+<ul>
+<li>A tongue-in-cheek acknowledgment that the &ldquo;obvious way&rdquo; may not be immediately apparent to everyone, especially those unfamiliar with Python&rsquo;s design principles (a reference to Python&rsquo;s Dutch creator, Guido van Rossum).</li>
+</ul>
+</li>
+<li><strong>Now is better than never.</strong>
+<ul>
+<li>It&rsquo;s better to start implementing solutions now rather than procrastinating indefinitely.</li>
+<li>Example:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Procrastinating</span>
+</span></span><span class="line"><span class="cl"><span class="n">todo_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;Task 1&#34;</span><span class="p">,</span> <span class="s2">&#34;Task 2&#34;</span><span class="p">,</span> <span class="s2">&#34;Task 3&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Starting now</span>
+</span></span><span class="line"><span class="cl"><span class="n">todo_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;Task 1&#34;</span><span class="p">,</span> <span class="s2">&#34;Task 2&#34;</span><span class="p">,</span> <span class="s2">&#34;Task 3&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">todo_list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">perform_task</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+</span></span></code></pre></div><ol start="16">
+<li><strong>Although never is often better than <em>right</em> now.</strong>
+<ul>
+<li>However, it&rsquo;s sometimes better to delay implementation and carefully consider the best approach, rather than rushing into premature or suboptimal solutions.</li>
+<li>Example:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Rushing into a solution</span>
+</span></span><span class="line"><span class="cl"><span class="n">data</span> <span class="o">=</span> <span class="n">fetch_data_from_source</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">process_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># Without considering data quality</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Delayed implementation with consideration</span>
+</span></span><span class="line"><span class="cl"><span class="n">data</span> <span class="o">=</span> <span class="n">fetch_data_from_source</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">data_is_valid</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">process_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">handle_invalid_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span></span></code></pre></div><ol start="17">
+<li><strong>If the implementation is hard to explain, it&rsquo;s a bad idea.</strong>
+<ul>
+<li>If a proposed implementation is difficult to explain clearly and concisely, it may be an indication that the idea itself is flawed or overly complex.</li>
+<li>Example:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Hard to explain</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_word_scores</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">word_scores</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="n">score</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">char</span><span class="p">)</span> <span class="o">-</span> <span class="mi">96</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="n">word_scores</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="n">score</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">word_scores</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Easy to explain</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">string</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_word_score</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">score</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">char</span><span class="p">)</span> <span class="o">-</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">score</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_word_scores</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">word_scores</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="n">word_scores</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_word_score</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">word_scores</span>
+</span></span></code></pre></div><ol start="18">
+<li><strong>If the implementation is easy to explain, it may be a good idea.</strong>
+<ul>
+<li>Conversely, if an implementation can be easily explained, it&rsquo;s likely a good sign that the underlying idea is sound and well-designed.</li>
+<li>Example:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Easy to explain</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">is_palindrome</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Check if a given string is a palindrome.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    A palindrome is a word, phrase, number, or other sequence of characters
+</span></span></span><span class="line"><span class="cl"><span class="s2">    that reads the same backward as forward.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">normalized</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">char</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">string</span> <span class="k">if</span> <span class="n">char</span><span class="o">.</span><span class="n">isalnum</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">normalized</span> <span class="o">==</span> <span class="n">normalized</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span></code></pre></div><ol start="19">
+<li><strong>Namespaces are one honking great idea &ndash; let&rsquo;s do more of those!</strong>
+<ul>
+<li>This final line endorses the use of namespaces, which help to organize code and prevent naming conflicts, promoting modular and maintainable codebases.</li>
+<li>Example:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Without namespaces</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_area</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">length</span> <span class="o">*</span> <span class="n">width</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">calculate_volume</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">length</span> <span class="o">*</span> <span class="n">width</span> <span class="o">*</span> <span class="n">height</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># With namespaces</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Rectangle</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Box</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">volume</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
+</span></span></code></pre></div>
+
+    </div>
+    <footer class="post-footer">
+        <ul class="post-tags">
+            <li>
+                <a href="http://localhost:1313/tags/python/">Python</a>
+            </li>
+        </ul>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share The Zen of Python on x"
+           href="https://x.com/intent/tweet/?text=The%20Zen%20of%20Python&amp;url=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fthe-zen-of-python%2f&amp;hashtags=Python">
+            <svg version="1.1"
+                 viewBox="0 0 512 512"
+                 xml:space="preserve"
+                 height="30px"
+                 width="30px"
+                 fill="currentColor">
+                <path d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share The Zen of Python on linkedin"
+           href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fthe-zen-of-python%2f&amp;title=The%20Zen%20of%20Python&amp;summary=The%20Zen%20of%20Python&amp;source=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fthe-zen-of-python%2f">
+            <svg version="1.1"
+                 viewBox="0 0 512 512"
+                 xml:space="preserve"
+                 height="30px"
+                 width="30px"
+                 fill="currentColor">
+                <path d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share The Zen of Python on reddit"
+           href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fthe-zen-of-python%2f&title=The%20Zen%20of%20Python">
+            <svg version="1.1"
+                 viewBox="0 0 512 512"
+                 xml:space="preserve"
+                 height="30px"
+                 width="30px"
+                 fill="currentColor">
+                <path d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share The Zen of Python on facebook"
+           href="https://facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fthe-zen-of-python%2f">
+            <svg version="1.1"
+                 viewBox="0 0 512 512"
+                 xml:space="preserve"
+                 height="30px"
+                 width="30px"
+                 fill="currentColor">
+                <path d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share The Zen of Python on whatsapp"
+           href="https://api.whatsapp.com/send?text=The%20Zen%20of%20Python%20-%20http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fthe-zen-of-python%2f">
+            <svg version="1.1"
+                 viewBox="0 0 512 512"
+                 xml:space="preserve"
+                 height="30px"
+                 width="30px"
+                 fill="currentColor">
+                <path d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share The Zen of Python on telegram"
+           href="https://telegram.me/share/url?text=The%20Zen%20of%20Python&amp;url=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fthe-zen-of-python%2f">
+            <svg version="1.1"
+                 xml:space="preserve"
+                 viewBox="2 2 28 28"
+                 height="30px"
+                 width="30px"
+                 fill="currentColor">
+                <path d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share The Zen of Python on ycombinator"
+           href="https://news.ycombinator.com/submitlink?t=The%20Zen%20of%20Python&u=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fthe-zen-of-python%2f">
+            <svg version="1.1"
+                 xml:space="preserve"
+                 width="30px"
+                 height="30px"
+                 viewBox="0 0 512 512"
+                 fill="currentColor"
+                 xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+    </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    
+    <a href="http://localhost:1313/donate" class="donate-big">Liked my blog and want to support? Click this button to donate!</a>
+    <style>
+    .donate-big {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 1rem 1.25rem;
+      background: var(--primary);
+      color: var(--theme) !important;
+      border-radius: 0.75rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+
+      transition: background 0.2s ease;
+    }
+    </style>
+    
+    
+<style>
+   
+  input.autofill-fix:-webkit-autofill,
+  input.autofill-fix:-webkit-autofill:hover,
+  input.autofill-fix:-webkit-autofill:focus,
+  input.autofill-fix:-webkit-autofill:active {
+    -webkit-text-fill-color: var(--primary2) !important;
+    caret-color: var(--primary2) !important;
+    -webkit-box-shadow: 0 0 0px 1000px var(--entry) inset !important;
+    box-shadow: 0 0 0px 1000px var(--entry) inset !important;
+    background-color: var(--entry) !important;
+    transition: background-color 9999s ease-in-out 0s;
+  }
+</style>
+<div style="max-width: 100%;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            border: 0.5px solid var(--border);
+            border-radius: 12px;
+            background: var(--entry)">
+    <form action="https://buttondown.com/api/emails/embed-subscribe/jitesh117"
+          target="_blank"
+          method="post"
+          class="embeddable-buttondown-form"
+          style="text-align: left">
+        <label for="bd-email"
+               style="display: block;
+                      margin-bottom: 0.5rem;
+                      font-weight: 600;
+                      font-size: 1rem;
+                      color: var(--primary2)">Join the newsletter!</label>
+        <input type="email"
+               name="email"
+               id="bd-email"
+               class="autofill-fix"
+               placeholder="you@example.com"
+               required
+               style="width: 100%;
+                      padding: 0.65rem;
+                      border: 1px solid #ccc;
+                      border-radius: 8px;
+                      margin-bottom: 1rem;
+                      color: var(--primary2)" />
+        <input type="submit"
+               value="Subscribe"
+               style="width: 100%;
+                      padding: 0.75rem;
+                      background: var(--primary);
+                      color: var(--theme);
+                      border: none;
+                      border-radius: 8px;
+                      font-weight: 600;
+                      font-size: 1rem;
+                      cursor: pointer" />
+        <p style="font-size: 0.85rem; margin-top: 1rem; text-align: center"></p>
+    </form>
+</div>
+
+
+    <span>&copy; 2026 <a href="http://localhost:1313/">Uday Parmar</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/"
+           rel="noopener"
+           target="_blank">PaperMod</a>
+    </span>
+    <span>·</span>
+    <span>
+        <a target="_blank" href="https://jitesh117.github.io/index.xml">RSS Feed</a>
+    </span>
+    <span>·</span>
+    <span>
+        <a target="_blank" href="https://buymeacoffee.com/jitesh117">Support my writing!</a>
+    </span>
+</footer><style>
+  @media (max-width: 768px) {
+    #bmc-iframe {
+      border-radius: 0 !important;
+    }
+  }
+</style>
+<script
+  data-name="BMC-Widget"
+  data-cfasync="false"
+  src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+  data-id="jitesh117"
+  data-description="Support me on Buy me a coffee!"
+  data-message="Like what you're reading? You can donate to support my writing!"
+  data-color="#FFDD00"
+  data-position="Right"
+  data-x_margin="18"
+  data-y_margin="18"
+></script>
+<style>
+   
+  @media (max-width: 1500px) {
+    #bmc-iframe {
+      border-radius: 0 !important;
+    }
+
+     
+    .graph-fab {
+      position: fixed;
+      bottom: 18px;
+      left: 18px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+      transition: all 0.3s;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(2px);
+    }
+
+    .graph-fab:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    }
+
+    .graph-fab img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      filter: brightness(1.1);
+    }
+
+    .graph-container {
+      position: fixed;
+      bottom: 85px;
+      left: 18px;
+      width: 350px;
+      height: 350px;
+      background-color: var(--code-bg);
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+      padding: 15px;
+      z-index: 99;
+      display: none;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .graph-container.active {
+      display: block;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+  }
+
+   
+  @media (min-width: 1501px) {
+    .graph-fab {
+      display: none;  
+    }
+
+    .graph-container {
+      position: fixed;
+      top: 50%;
+      left: calc(((100% - 700px) / 2) / 2);  
+      transform: translateY(-50%) translateX(-50%);  
+      width: 350px;  
+      height: 350px;
+      background-color: var(--code-bg);
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+      padding: 15px;
+      z-index: 99;
+      display: block;  
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  }
+
+   
+  .graph-container svg {
+    display: block;
+    margin: 0 auto;
+    width: 100% !important;
+    height: calc(100% - 40px) !important;
+  }
+
+  .graph-container svg g {
+     
+     
+  }
+
+  .graph-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 0;
+    margin-bottom: 5px;
+    border-bottom: 1px solid rgba(125, 125, 125, 0.2);
+  }
+
+  .graph-title {
+    font-size: 14px;
+    color: var(--primary);
+    padding: 0 10px;
+    font-weight: 500;
+  }
+
+   
+  .zoom-instructions {
+    font-size: 12px;
+    font-style: italic;
+    opacity: 0.8;
+    font-weight: normal;
+    margin-left: 5px;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 400px) {
+    .graph-container {
+      width: calc(100% - 36px);
+    }
+  }
+</style>
+
+
+<div id="graph-container" class="graph-container">
+  <div class="graph-controls">
+    <div class="graph-title">
+      Topic Graph
+      <span class="zoom-instructions">(Use scroll wheel to zoom)</span>
+    </div>
+  </div>
+  <div class="component-graph-container" id="container-floating-graph">
+  <div class="component-graph" id="floating-graph"></div>
+</div>
+<style>
+  .component-graph-container {
+      position: relative;
+      width: 100%;
+      margin: 20px 0;
+      border-radius: 8px;
+  }
+
+  .component-graph {
+      width: 100%;
+        
+      aspect-ratio: 1;
+      border-radius: 16px;
+      background-color: var(--code-bg, #f5f5f5);
+      overflow: hidden;
+  }
+
+  .node-label {
+      font-size: 10px;
+      text-anchor: middle;
+      pointer-events: none;
+      font-family: sans-serif;
+      fill: #333;
+      user-select: none;
+      opacity: 0;  
+      transition: opacity 0.3s;
+  }
+
+  .node-label-background {
+      fill: rgba(255, 255, 255, 0.8);
+      rx: 3;
+      ry: 3;
+      pointer-events: none;
+      opacity: 0;  
+      transition: opacity 0.3s;
+  }
+
+  .tag-label {
+      font-size: 12px;
+      font-weight: bold;
+      text-anchor: middle;
+      pointer-events: none;
+      font-family: sans-serif;
+      fill: var(--primary);
+      user-select: none;
+  }
+
+  .node-tooltip {
+      position: absolute;
+      padding: 8px 12px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      border-radius: 4px;
+      font-size: 12px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 100;
+      max-width: 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+  }
+</style>
+<script>
+    (function () {
+      
+      let graphData = { nodes: [], links: [] };
+      let simulation;
+      let svg;
+      let g; 
+      let currentZoomScale = 1; 
+      const zoomThreshold = 1.5; 
+      const graphId = "floating-graph";
+      const jsonPath = "\/index.json";
+      const graphElement = document.getElementById(graphId);
+
+      
+      const colorPalette = [
+        "#f28e2c",
+        "#04ff00",
+        "#b342f5",
+        "#e6327a",
+        "#edc949",
+        "#76b7b2",
+        "#af7aa1",
+        "#9c755f",
+        "#bab0ab",
+        "#6b9ac4",
+        "#d7a763",
+        "#d37372",
+        "#a4ccc9",
+        "#8bb174",
+        "#f1d78c",
+      ];
+
+      
+      const tooltip = document.createElement("div");
+      tooltip.className = "node-tooltip";
+      document.getElementById(`container-${graphId}`).appendChild(tooltip);
+
+      
+      function initGraph() {
+        
+        const width = graphElement.clientWidth;
+        const height = graphElement.clientHeight;
+
+        
+        if (graphElement.querySelector("svg")) {
+          graphElement.querySelector("svg").remove();
+        }
+
+        
+        svg = d3
+          .select("#" + graphId)
+          .append("svg")
+          .attr("width", width)
+          .attr("height", height)
+          .attr("viewBox", `0 0 ${width} ${height}`);
+
+        
+        const zoom = d3
+          .zoom()
+          .scaleExtent([0.1, 10])
+          .on("zoom", (event) => {
+            g.attr("transform", event.transform);
+            currentZoomScale = event.transform.k;
+
+            
+            updateLabelsVisibility(currentZoomScale);
+
+            
+            if (simulation) {
+              adjustNodeSpacing(currentZoomScale);
+            }
+          });
+
+        svg.call(zoom);
+
+        
+        g = svg.append("g");
+
+        
+        const tagConnections = {};
+        graphData.nodes.forEach((node) => {
+          if (node.isTag) {
+            tagConnections[node.id] = 0;
+          }
+        });
+
+        graphData.links.forEach((link) => {
+          if (link.source.id) {
+            if (tagConnections[link.source.id] !== undefined) {
+              tagConnections[link.source.id]++;
+            }
+          } else if (tagConnections[link.source] !== undefined) {
+            tagConnections[link.source]++;
+          }
+        });
+
+        
+        graphData.nodes.forEach((node) => {
+          if (node.isTag) {
+            const connectionCount = tagConnections[node.id] || 1;
+            node.radius = Math.max(8, Math.min(14, 5 + connectionCount * 0.8));
+            node.connections = connectionCount;
+          } else {
+            node.radius = 5;
+          }
+        });
+
+        
+        simulation = d3
+          .forceSimulation(graphData.nodes)
+          .force(
+            "link",
+            d3
+              .forceLink(graphData.links)
+              .id((d) => d.id)
+              .distance((d) => {
+                
+                if (d.source.isTag) {
+                  return 80 + d.source.connections * 2;
+                }
+                return 50;
+              }),
+          )
+          .force(
+            "charge",
+            d3.forceManyBody().strength((d) => (d.isTag ? -300 : -50)),
+          )
+          .force("center", d3.forceCenter(width / 2, height / 2))
+          .force(
+            "collision",
+            d3.forceCollide().radius((d) => d.radius * 1.5),
+          )
+          .force("x", d3.forceX(width / 2).strength(0.1))
+          .force("y", d3.forceY(height / 2).strength(0.1));
+
+        
+        const link = g
+          .append("g")
+          .attr("class", "links")
+          .selectAll("line")
+          .data(graphData.links)
+          .enter()
+          .append("line")
+          .attr("stroke", "#888888") 
+          .attr("stroke-opacity", 0.6)
+          .attr("stroke-width", 1)
+          .attr("data-source", (d) => d.source.id || d.source)
+          .attr("data-target", (d) => d.target.id || d.target)
+          .style("transition", "opacity 0.3s, stroke 0.3s, stroke-width 0.3s"); 
+
+        
+        const nodeGroup = g
+          .append("g")
+          .attr("class", "nodes")
+          .selectAll("g")
+          .data(graphData.nodes)
+          .enter()
+          .append("g")
+          .attr("data-id", (d) => d.id)
+          .style("cursor", "pointer")
+          .call(drag(simulation))
+          .on("click", (event, d) => {
+            
+            handleNodeClick(d);
+
+            
+            if (!d.isTag && (d.link || d.permalink)) {
+              window.open(d.link || d.permalink, "_blank");
+            } else if (d.isTag) {
+                  
+                  const tagName = d.title.replace(/\s+/g, "-");
+                  const tagPermalink = 
+                    "http://localhost:1313/tags/" + tagName.toLowerCase()
+                  ;
+                  window.open(tagPermalink, "_blank");
+                }
+          })
+          .on("mouseover", (event, d) => {
+            
+            const tooltipText = d.isTag
+              ? `Tag: ${d.title} (${d.connections} posts)`
+              : d.title;
+            showTooltip(tooltipText, event.pageX, event.pageY);
+            highlightConnections(d);
+          })
+          .on("mousemove", (event) => {
+            
+            updateTooltipPosition(event.pageX, event.pageY);
+          })
+          .on("mouseout", () => {
+            
+            hideTooltip();
+            resetHighlighting();
+          });
+
+        
+        nodeGroup
+          .append("circle")
+          .attr("r", (d) => d.radius)
+          .attr("fill", (d) => {
+            if (d.isTag) {
+              return colorPalette[d.colorIndex];
+            }
+            return "#ffffff";
+          })
+          .attr("stroke", (d) => (d.isTag ? "#333333" : "#888888"))
+          .attr("stroke-width", (d) => (d.isTag ? 1.5 : 1))
+          .style("transition", "opacity 0.3s, fill 0.3s, stroke-width 0.3s");
+
+        
+        nodeGroup
+          .filter((d) => d.isTag)
+          .append("text")
+          .attr("class", "tag-label")
+          .attr("dy", (d) => d.radius + 12) 
+          .text((d) => d.title)
+          .style("opacity", 0.85)
+          .style("fill", (d) => {
+            
+            const color = d3.color(colorPalette[d.colorIndex]);
+          })
+          .each(function (d) {
+            d.hasTagLabel = true; 
+          });
+
+        
+        const labelGroups = nodeGroup
+          .filter((d) => !d.hasTagLabel) 
+          .append("g")
+          .attr("class", "label-group");
+
+        
+        labelGroups
+          .append("rect")
+          .attr("class", "node-label-background")
+          .attr("x", -40)
+          .attr("y", (d) => d.radius + 2)
+          .attr("width", 80) 
+          .attr("height", 16)
+          .style("opacity", 0);
+
+        
+        const labels = labelGroups
+          .append("text")
+          .attr("class", "node-label")
+          .attr("dy", (d) => d.radius + 14) 
+          .text((d) => d.title)
+          .style("opacity", 0); 
+
+        
+        labels.each(function () {
+          const bbox = this.getBBox();
+          const parent = d3.select(this.parentNode);
+          parent
+            .select("rect")
+            .attr("x", bbox.x - 2)
+            .attr("width", bbox.width + 4);
+        });
+
+        
+        function updateLabelsVisibility(scale) {
+          
+          nodeGroup
+            .selectAll(".node-label")
+            .style("opacity", scale >= zoomThreshold ? 1 : 0);
+          nodeGroup
+            .selectAll(".node-label-background")
+            .style("opacity", scale >= zoomThreshold ? 0.8 : 0);
+
+          
+          nodeGroup
+            .filter((d) => d.isTag)
+            .selectAll(".tag-label")
+            .style("opacity", 0.85);
+        }
+
+        
+        function adjustNodeSpacing(scale) {
+          
+          const zoomFactor = Math.max(0, (scale - 1) * 1.2);
+
+          
+          const collisionRadius = (d) => {
+            const baseRadius = d.radius * 1.5;
+            return baseRadius * (1 + zoomFactor);
+          };
+
+          
+          const linkDistance = (d) => {
+            const baseDistance = d.source.isTag
+              ? 80 + d.source.connections * 3
+              : 60;
+            return baseDistance * (1 + zoomFactor * 1.5);
+          };
+
+          
+          const chargeStrength = (d) => {
+            const baseCharge = d.isTag ? -300 : -50;
+            return baseCharge * (1 + zoomFactor);
+          };
+
+          
+          simulation
+            .force("collision", d3.forceCollide().radius(collisionRadius))
+            .force(
+              "link",
+              d3
+                .forceLink(graphData.links)
+                .id((d) => d.id)
+                .distance(linkDistance),
+            )
+            .force("charge", d3.forceManyBody().strength(chargeStrength))
+            .alpha(0.3) 
+            .restart();
+        }
+
+        
+        let isDragging = false;
+
+        
+        function handleNodeClick(d) {
+          
+          nodeGroup
+            .selectAll("circle")
+            .attr("fill", (n) => {
+              if (n.isTag) {
+                return colorPalette[n.colorIndex];
+              }
+              return "#ffffff";
+            })
+            .attr("stroke-width", (n) => (n.isTag ? 1.5 : 1));
+
+          link
+            .attr("stroke", "#888888")
+            .attr("stroke-width", 1)
+            .attr("stroke-opacity", 0.6);
+
+          
+          nodeGroup
+            .filter((n) => n.id === d.id)
+            .select("circle")
+            .attr("stroke-width", 2.5)
+            .attr("stroke", "#000000");
+
+          const connectedNodes = [];
+
+          if (d.isTag) {
+            
+            link.each(function (l) {
+              if (l.source.id === d.id || l.source === d.id) {
+                
+                d3.select(this)
+                  .attr("stroke", colorPalette[d.colorIndex])
+                  .attr("stroke-width", 2)
+                  .attr("stroke-opacity", 1);
+                connectedNodes.push(l.target.id || l.target);
+              }
+            });
+          } else {
+            
+            const connectedTagColors = {};
+
+            link.each(function (l) {
+              if (l.target.id === d.id || l.target === d.id) {
+                const sourceId = l.source.id || l.source;
+                const tagNode = graphData.nodes.find((n) => n.id === sourceId);
+                if (tagNode) {
+                  const tagColor = colorPalette[tagNode.colorIndex];
+                  connectedTagColors[sourceId] = tagColor;
+
+                  
+                  d3.select(this)
+                    .attr("stroke", tagColor)
+                    .attr("stroke-width", 2)
+                    .attr("stroke-opacity", 1);
+
+                  connectedNodes.push(sourceId);
+                }
+              }
+            });
+          }
+
+          
+          nodeGroup
+            .filter((n) => connectedNodes.includes(n.id))
+            .select("circle")
+            .attr("stroke-width", 2)
+            .attr("stroke", "#000000");
+        }
+
+        
+        function highlightConnections(d) {
+          if (isDragging) return; 
+
+          
+          nodeGroup.style("opacity", 0.4);
+          link.style("opacity", 0.1);
+
+          
+          nodeGroup.filter((n) => n.id === d.id).style("opacity", 1);
+
+          const connectedNodes = [];
+
+          if (d.isTag) {
+            
+            link.each(function (l) {
+              if (l.source.id === d.id || l.source === d.id) {
+                
+                d3.select(this)
+                  .style("opacity", 1)
+                  .attr("stroke", colorPalette[d.colorIndex])
+                  .attr("stroke-width", 1.5);
+                connectedNodes.push(l.target.id || l.target);
+              }
+            });
+          } else {
+            
+            link.each(function (l) {
+              if (l.target.id === d.id || l.target === d.id) {
+                const sourceId = l.source.id || l.source;
+                const tagNode = graphData.nodes.find((n) => n.id === sourceId);
+
+                if (tagNode) {
+                  
+                  d3.select(this)
+                    .style("opacity", 1)
+                    .attr("stroke", colorPalette[tagNode.colorIndex])
+                    .attr("stroke-width", 1.5);
+                  connectedNodes.push(sourceId);
+                }
+              }
+            });
+          }
+
+          
+          nodeGroup
+            .filter((n) => connectedNodes.includes(n.id))
+            .style("opacity", 1);
+        }
+
+        
+        function resetHighlighting() {
+          if (isDragging) return; 
+          nodeGroup.style("opacity", 1);
+          link
+            .style("opacity", 0.6)
+            .attr("stroke", "#888888")
+            .attr("stroke-width", 1);
+        }
+
+        
+        simulation.on("tick", () => {
+          link
+            .attr("x1", (d) => d.source.x)
+            .attr("y1", (d) => d.source.y)
+            .attr("x2", (d) => d.target.x)
+            .attr("y2", (d) => d.target.y);
+
+          nodeGroup.attr("transform", (d) => `translate(${d.x},${d.y})`);
+        });
+      }
+
+      
+      function showTooltip(text, x, y) {
+        tooltip.textContent = text;
+        tooltip.style.opacity = "1";
+        updateTooltipPosition(x, y);
+      }
+
+      function updateTooltipPosition(x, y) {
+        const rect = graphElement.getBoundingClientRect();
+        const offsetX = x - rect.left;
+        const offsetY = y - rect.top;
+
+        tooltip.style.left = `${offsetX + 15}px`;
+        tooltip.style.top = `${offsetY - 10}px`;
+      }
+
+      function hideTooltip() {
+        tooltip.style.opacity = "0";
+      }
+
+      
+      function drag(simulation) {
+        function dragstarted(event) {
+          if (!event.active) simulation.alphaTarget(0.3).restart();
+          event.subject.fx = event.subject.x;
+          event.subject.fy = event.subject.y;
+          isDragging = true;
+        }
+
+        function dragged(event) {
+          event.subject.fx = event.x;
+          event.subject.fy = event.y;
+        }
+
+        function dragended(event) {
+          if (!event.active) simulation.alphaTarget(0);
+          event.subject.fx = null;
+          event.subject.fy = null;
+          setTimeout(() => {
+            isDragging = false;
+          }, 100);
+        }
+
+        return d3
+          .drag()
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended);
+      }
+
+      
+      function processHugoData(data) {
+        const postNodes = data.map((post, index) => ({
+          id: "post-" + index,
+          title: post.title,
+          permalink: post.permalink,
+          link: post.link || post.permalink,
+          tags: post.tags || [],
+          isTag: false,
+        }));
+
+        
+        const allTags = new Set();
+        postNodes.forEach((post) => {
+          if (post.tags && post.tags.length > 0) {
+            post.tags.forEach((tag) => allTags.add(tag));
+          }
+        });
+
+        
+        const tagNodes = Array.from(allTags).map((tag) => ({
+          id: "tag-" + tag.replace(/\s+/g, "-").toLowerCase(),
+          title: tag,
+          isTag: true,
+          colorIndex: 0, 
+        }));
+
+        
+        const links = [];
+        postNodes.forEach((post) => {
+          if (post.tags && post.tags.length > 0) {
+            post.tags.forEach((tag) => {
+              const tagId = "tag-" + tag.replace(/\s+/g, "-").toLowerCase();
+              links.push({
+                source: tagId,
+                target: post.id,
+                value: 1,
+              });
+            });
+          }
+        });
+
+        
+        const tagAdjacencyMap = createTagAdjacencyMap(tagNodes, links);
+
+        
+        applyGraphColoring(tagNodes, tagAdjacencyMap);
+
+        
+        const nodes = [...tagNodes, ...postNodes];
+
+        return { nodes, links };
+      }
+
+      
+      function createTagAdjacencyMap(tagNodes, links) {
+        const tagIds = tagNodes.map((tag) => tag.id);
+        const adjacencyMap = {};
+
+        
+        tagIds.forEach((tagId) => {
+          adjacencyMap[tagId] = new Set();
+        });
+
+        
+        const postToTagsMap = {};
+
+        
+        links.forEach((link) => {
+          const sourceId = link.source.id || link.source;
+          const targetId = link.target.id || link.target;
+
+          
+          if (sourceId.startsWith("tag-") && !targetId.startsWith("tag-")) {
+            if (!postToTagsMap[targetId]) {
+              postToTagsMap[targetId] = [];
+            }
+            postToTagsMap[targetId].push(sourceId);
+          }
+        });
+
+        
+        Object.values(postToTagsMap).forEach((connectedTags) => {
+          if (connectedTags.length > 1) {
+            
+            for (let i = 0; i < connectedTags.length; i++) {
+              for (let j = 0; j < connectedTags.length; j++) {
+                if (i !== j) {
+                  adjacencyMap[connectedTags[i]].add(connectedTags[j]);
+                }
+              }
+            }
+          }
+        });
+
+        return adjacencyMap;
+      }
+
+      
+      function applyGraphColoring(tagNodes, adjacencyMap) {
+        
+        const sortedTags = [...tagNodes].sort((a, b) => {
+          const degreeA = adjacencyMap[a.id] ? adjacencyMap[a.id].size : 0;
+          const degreeB = adjacencyMap[b.id] ? adjacencyMap[b.id].size : 0;
+          return degreeB - degreeA; 
+        });
+
+        
+        sortedTags.forEach((tagNode) => {
+          const usedColors = new Set();
+
+          
+          if (adjacencyMap[tagNode.id]) {
+            adjacencyMap[tagNode.id].forEach((adjacentTagId) => {
+              
+              const adjacentTag = tagNodes.find((t) => t.id === adjacentTagId);
+              if (adjacentTag && adjacentTag.colorIndex !== undefined) {
+                usedColors.add(adjacentTag.colorIndex);
+              }
+            });
+          }
+
+          
+          let colorIndex = 0;
+          while (usedColors.has(colorIndex)) {
+            colorIndex++;
+          }
+          tagNode.colorIndex = colorIndex % colorPalette.length;
+        });
+      }
+
+      
+      function loadGraphData() {
+  const jsonPath = "\/index.json";
+  fetch(jsonPath)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            graphData = processHugoData(data);
+            initGraph();
+          })
+          .catch((error) => {
+            console.error("Error loading blog graph data:", error);
+            graphElement.innerHTML =
+              '<div style="padding: 20px; text-align: center;">Error loading blog graph data.</div>';
+          });
+      }
+
+      
+      window.addEventListener("resize", () => {
+        if (simulation) {
+          initGraph();
+        }
+      });
+
+      
+      function loadScript(url, callback) {
+        if (typeof d3 !== "undefined") {
+          callback();
+          return;
+        }
+
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = url;
+        script.onload = callback;
+        document.head.appendChild(script);
+      }
+
+      
+      loadScript(
+        "https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js",
+        loadGraphData,
+      );
+    })();
+</script>
+
+</div>
+
+<div id="graph-fab" class="graph-fab">
+  <img src="/images/graph_icon.png" alt="Graph" />
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const fab = document.getElementById("graph-fab");
+    const container = document.getElementById("graph-container");
+    let graphInitialized = false;
+    const isMobile = window.innerWidth <= 1500;
+
+    
+    if (!isMobile) {
+      setTimeout(function () {
+        window.dispatchEvent(new Event("resize"));
+        graphInitialized = true;
+      }, 500);
+    }
+
+    if (fab) {
+      fab.addEventListener("click", function () {
+        container.classList.toggle("active");
+
+        
+        if (!graphInitialized && container.classList.contains("active")) {
+          setTimeout(function () {
+            window.dispatchEvent(new Event("resize"));
+            graphInitialized = true;
+          }, 100);
+        }
+      });
+    }
+
+    
+    document.addEventListener("click", function (event) {
+      if (
+        isMobile &&
+        container &&
+        !container.contains(event.target) &&
+        fab &&
+        !fab.contains(event.target) &&
+        container.classList.contains("active")
+      ) {
+        container.classList.remove("active");
+      }
+    });
+  });
+</script>
+
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

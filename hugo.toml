@@ -1,0 +1,119 @@
+# Site Configuration
+baseURL = 'https://uday-parmar07.github.io/'
+languageCode = "en-us"
+title = "Uday Parmar"
+theme = "PaperMod"
+cover_image = "images/cover.jpeg"
+googleAnalytics = "G-CGJ4KC5CSM"
+buildFuture = true
+
+[social]
+twitter = "udayparmar6845"
+facebook_admin = ""
+
+# Output Formats
+[outputs]
+  home = ['html', 'rss', 'json']
+  section = ['html', 'rss']
+  taxonomy = ['html']
+  term = ['html']
+
+# Site Parameters
+[params]
+  mainSections = ["projects"]
+  hideSummary = true
+  comments = true
+  archives = true
+  archiveSection = ["blog", "projects"]
+  defaultTheme = "dark"
+  disableThemeToggle = true
+  ShowCodeCopyButtons = true
+  ShowPostNavLinks = true
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShowPageNums = true
+  search = true
+  searchPlaceholder = "Search..."
+  disableScrollToTop = true
+
+
+  # Home Page Information
+  [params.homeInfoParams]
+Title = "Hi — I'm Uday."
+Content = "### Hi! I'm Uday\n Welcome to my corner of the internet. I write about Go, machine learning, developer tooling, and project writeups.\n\n  Follow my work on GitHub and X (Twitter) for updates."
+
+  # Social Icons
+  [[params.socialIcons]]
+  name = "github"
+  url = "https://github.com/Uday-Parmar07"
+
+  [[params.socialIcons]]
+  name = "linkedin"
+  url = "https://www.linkedin.com/in/uday-parmar-226225259/"
+
+  [[params.socialIcons]]
+  name = "twitter"
+  url = "https://x.com/udayparmar6845"
+
+  [params.author]
+  name = "Uday"
+
+  [params.social]
+  twitter = "udayparmar6845"
+  facebook_admin = ""
+
+  # Cover Image Parameters
+  [params.cover]
+  linkFullImages = true
+
+  # Search Settings
+  [params.fuseOpts]
+    isCaseSensitive = false
+    shouldSort = true
+    location = 0
+    distance = 1_000
+    threshold = 0.4
+    minMatchCharLength = 0
+    keys = [ "title", "permalink", "summary", "content" ]
+
+# Menu Configuration
+[[menu.main]]
+identifier = "home"
+name = "Home"
+url = "/"
+weight = 1
+
+[[menu.main]]
+identifier = "about"
+name = "About"
+url = "/about/"
+weight = 2
+
+[[menu.main]]
+identifier = "projects"
+name = "Projects"
+url = "/projects/"
+weight = 3.5
+
+[[menu.main]]
+identifier = "musings"
+name = "Essays"
+url = "/musings/"
+weight = 4
+
+
+[[menu.main]]
+identifier = "search"
+name = "🔍"
+url = "/search/"
+weight = 6
+
+
+
+
+# Markup and Syntax Highlighting Settings
+[markup.highlight]
+  codeFences = true
+  guessSyntax = true
+  lineNos = false
+  noClasses = false

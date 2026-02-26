@@ -1,0 +1,1797 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Creating a Brainrot Language Server in Golang | Uday Parmar</title>
+<meta name="keywords" content="golang, tech, brainrot">
+<meta name="description" content="I was reading the language server protocol docs and about json-rpc for collaborating on a new project which will need an LSP server. Since it was getting a little boring to just read so much of documentations and RFCs, I thought of making a small and fun project around LSPs.
+      
+
+    🌐
+    
+        You can find the source code of this project in this github repository
+    
+
+
+
+What&rsquo;s an LSP?
+The Language Server Protocol (LSP) is a game-changer in how we build development tools. Before Microsoft created LSP for VS Code, each editor (like Vim, Emacs, Sublime) needed to implement language support separately for each programming language. Microsoft&rsquo;s decision to make LSP open source and editor-agnostic meant that one language server could now work with any LSP-compatible editor, making it more efficient for the community and providing consistent experiences across different editors.">
+<meta name="author" content="map[name:Uday]">
+<link rel="canonical" href="http://localhost:1313/archive/old_posts/creating-a-brainrot-language-server-in-golang/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e4ab7bca89e92a434b6ee0659c4052124b24f15cc9bbfa80e5b5201587388aba.css" integrity="sha256-5Kt7yonpKkNLbuBlnEBSEksk8VzJu/qA5bUgFYc4iro=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/archive/old_posts/creating-a-brainrot-language-server-in-golang/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+<script>
+  
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: "dark",
+    themeVariables: {
+      darkMode: true,
+      background: "#000000",
+      primaryColor: "#FFFFFF",
+      lineColor: "#FFFFFF",
+      textColor: "#FFFFFF",
+      nodeTextColor: "#FFFFFF",
+      tertiaryColor: "#CCCCCC",
+    },
+    
+    sequence: {
+      showSequenceNumbers: true,
+    },
+    flowchart: {
+      htmlLabels: true,
+      curve: "basis",
+    },
+  });
+</script>
+
+
+</head>
+
+<body class=" dark" id="top">
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Uday Parmar (Alt + H)">Uday Parmar</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/projects/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/musings/" title="Essays">
+                    <span>Essays</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/search/" title="🔍 (Alt &#43; /)" accesskey=/>
+                    <span>🔍</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    
+    
+</header>
+<main class="main">
+<article class="post-single">
+    <header class="post-header">
+        
+        <h1 class="post-title entry-hint-parent">
+            Creating a Brainrot Language Server in Golang
+        </h1>
+        <div class="post-meta"><span title='2024-11-08 09:56:17 +0530 IST'>November 8, 2024</span>&nbsp;·&nbsp;7 min&nbsp;·&nbsp;map[name:Uday]
+
+</div>
+    </header> 
+<figure class="entry-cover"><a href="http://localhost:1313/images/brainrot.jpg" target="_blank"
+            rel="noopener noreferrer"><img loading="eager" src="http://localhost:1313/images/brainrot.jpg" alt=""></a>
+        
+</figure><div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#whats-an-lsp" aria-label="What&rsquo;s an LSP?">What&rsquo;s an LSP?</a></li>
+                <li>
+                    <a href="#why-did-i-use-golang" aria-label="Why did I use Golang?">Why did I use Golang?</a></li>
+                <li>
+                    <a href="#the-brainrot-language-server" aria-label="The Brainrot Language Server">The Brainrot Language Server</a><ul>
+                        
+                <li>
+                    <a href="#setting-up-the-project" aria-label="Setting up the project">Setting up the project</a></li>
+                <li>
+                    <a href="#project-structure" aria-label="Project Structure">Project Structure</a></li>
+                <li>
+                    <a href="#implementing-the-core" aria-label="Implementing the Core">Implementing the Core</a></li>
+                <li>
+                    <a href="#the-fun-part-autocomplete-and-snippets" aria-label="The Fun Part: Autocomplete and Snippets">The Fun Part: Autocomplete and Snippets</a></li>
+                <li>
+                    <a href="#completion-handler" aria-label="Completion Handler">Completion Handler</a></li>
+                <li>
+                    <a href="#using-the-language-server" aria-label="Using the Language Server">Using the Language Server</a></li></ul>
+                </li>
+                <li>
+                    <a href="#future-improvements" aria-label="Future Improvements">Future Improvements</a></li>
+                <li>
+                    <a href="#conclusion" aria-label="Conclusion">Conclusion</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+    <div class="post-content"><p>I was reading the language server protocol docs and about json-rpc for collaborating on a new project which will need an LSP server. Since it was getting a little boring to just read so much of documentations and RFCs, I thought of making a small and fun project around LSPs.</p>
+      
+<div class="callout callout-default">
+    <div class="callout-emoji"><div class="emoji">🌐</div></div>
+    <div class="callout-content">
+        <div class="callout-text">You can find the source code of this project in this <a href="https://github.com/Jitesh117/brainrot-lsp"><strong>github repository</strong></a></div>
+    </div>
+</div>
+<style>
+   
+  .callout {
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    display: flex;
+    border-left: 4px solid;
+    border-radius: 0.75rem;
+    background-color: #f9fafb;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+    align-items: flex-start;
+  }
+
+  [dir="rtl"] .callout {
+    padding: 0.5rem 0 0.5rem 1rem;
+  }
+
+   
+  .callout-emoji {
+    padding-left: 0.75rem;
+    padding-right: 0.5rem;
+  }
+
+  [dir="rtl"] .callout-emoji {
+    padding-right: 0.75rem;
+    padding-left: 0.5rem;
+  }
+
+   
+  .emoji {
+    user-select: none;
+    font-size: 1.25rem;
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  }
+
+   
+  .icon-inline {
+    display: inline-block;
+    vertical-align: middle;
+    height: 1.2em;
+  }
+
+   
+  .callout-content {
+    width: 100%;
+    min-width: 0;
+    line-height: 1.75;
+  }
+
+   
+  .callout-text {
+    margin-top: 1.5rem;
+    line-height: 1.75;
+  }
+
+  .callout-text:first-child {
+    margin-top: 0;
+  }
+
+  .callout-default {
+    border-color: rgba(251, 146, 60, 0.3);
+    background-color: rgba(251, 146, 60, 0.2);
+    color: rgb(253, 186, 116);
+  }
+
+  .callout-info {
+    border-color: #6b4c3b;
+    background-color: rgba(251, 146, 60, 0.2);
+    color: rgb(191, 219, 254);
+  }
+
+  .callout-warning {
+    border-color: rgba(253, 224, 71, 0.3);
+    background-color: rgba(161, 98, 7, 0.3);
+    color: rgb(253, 224, 71);
+  }
+
+  .callout-error {
+    border-color: rgba(254, 202, 202, 0.3);
+    background-color: rgba(153, 27, 27, 0.3);
+    color: rgb(254, 202, 202);
+  }
+</style>
+
+<h2 id="whats-an-lsp">What&rsquo;s an LSP?<a hidden class="anchor" aria-hidden="true" href="#whats-an-lsp">#</a></h2>
+<p>The Language Server Protocol (LSP) is a game-changer in how we build development tools. Before Microsoft created LSP for VS Code, each editor (like Vim, Emacs, Sublime) needed to implement language support separately for each programming language. Microsoft&rsquo;s decision to make LSP open source and editor-agnostic meant that one language server could now work with any LSP-compatible editor, making it more efficient for the community and providing consistent experiences across different editors.</p>
+<p>LSP defines a protocol for common features like:</p>
+<ul>
+<li>Code completion</li>
+<li>Hover information</li>
+<li>Go to definition</li>
+<li>Find all references</li>
+<li>Symbol search</li>
+<li>Formatting</li>
+<li>Refactoring</li>
+</ul>
+<p>On a high level this is how an LSP works:</p>
+<div style="display: flex; justify-content: center">
+  <pre class="mermaid">
+
+sequenceDiagram
+participant User
+participant Editor
+participant LSP
+User ->> Editor: Open file / Type code
+Editor ->> LSP: Send request (e.g., syntax check, completion)
+LSP -->> Editor: Respond with diagnostics or completions
+User ->> Editor: Hover over code
+Editor ->> LSP: Request symbol info
+LSP -->> Editor: Respond with symbol information (tooltip)
+User ->> Editor: Request go to definition
+Editor ->> LSP: Request definition location
+LSP -->> Editor: Respond with definition location
+Editor ->> User: Navigate to definition
+User ->> Editor: Format code
+Editor ->> LSP: Request code formatting
+LSP -->> Editor: Return formatted code
+Editor ->> User: Display formatted code
+
+</pre>
+</div>
+
+
+
+<style>
+  .mermaid {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    margin: 1em 0;
+  }
+</style>
+
+<p>Now, you can write one language server that works with any LSP-compatible editor. The language server runs as a separate process and communicates with the editor through JSON-RPC messages.</p>
+<h2 id="why-did-i-use-golang">Why did I use Golang?<a hidden class="anchor" aria-hidden="true" href="#why-did-i-use-golang">#</a></h2>
+<p>I&rsquo;m going to be honest here – I didn&rsquo;t choose Go because of some grand technical reasons about performance or concurrency. The truth is much simpler: Go just clicked with me.</p>
+<p>When I started learning Go in August this year, I wasn&rsquo;t expecting much. Microsoft created LSP, so JavaScript would have been the obvious choice, especially with the extensive TypeScript LSP examples out there. But Go has this way of growing on you.</p>
+<p>What made me stick with Go for this project?</p>
+<ol>
+<li>
+<p><strong>It&rsquo;s Refreshingly Simple</strong>: No class inheritance hierarchies to wrestle with, no complex type systems to navigate. Just structs, interfaces, and straightforward functions. When you&rsquo;re trying to understand something as complex as LSP, this simplicity is a blessing.</p>
+</li>
+<li>
+<p><strong>The Standard Library is Your Friend</strong>: Need to handle JSON? <code>encoding/json</code> is right there. Want to work with streams? <code>io</code> has your back. No need to dive into npm looking for the right package.</p>
+</li>
+<li>
+<p><strong>Clear Error Handling</strong>: Yes, some people hate the <code>if err != nil</code> pattern, but when you&rsquo;re debugging why your language server isn&rsquo;t responding, explicit error handling is actually pretty nice.</p>
+</li>
+<li>
+<p><strong>Fast Iteration</strong>: Write code, run <code>go build</code>, test. No build configs, no transpilation, no bundling. For a project where you&rsquo;re constantly testing with different editors, this quick feedback loop is invaluable.</p>
+</li>
+</ol>
+<p>Could I have built this in JavaScript/TypeScript? Absolutely. Would it have worked just as well? Probably. But sometimes you pick a tool not because it&rsquo;s the &ldquo;best&rdquo; choice, but because it makes the development process enjoyable. For me, that tool happened to be Go.</p>
+<h2 id="the-brainrot-language-server">The Brainrot Language Server<a hidden class="anchor" aria-hidden="true" href="#the-brainrot-language-server">#</a></h2>
+<p>For this project, I decided to create something fun: a language server that helps you write in peak internet slang. It provides snippets and completions for creating social media style posts, rants, and reactions.</p>
+<p>This is how it looks like:
+<img loading="lazy" src="/images/demo.gif" alt="demo"  />
+</p>
+<h3 id="setting-up-the-project">Setting up the project<a hidden class="anchor" aria-hidden="true" href="#setting-up-the-project">#</a></h3>
+<p>First, let&rsquo;s create our project structure:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir brainrot-lsp
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> brainrot-lsp
+</span></span><span class="line"><span class="cl">go mod init github.com/yourusername/brainrot-lsp
+</span></span></code></pre></div><p>We&rsquo;ll use the <a href="https://github.com/tliron/glsp"><code>glsp</code></a> library for LSP implementation:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">go get github.com/tliron/glsp
+</span></span></code></pre></div><h3 id="project-structure">Project Structure<a hidden class="anchor" aria-hidden="true" href="#project-structure">#</a></h3>
+<p>Our project follows this structure:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">brainrot-lsp
+</span></span><span class="line"><span class="cl">├── go.mod
+</span></span><span class="line"><span class="cl">├── go.sum
+</span></span><span class="line"><span class="cl">├── handlers
+</span></span><span class="line"><span class="cl">│   └── completionHandler.go
+</span></span><span class="line"><span class="cl">├── main.go
+</span></span><span class="line"><span class="cl">└── mappers/
+</span></span><span class="line"><span class="cl">    ├── brainrotMapper.go
+</span></span><span class="line"><span class="cl">    └── snippets.go
+</span></span></code></pre></div><h3 id="implementing-the-core">Implementing the Core<a hidden class="anchor" aria-hidden="true" href="#implementing-the-core">#</a></h3>
+<p>Let&rsquo;s look at the main server implementation:
+Intialize and shutdown are two of the mandatory LSP lifecycle methods. Fortunately, <a href="https://github.com/tliron/glsp">glsp</a> has took care of the heavy lifting for us by providing an elegant <code>protocol.Handler</code> struct.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nx">main</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;github.com/Jitesh117/brainrot-lsp/handlers&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;github.com/tliron/commonlog&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;github.com/tliron/glsp&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">protocol</span><span class="w"> </span><span class="s">&#34;github.com/tliron/glsp/protocol_3_16&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;github.com/tliron/glsp/server&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">_</span><span class="w"> </span><span class="s">&#34;github.com/tliron/commonlog/simple&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">const</span><span class="w"> </span><span class="nx">lsName</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#34;Brainrot Autocomplete Language Server&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">var</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">version</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#34;0.0.1&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">handler</span><span class="w"> </span><span class="nx">protocol</span><span class="p">.</span><span class="nx">Handler</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">commonlog</span><span class="p">.</span><span class="nf">Configure</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">handler</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">protocol</span><span class="p">.</span><span class="nx">Handler</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">Initialize</span><span class="p">:</span><span class="w">             </span><span class="nx">initialize</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">Shutdown</span><span class="p">:</span><span class="w">               </span><span class="nx">shutdown</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">TextDocumentCompletion</span><span class="p">:</span><span class="w"> </span><span class="nx">handlers</span><span class="p">.</span><span class="nx">TextDocumentCompletion</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">server</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">server</span><span class="p">.</span><span class="nf">NewServer</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">handler</span><span class="p">,</span><span class="w"> </span><span class="nx">lsName</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">server</span><span class="p">.</span><span class="nf">RunStdio</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">initialize</span><span class="p">(</span><span class="nx">context</span><span class="w"> </span><span class="o">*</span><span class="nx">glsp</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span><span class="w"> </span><span class="nx">params</span><span class="w"> </span><span class="o">*</span><span class="nx">protocol</span><span class="p">.</span><span class="nx">InitializeParams</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">any</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">commonlog</span><span class="p">.</span><span class="nf">NewInfoMessage</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Initializing Brainrot server...&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">capabilities</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">handler</span><span class="p">.</span><span class="nf">CreateServerCapabilities</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">trueVar</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">capabilities</span><span class="p">.</span><span class="nx">CompletionProvider</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">protocol</span><span class="p">.</span><span class="nx">CompletionOptions</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">ResolveProvider</span><span class="p">:</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">trueVar</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">protocol</span><span class="p">.</span><span class="nx">InitializeResult</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">Capabilities</span><span class="p">:</span><span class="w"> </span><span class="nx">capabilities</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">ServerInfo</span><span class="p">:</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">protocol</span><span class="p">.</span><span class="nx">InitializeResultServerInfo</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">			</span><span class="nx">Name</span><span class="p">:</span><span class="w">    </span><span class="nx">lsName</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">			</span><span class="nx">Version</span><span class="p">:</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">version</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="p">},</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">},</span><span class="w"> </span><span class="kc">nil</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">shutdown</span><span class="p">(</span><span class="nx">context</span><span class="w"> </span><span class="o">*</span><span class="nx">glsp</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="the-fun-part-autocomplete-and-snippets">The Fun Part: Autocomplete and Snippets<a hidden class="anchor" aria-hidden="true" href="#the-fun-part-autocomplete-and-snippets">#</a></h3>
+<p>The heart of our LSP is the snippet system. We define templates for various social media scenarios:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nx">mappers</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">BrainrotEntry</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">Term</span><span class="w">        </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">Description</span><span class="w"> </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">var</span><span class="w"> </span><span class="nx">BrainrotMapper</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">BrainrotEntry</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;yes&#34;</span><span class="p">:</span><span class="w">           </span><span class="p">{</span><span class="s">&#34;ongod frfr 💯🔥&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;An enthusiastic affirmation, absolutely true.&#34;</span><span class="p">},</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;no&#34;</span><span class="p">:</span><span class="w">            </span><span class="p">{</span><span class="s">&#34;nah fam 🚫🙅&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Casual denial or rejection.&#34;</span><span class="p">},</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// SIMILAR BRAINROT SLANGS</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">var</span><span class="w"> </span><span class="nx">CodeSnippets</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">CodeSnippet</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="s">&#34;#story&#34;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nx">Body</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;no cap frfr ${1:name} was ${2:activity} and suddenly 💀 ${3:unexpected_event} happened ong\neveryone was like sheeeesh 😱&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nx">Description</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;Generate a dramatic story template&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">},</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="s">&#34;#rant&#34;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nx">Body</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;NAH FR THO 😤 ${1:topic} is actually WILD 💯 like how are people even ${2:action} fr⁉️&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nx">Description</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;Create a passionate rant template&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">},</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// ... MORE SNIPPETS</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="completion-handler">Completion Handler<a hidden class="anchor" aria-hidden="true" href="#completion-handler">#</a></h3>
+<p>The completion handler brings our snippets to life:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nx">handlers</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;fmt&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;github.com/Jitesh117/brainrot-lsp/mappers&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">_</span><span class="w"> </span><span class="s">&#34;github.com/tliron/commonlog/simple&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;github.com/tliron/glsp&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">protocol</span><span class="w"> </span><span class="s">&#34;github.com/tliron/glsp/protocol_3_16&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">TextDocumentCompletion</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">context</span><span class="w"> </span><span class="o">*</span><span class="nx">glsp</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">params</span><span class="w"> </span><span class="o">*</span><span class="nx">protocol</span><span class="p">.</span><span class="nx">CompletionParams</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kd">interface</span><span class="p">{},</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="kd">var</span><span class="w"> </span><span class="nx">completionItems</span><span class="w"> </span><span class="p">[]</span><span class="nx">protocol</span><span class="p">.</span><span class="nx">CompletionItem</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="c1">// FOR AUTOCOMPLETE BRAINROT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">for</span><span class="w"> </span><span class="nx">word</span><span class="p">,</span><span class="w"> </span><span class="nx">entry</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">mappers</span><span class="p">.</span><span class="nx">BrainrotMapper</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">term</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">Term</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">description</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">Description</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">detail</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s\n%s&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">term</span><span class="p">,</span><span class="w"> </span><span class="nx">description</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">completionItems</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="nx">completionItems</span><span class="p">,</span><span class="w"> </span><span class="nx">protocol</span><span class="p">.</span><span class="nx">CompletionItem</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">			</span><span class="nx">Label</span><span class="p">:</span><span class="w">      </span><span class="nx">word</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">			</span><span class="nx">Detail</span><span class="p">:</span><span class="w">     </span><span class="o">&amp;</span><span class="nx">detail</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">			</span><span class="nx">InsertText</span><span class="p">:</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">term</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="c1">// FOR SNIPPETS</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">for</span><span class="w"> </span><span class="nx">label</span><span class="p">,</span><span class="w"> </span><span class="nx">snippet</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">mappers</span><span class="p">.</span><span class="nx">CodeSnippets</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">insertText</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">snippet</span><span class="p">.</span><span class="nx">Body</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">detail</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">snippet</span><span class="p">.</span><span class="nx">Description</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">kind</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">protocol</span><span class="p">.</span><span class="nx">CompletionItemKindSnippet</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">textFormat</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">protocol</span><span class="p">.</span><span class="nx">InsertTextFormatSnippet</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">completionItems</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="nx">completionItems</span><span class="p">,</span><span class="w"> </span><span class="nx">protocol</span><span class="p">.</span><span class="nx">CompletionItem</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">			</span><span class="nx">Label</span><span class="p">:</span><span class="w">            </span><span class="nx">label</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">			</span><span class="nx">Detail</span><span class="p">:</span><span class="w">           </span><span class="o">&amp;</span><span class="nx">detail</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">			</span><span class="nx">InsertText</span><span class="p">:</span><span class="w">       </span><span class="o">&amp;</span><span class="nx">insertText</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">			</span><span class="nx">Kind</span><span class="p">:</span><span class="w">             </span><span class="o">&amp;</span><span class="nx">kind</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">			</span><span class="nx">InsertTextFormat</span><span class="p">:</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">textFormat</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">completionItems</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>Now run <code>go mod tidy</code> to install any missing packages used.</p>
+<h3 id="using-the-language-server">Using the Language Server<a hidden class="anchor" aria-hidden="true" href="#using-the-language-server">#</a></h3>
+<p>To use the server in VSCode, create a client extension or use an existing LSP client. But if you use neovim(btw), you can just add this to your current neovim session:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="n">vim.lsp</span><span class="p">.</span><span class="n">start</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">	<span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;brainrot-lsp&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">cmd</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;./bin/brainrot-lsp&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="n">root_dir</span> <span class="o">=</span> <span class="n">vim.fn</span><span class="p">.</span><span class="n">getcwd</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span></code></pre></div><p>Then run the command <code>:source &lt;filename&gt;.lua</code>. After this the language server should be working now.</p>
+<p>And if you want to add it to your neovim config for global usage. You can add this to your config&rsquo;s <code>init.lua</code> file:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-lua" data-lang="lua"><span class="line"><span class="cl"><span class="kd">local</span> <span class="kr">function</span> <span class="nf">start_brainrot_lsp</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">local</span> <span class="n">filetype</span> <span class="o">=</span> <span class="n">vim.bo</span><span class="p">.</span><span class="n">filetype</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">if</span> <span class="n">filetype</span> <span class="o">==</span> <span class="s2">&#34;text&#34;</span> <span class="ow">or</span> <span class="n">filetype</span> <span class="o">==</span> <span class="s2">&#34;markdown&#34;</span> <span class="kr">then</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vim.lsp</span><span class="p">.</span><span class="n">start</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;brainrot-lsp&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="n">cmd</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&#34;path-to/brainrot-lsp&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">      <span class="n">root_dir</span> <span class="o">=</span> <span class="n">vim.fn</span><span class="p">.</span><span class="n">getcwd</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">end</span>
+</span></span><span class="line"><span class="cl"><span class="kr">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">vim.api</span><span class="p">.</span><span class="n">nvim_create_autocmd</span><span class="p">(</span><span class="s2">&#34;BufEnter&#34;</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">pattern</span> <span class="o">=</span> <span class="s2">&#34;*&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">callback</span> <span class="o">=</span> <span class="n">start_brainrot_lsp</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span></code></pre></div><p>Now you can type <code>story</code> and get a template like:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">no cap frfr John was studying and suddenly 💀 a ghost appeared happened ong
+</span></span><span class="line"><span class="cl">everyone was like sheeeesh 😱
+</span></span></code></pre></div><h2 id="future-improvements">Future Improvements<a hidden class="anchor" aria-hidden="true" href="#future-improvements">#</a></h2>
+<p>This is only a basic language server. We&rsquo;d need to add more stuff to it to make it &ldquo;production grade&rdquo;. Some features we could add:</p>
+<ol>
+<li>Emoji suggestions based on context</li>
+<li>Auto-capitalization for emphasis</li>
+<li>Code actions</li>
+</ol>
+<h2 id="conclusion">Conclusion<a hidden class="anchor" aria-hidden="true" href="#conclusion">#</a></h2>
+<p>Building an LSP might seem daunting, but Go and modern libraries make it approachable. This fun project shows how LSP can enhance any text editing experience, even if it&rsquo;s just helping you write more brainrot slangs lol.</p>
+<p>The full code is available on <a href="https://github.com/Jitesh117/brainrot-lsp">GitHub</a>. Feel free to contribute and make it even more 🔥!</p>
+
+
+    </div>
+    <footer class="post-footer">
+        <ul class="post-tags">
+            <li>
+                <a href="http://localhost:1313/tags/golang/">Golang</a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/tech/">Tech</a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/brainrot/">Brainrot</a>
+            </li>
+        </ul>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share Creating a Brainrot Language Server in Golang on x"
+           href="https://x.com/intent/tweet/?text=Creating%20a%20Brainrot%20Language%20Server%20in%20Golang&amp;url=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fcreating-a-brainrot-language-server-in-golang%2f&amp;hashtags=golang%2ctech%2cbrainrot">
+            <svg version="1.1"
+                 viewBox="0 0 512 512"
+                 xml:space="preserve"
+                 height="30px"
+                 width="30px"
+                 fill="currentColor">
+                <path d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share Creating a Brainrot Language Server in Golang on linkedin"
+           href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fcreating-a-brainrot-language-server-in-golang%2f&amp;title=Creating%20a%20Brainrot%20Language%20Server%20in%20Golang&amp;summary=Creating%20a%20Brainrot%20Language%20Server%20in%20Golang&amp;source=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fcreating-a-brainrot-language-server-in-golang%2f">
+            <svg version="1.1"
+                 viewBox="0 0 512 512"
+                 xml:space="preserve"
+                 height="30px"
+                 width="30px"
+                 fill="currentColor">
+                <path d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share Creating a Brainrot Language Server in Golang on reddit"
+           href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fcreating-a-brainrot-language-server-in-golang%2f&title=Creating%20a%20Brainrot%20Language%20Server%20in%20Golang">
+            <svg version="1.1"
+                 viewBox="0 0 512 512"
+                 xml:space="preserve"
+                 height="30px"
+                 width="30px"
+                 fill="currentColor">
+                <path d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share Creating a Brainrot Language Server in Golang on facebook"
+           href="https://facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fcreating-a-brainrot-language-server-in-golang%2f">
+            <svg version="1.1"
+                 viewBox="0 0 512 512"
+                 xml:space="preserve"
+                 height="30px"
+                 width="30px"
+                 fill="currentColor">
+                <path d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share Creating a Brainrot Language Server in Golang on whatsapp"
+           href="https://api.whatsapp.com/send?text=Creating%20a%20Brainrot%20Language%20Server%20in%20Golang%20-%20http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fcreating-a-brainrot-language-server-in-golang%2f">
+            <svg version="1.1"
+                 viewBox="0 0 512 512"
+                 xml:space="preserve"
+                 height="30px"
+                 width="30px"
+                 fill="currentColor">
+                <path d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share Creating a Brainrot Language Server in Golang on telegram"
+           href="https://telegram.me/share/url?text=Creating%20a%20Brainrot%20Language%20Server%20in%20Golang&amp;url=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fcreating-a-brainrot-language-server-in-golang%2f">
+            <svg version="1.1"
+                 xml:space="preserve"
+                 viewBox="2 2 28 28"
+                 height="30px"
+                 width="30px"
+                 fill="currentColor">
+                <path d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share Creating a Brainrot Language Server in Golang on ycombinator"
+           href="https://news.ycombinator.com/submitlink?t=Creating%20a%20Brainrot%20Language%20Server%20in%20Golang&u=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fcreating-a-brainrot-language-server-in-golang%2f">
+            <svg version="1.1"
+                 xml:space="preserve"
+                 width="30px"
+                 height="30px"
+                 viewBox="0 0 512 512"
+                 fill="currentColor"
+                 xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+    </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    
+    <a href="http://localhost:1313/donate" class="donate-big">Liked my blog and want to support? Click this button to donate!</a>
+    <style>
+    .donate-big {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 1rem 1.25rem;
+      background: var(--primary);
+      color: var(--theme) !important;
+      border-radius: 0.75rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+
+      transition: background 0.2s ease;
+    }
+    </style>
+    
+    
+<style>
+   
+  input.autofill-fix:-webkit-autofill,
+  input.autofill-fix:-webkit-autofill:hover,
+  input.autofill-fix:-webkit-autofill:focus,
+  input.autofill-fix:-webkit-autofill:active {
+    -webkit-text-fill-color: var(--primary2) !important;
+    caret-color: var(--primary2) !important;
+    -webkit-box-shadow: 0 0 0px 1000px var(--entry) inset !important;
+    box-shadow: 0 0 0px 1000px var(--entry) inset !important;
+    background-color: var(--entry) !important;
+    transition: background-color 9999s ease-in-out 0s;
+  }
+</style>
+<div style="max-width: 100%;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            border: 0.5px solid var(--border);
+            border-radius: 12px;
+            background: var(--entry)">
+    <form action="https://buttondown.com/api/emails/embed-subscribe/jitesh117"
+          target="_blank"
+          method="post"
+          class="embeddable-buttondown-form"
+          style="text-align: left">
+        <label for="bd-email"
+               style="display: block;
+                      margin-bottom: 0.5rem;
+                      font-weight: 600;
+                      font-size: 1rem;
+                      color: var(--primary2)">Join the newsletter!</label>
+        <input type="email"
+               name="email"
+               id="bd-email"
+               class="autofill-fix"
+               placeholder="you@example.com"
+               required
+               style="width: 100%;
+                      padding: 0.65rem;
+                      border: 1px solid #ccc;
+                      border-radius: 8px;
+                      margin-bottom: 1rem;
+                      color: var(--primary2)" />
+        <input type="submit"
+               value="Subscribe"
+               style="width: 100%;
+                      padding: 0.75rem;
+                      background: var(--primary);
+                      color: var(--theme);
+                      border: none;
+                      border-radius: 8px;
+                      font-weight: 600;
+                      font-size: 1rem;
+                      cursor: pointer" />
+        <p style="font-size: 0.85rem; margin-top: 1rem; text-align: center"></p>
+    </form>
+</div>
+
+
+    <span>&copy; 2026 <a href="http://localhost:1313/">Uday Parmar</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/"
+           rel="noopener"
+           target="_blank">PaperMod</a>
+    </span>
+    <span>·</span>
+    <span>
+        <a target="_blank" href="https://jitesh117.github.io/index.xml">RSS Feed</a>
+    </span>
+    <span>·</span>
+    <span>
+        <a target="_blank" href="https://buymeacoffee.com/jitesh117">Support my writing!</a>
+    </span>
+</footer><style>
+  @media (max-width: 768px) {
+    #bmc-iframe {
+      border-radius: 0 !important;
+    }
+  }
+</style>
+<script
+  data-name="BMC-Widget"
+  data-cfasync="false"
+  src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+  data-id="jitesh117"
+  data-description="Support me on Buy me a coffee!"
+  data-message="Like what you're reading? You can donate to support my writing!"
+  data-color="#FFDD00"
+  data-position="Right"
+  data-x_margin="18"
+  data-y_margin="18"
+></script>
+<style>
+   
+  @media (max-width: 1500px) {
+    #bmc-iframe {
+      border-radius: 0 !important;
+    }
+
+     
+    .graph-fab {
+      position: fixed;
+      bottom: 18px;
+      left: 18px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+      transition: all 0.3s;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(2px);
+    }
+
+    .graph-fab:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    }
+
+    .graph-fab img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      filter: brightness(1.1);
+    }
+
+    .graph-container {
+      position: fixed;
+      bottom: 85px;
+      left: 18px;
+      width: 350px;
+      height: 350px;
+      background-color: var(--code-bg);
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+      padding: 15px;
+      z-index: 99;
+      display: none;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .graph-container.active {
+      display: block;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+  }
+
+   
+  @media (min-width: 1501px) {
+    .graph-fab {
+      display: none;  
+    }
+
+    .graph-container {
+      position: fixed;
+      top: 50%;
+      left: calc(((100% - 700px) / 2) / 2);  
+      transform: translateY(-50%) translateX(-50%);  
+      width: 350px;  
+      height: 350px;
+      background-color: var(--code-bg);
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+      padding: 15px;
+      z-index: 99;
+      display: block;  
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  }
+
+   
+  .graph-container svg {
+    display: block;
+    margin: 0 auto;
+    width: 100% !important;
+    height: calc(100% - 40px) !important;
+  }
+
+  .graph-container svg g {
+     
+     
+  }
+
+  .graph-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 0;
+    margin-bottom: 5px;
+    border-bottom: 1px solid rgba(125, 125, 125, 0.2);
+  }
+
+  .graph-title {
+    font-size: 14px;
+    color: var(--primary);
+    padding: 0 10px;
+    font-weight: 500;
+  }
+
+   
+  .zoom-instructions {
+    font-size: 12px;
+    font-style: italic;
+    opacity: 0.8;
+    font-weight: normal;
+    margin-left: 5px;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 400px) {
+    .graph-container {
+      width: calc(100% - 36px);
+    }
+  }
+</style>
+
+
+<div id="graph-container" class="graph-container">
+  <div class="graph-controls">
+    <div class="graph-title">
+      Topic Graph
+      <span class="zoom-instructions">(Use scroll wheel to zoom)</span>
+    </div>
+  </div>
+  <div class="component-graph-container" id="container-floating-graph">
+  <div class="component-graph" id="floating-graph"></div>
+</div>
+<style>
+  .component-graph-container {
+      position: relative;
+      width: 100%;
+      margin: 20px 0;
+      border-radius: 8px;
+  }
+
+  .component-graph {
+      width: 100%;
+        
+      aspect-ratio: 1;
+      border-radius: 16px;
+      background-color: var(--code-bg, #f5f5f5);
+      overflow: hidden;
+  }
+
+  .node-label {
+      font-size: 10px;
+      text-anchor: middle;
+      pointer-events: none;
+      font-family: sans-serif;
+      fill: #333;
+      user-select: none;
+      opacity: 0;  
+      transition: opacity 0.3s;
+  }
+
+  .node-label-background {
+      fill: rgba(255, 255, 255, 0.8);
+      rx: 3;
+      ry: 3;
+      pointer-events: none;
+      opacity: 0;  
+      transition: opacity 0.3s;
+  }
+
+  .tag-label {
+      font-size: 12px;
+      font-weight: bold;
+      text-anchor: middle;
+      pointer-events: none;
+      font-family: sans-serif;
+      fill: var(--primary);
+      user-select: none;
+  }
+
+  .node-tooltip {
+      position: absolute;
+      padding: 8px 12px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      border-radius: 4px;
+      font-size: 12px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 100;
+      max-width: 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+  }
+</style>
+<script>
+    (function () {
+      
+      let graphData = { nodes: [], links: [] };
+      let simulation;
+      let svg;
+      let g; 
+      let currentZoomScale = 1; 
+      const zoomThreshold = 1.5; 
+      const graphId = "floating-graph";
+      const jsonPath = "\/index.json";
+      const graphElement = document.getElementById(graphId);
+
+      
+      const colorPalette = [
+        "#f28e2c",
+        "#04ff00",
+        "#b342f5",
+        "#e6327a",
+        "#edc949",
+        "#76b7b2",
+        "#af7aa1",
+        "#9c755f",
+        "#bab0ab",
+        "#6b9ac4",
+        "#d7a763",
+        "#d37372",
+        "#a4ccc9",
+        "#8bb174",
+        "#f1d78c",
+      ];
+
+      
+      const tooltip = document.createElement("div");
+      tooltip.className = "node-tooltip";
+      document.getElementById(`container-${graphId}`).appendChild(tooltip);
+
+      
+      function initGraph() {
+        
+        const width = graphElement.clientWidth;
+        const height = graphElement.clientHeight;
+
+        
+        if (graphElement.querySelector("svg")) {
+          graphElement.querySelector("svg").remove();
+        }
+
+        
+        svg = d3
+          .select("#" + graphId)
+          .append("svg")
+          .attr("width", width)
+          .attr("height", height)
+          .attr("viewBox", `0 0 ${width} ${height}`);
+
+        
+        const zoom = d3
+          .zoom()
+          .scaleExtent([0.1, 10])
+          .on("zoom", (event) => {
+            g.attr("transform", event.transform);
+            currentZoomScale = event.transform.k;
+
+            
+            updateLabelsVisibility(currentZoomScale);
+
+            
+            if (simulation) {
+              adjustNodeSpacing(currentZoomScale);
+            }
+          });
+
+        svg.call(zoom);
+
+        
+        g = svg.append("g");
+
+        
+        const tagConnections = {};
+        graphData.nodes.forEach((node) => {
+          if (node.isTag) {
+            tagConnections[node.id] = 0;
+          }
+        });
+
+        graphData.links.forEach((link) => {
+          if (link.source.id) {
+            if (tagConnections[link.source.id] !== undefined) {
+              tagConnections[link.source.id]++;
+            }
+          } else if (tagConnections[link.source] !== undefined) {
+            tagConnections[link.source]++;
+          }
+        });
+
+        
+        graphData.nodes.forEach((node) => {
+          if (node.isTag) {
+            const connectionCount = tagConnections[node.id] || 1;
+            node.radius = Math.max(8, Math.min(14, 5 + connectionCount * 0.8));
+            node.connections = connectionCount;
+          } else {
+            node.radius = 5;
+          }
+        });
+
+        
+        simulation = d3
+          .forceSimulation(graphData.nodes)
+          .force(
+            "link",
+            d3
+              .forceLink(graphData.links)
+              .id((d) => d.id)
+              .distance((d) => {
+                
+                if (d.source.isTag) {
+                  return 80 + d.source.connections * 2;
+                }
+                return 50;
+              }),
+          )
+          .force(
+            "charge",
+            d3.forceManyBody().strength((d) => (d.isTag ? -300 : -50)),
+          )
+          .force("center", d3.forceCenter(width / 2, height / 2))
+          .force(
+            "collision",
+            d3.forceCollide().radius((d) => d.radius * 1.5),
+          )
+          .force("x", d3.forceX(width / 2).strength(0.1))
+          .force("y", d3.forceY(height / 2).strength(0.1));
+
+        
+        const link = g
+          .append("g")
+          .attr("class", "links")
+          .selectAll("line")
+          .data(graphData.links)
+          .enter()
+          .append("line")
+          .attr("stroke", "#888888") 
+          .attr("stroke-opacity", 0.6)
+          .attr("stroke-width", 1)
+          .attr("data-source", (d) => d.source.id || d.source)
+          .attr("data-target", (d) => d.target.id || d.target)
+          .style("transition", "opacity 0.3s, stroke 0.3s, stroke-width 0.3s"); 
+
+        
+        const nodeGroup = g
+          .append("g")
+          .attr("class", "nodes")
+          .selectAll("g")
+          .data(graphData.nodes)
+          .enter()
+          .append("g")
+          .attr("data-id", (d) => d.id)
+          .style("cursor", "pointer")
+          .call(drag(simulation))
+          .on("click", (event, d) => {
+            
+            handleNodeClick(d);
+
+            
+            if (!d.isTag && (d.link || d.permalink)) {
+              window.open(d.link || d.permalink, "_blank");
+            } else if (d.isTag) {
+                  
+                  const tagName = d.title.replace(/\s+/g, "-");
+                  const tagPermalink = 
+                    "http://localhost:1313/tags/" + tagName.toLowerCase()
+                  ;
+                  window.open(tagPermalink, "_blank");
+                }
+          })
+          .on("mouseover", (event, d) => {
+            
+            const tooltipText = d.isTag
+              ? `Tag: ${d.title} (${d.connections} posts)`
+              : d.title;
+            showTooltip(tooltipText, event.pageX, event.pageY);
+            highlightConnections(d);
+          })
+          .on("mousemove", (event) => {
+            
+            updateTooltipPosition(event.pageX, event.pageY);
+          })
+          .on("mouseout", () => {
+            
+            hideTooltip();
+            resetHighlighting();
+          });
+
+        
+        nodeGroup
+          .append("circle")
+          .attr("r", (d) => d.radius)
+          .attr("fill", (d) => {
+            if (d.isTag) {
+              return colorPalette[d.colorIndex];
+            }
+            return "#ffffff";
+          })
+          .attr("stroke", (d) => (d.isTag ? "#333333" : "#888888"))
+          .attr("stroke-width", (d) => (d.isTag ? 1.5 : 1))
+          .style("transition", "opacity 0.3s, fill 0.3s, stroke-width 0.3s");
+
+        
+        nodeGroup
+          .filter((d) => d.isTag)
+          .append("text")
+          .attr("class", "tag-label")
+          .attr("dy", (d) => d.radius + 12) 
+          .text((d) => d.title)
+          .style("opacity", 0.85)
+          .style("fill", (d) => {
+            
+            const color = d3.color(colorPalette[d.colorIndex]);
+          })
+          .each(function (d) {
+            d.hasTagLabel = true; 
+          });
+
+        
+        const labelGroups = nodeGroup
+          .filter((d) => !d.hasTagLabel) 
+          .append("g")
+          .attr("class", "label-group");
+
+        
+        labelGroups
+          .append("rect")
+          .attr("class", "node-label-background")
+          .attr("x", -40)
+          .attr("y", (d) => d.radius + 2)
+          .attr("width", 80) 
+          .attr("height", 16)
+          .style("opacity", 0);
+
+        
+        const labels = labelGroups
+          .append("text")
+          .attr("class", "node-label")
+          .attr("dy", (d) => d.radius + 14) 
+          .text((d) => d.title)
+          .style("opacity", 0); 
+
+        
+        labels.each(function () {
+          const bbox = this.getBBox();
+          const parent = d3.select(this.parentNode);
+          parent
+            .select("rect")
+            .attr("x", bbox.x - 2)
+            .attr("width", bbox.width + 4);
+        });
+
+        
+        function updateLabelsVisibility(scale) {
+          
+          nodeGroup
+            .selectAll(".node-label")
+            .style("opacity", scale >= zoomThreshold ? 1 : 0);
+          nodeGroup
+            .selectAll(".node-label-background")
+            .style("opacity", scale >= zoomThreshold ? 0.8 : 0);
+
+          
+          nodeGroup
+            .filter((d) => d.isTag)
+            .selectAll(".tag-label")
+            .style("opacity", 0.85);
+        }
+
+        
+        function adjustNodeSpacing(scale) {
+          
+          const zoomFactor = Math.max(0, (scale - 1) * 1.2);
+
+          
+          const collisionRadius = (d) => {
+            const baseRadius = d.radius * 1.5;
+            return baseRadius * (1 + zoomFactor);
+          };
+
+          
+          const linkDistance = (d) => {
+            const baseDistance = d.source.isTag
+              ? 80 + d.source.connections * 3
+              : 60;
+            return baseDistance * (1 + zoomFactor * 1.5);
+          };
+
+          
+          const chargeStrength = (d) => {
+            const baseCharge = d.isTag ? -300 : -50;
+            return baseCharge * (1 + zoomFactor);
+          };
+
+          
+          simulation
+            .force("collision", d3.forceCollide().radius(collisionRadius))
+            .force(
+              "link",
+              d3
+                .forceLink(graphData.links)
+                .id((d) => d.id)
+                .distance(linkDistance),
+            )
+            .force("charge", d3.forceManyBody().strength(chargeStrength))
+            .alpha(0.3) 
+            .restart();
+        }
+
+        
+        let isDragging = false;
+
+        
+        function handleNodeClick(d) {
+          
+          nodeGroup
+            .selectAll("circle")
+            .attr("fill", (n) => {
+              if (n.isTag) {
+                return colorPalette[n.colorIndex];
+              }
+              return "#ffffff";
+            })
+            .attr("stroke-width", (n) => (n.isTag ? 1.5 : 1));
+
+          link
+            .attr("stroke", "#888888")
+            .attr("stroke-width", 1)
+            .attr("stroke-opacity", 0.6);
+
+          
+          nodeGroup
+            .filter((n) => n.id === d.id)
+            .select("circle")
+            .attr("stroke-width", 2.5)
+            .attr("stroke", "#000000");
+
+          const connectedNodes = [];
+
+          if (d.isTag) {
+            
+            link.each(function (l) {
+              if (l.source.id === d.id || l.source === d.id) {
+                
+                d3.select(this)
+                  .attr("stroke", colorPalette[d.colorIndex])
+                  .attr("stroke-width", 2)
+                  .attr("stroke-opacity", 1);
+                connectedNodes.push(l.target.id || l.target);
+              }
+            });
+          } else {
+            
+            const connectedTagColors = {};
+
+            link.each(function (l) {
+              if (l.target.id === d.id || l.target === d.id) {
+                const sourceId = l.source.id || l.source;
+                const tagNode = graphData.nodes.find((n) => n.id === sourceId);
+                if (tagNode) {
+                  const tagColor = colorPalette[tagNode.colorIndex];
+                  connectedTagColors[sourceId] = tagColor;
+
+                  
+                  d3.select(this)
+                    .attr("stroke", tagColor)
+                    .attr("stroke-width", 2)
+                    .attr("stroke-opacity", 1);
+
+                  connectedNodes.push(sourceId);
+                }
+              }
+            });
+          }
+
+          
+          nodeGroup
+            .filter((n) => connectedNodes.includes(n.id))
+            .select("circle")
+            .attr("stroke-width", 2)
+            .attr("stroke", "#000000");
+        }
+
+        
+        function highlightConnections(d) {
+          if (isDragging) return; 
+
+          
+          nodeGroup.style("opacity", 0.4);
+          link.style("opacity", 0.1);
+
+          
+          nodeGroup.filter((n) => n.id === d.id).style("opacity", 1);
+
+          const connectedNodes = [];
+
+          if (d.isTag) {
+            
+            link.each(function (l) {
+              if (l.source.id === d.id || l.source === d.id) {
+                
+                d3.select(this)
+                  .style("opacity", 1)
+                  .attr("stroke", colorPalette[d.colorIndex])
+                  .attr("stroke-width", 1.5);
+                connectedNodes.push(l.target.id || l.target);
+              }
+            });
+          } else {
+            
+            link.each(function (l) {
+              if (l.target.id === d.id || l.target === d.id) {
+                const sourceId = l.source.id || l.source;
+                const tagNode = graphData.nodes.find((n) => n.id === sourceId);
+
+                if (tagNode) {
+                  
+                  d3.select(this)
+                    .style("opacity", 1)
+                    .attr("stroke", colorPalette[tagNode.colorIndex])
+                    .attr("stroke-width", 1.5);
+                  connectedNodes.push(sourceId);
+                }
+              }
+            });
+          }
+
+          
+          nodeGroup
+            .filter((n) => connectedNodes.includes(n.id))
+            .style("opacity", 1);
+        }
+
+        
+        function resetHighlighting() {
+          if (isDragging) return; 
+          nodeGroup.style("opacity", 1);
+          link
+            .style("opacity", 0.6)
+            .attr("stroke", "#888888")
+            .attr("stroke-width", 1);
+        }
+
+        
+        simulation.on("tick", () => {
+          link
+            .attr("x1", (d) => d.source.x)
+            .attr("y1", (d) => d.source.y)
+            .attr("x2", (d) => d.target.x)
+            .attr("y2", (d) => d.target.y);
+
+          nodeGroup.attr("transform", (d) => `translate(${d.x},${d.y})`);
+        });
+      }
+
+      
+      function showTooltip(text, x, y) {
+        tooltip.textContent = text;
+        tooltip.style.opacity = "1";
+        updateTooltipPosition(x, y);
+      }
+
+      function updateTooltipPosition(x, y) {
+        const rect = graphElement.getBoundingClientRect();
+        const offsetX = x - rect.left;
+        const offsetY = y - rect.top;
+
+        tooltip.style.left = `${offsetX + 15}px`;
+        tooltip.style.top = `${offsetY - 10}px`;
+      }
+
+      function hideTooltip() {
+        tooltip.style.opacity = "0";
+      }
+
+      
+      function drag(simulation) {
+        function dragstarted(event) {
+          if (!event.active) simulation.alphaTarget(0.3).restart();
+          event.subject.fx = event.subject.x;
+          event.subject.fy = event.subject.y;
+          isDragging = true;
+        }
+
+        function dragged(event) {
+          event.subject.fx = event.x;
+          event.subject.fy = event.y;
+        }
+
+        function dragended(event) {
+          if (!event.active) simulation.alphaTarget(0);
+          event.subject.fx = null;
+          event.subject.fy = null;
+          setTimeout(() => {
+            isDragging = false;
+          }, 100);
+        }
+
+        return d3
+          .drag()
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended);
+      }
+
+      
+      function processHugoData(data) {
+        const postNodes = data.map((post, index) => ({
+          id: "post-" + index,
+          title: post.title,
+          permalink: post.permalink,
+          link: post.link || post.permalink,
+          tags: post.tags || [],
+          isTag: false,
+        }));
+
+        
+        const allTags = new Set();
+        postNodes.forEach((post) => {
+          if (post.tags && post.tags.length > 0) {
+            post.tags.forEach((tag) => allTags.add(tag));
+          }
+        });
+
+        
+        const tagNodes = Array.from(allTags).map((tag) => ({
+          id: "tag-" + tag.replace(/\s+/g, "-").toLowerCase(),
+          title: tag,
+          isTag: true,
+          colorIndex: 0, 
+        }));
+
+        
+        const links = [];
+        postNodes.forEach((post) => {
+          if (post.tags && post.tags.length > 0) {
+            post.tags.forEach((tag) => {
+              const tagId = "tag-" + tag.replace(/\s+/g, "-").toLowerCase();
+              links.push({
+                source: tagId,
+                target: post.id,
+                value: 1,
+              });
+            });
+          }
+        });
+
+        
+        const tagAdjacencyMap = createTagAdjacencyMap(tagNodes, links);
+
+        
+        applyGraphColoring(tagNodes, tagAdjacencyMap);
+
+        
+        const nodes = [...tagNodes, ...postNodes];
+
+        return { nodes, links };
+      }
+
+      
+      function createTagAdjacencyMap(tagNodes, links) {
+        const tagIds = tagNodes.map((tag) => tag.id);
+        const adjacencyMap = {};
+
+        
+        tagIds.forEach((tagId) => {
+          adjacencyMap[tagId] = new Set();
+        });
+
+        
+        const postToTagsMap = {};
+
+        
+        links.forEach((link) => {
+          const sourceId = link.source.id || link.source;
+          const targetId = link.target.id || link.target;
+
+          
+          if (sourceId.startsWith("tag-") && !targetId.startsWith("tag-")) {
+            if (!postToTagsMap[targetId]) {
+              postToTagsMap[targetId] = [];
+            }
+            postToTagsMap[targetId].push(sourceId);
+          }
+        });
+
+        
+        Object.values(postToTagsMap).forEach((connectedTags) => {
+          if (connectedTags.length > 1) {
+            
+            for (let i = 0; i < connectedTags.length; i++) {
+              for (let j = 0; j < connectedTags.length; j++) {
+                if (i !== j) {
+                  adjacencyMap[connectedTags[i]].add(connectedTags[j]);
+                }
+              }
+            }
+          }
+        });
+
+        return adjacencyMap;
+      }
+
+      
+      function applyGraphColoring(tagNodes, adjacencyMap) {
+        
+        const sortedTags = [...tagNodes].sort((a, b) => {
+          const degreeA = adjacencyMap[a.id] ? adjacencyMap[a.id].size : 0;
+          const degreeB = adjacencyMap[b.id] ? adjacencyMap[b.id].size : 0;
+          return degreeB - degreeA; 
+        });
+
+        
+        sortedTags.forEach((tagNode) => {
+          const usedColors = new Set();
+
+          
+          if (adjacencyMap[tagNode.id]) {
+            adjacencyMap[tagNode.id].forEach((adjacentTagId) => {
+              
+              const adjacentTag = tagNodes.find((t) => t.id === adjacentTagId);
+              if (adjacentTag && adjacentTag.colorIndex !== undefined) {
+                usedColors.add(adjacentTag.colorIndex);
+              }
+            });
+          }
+
+          
+          let colorIndex = 0;
+          while (usedColors.has(colorIndex)) {
+            colorIndex++;
+          }
+          tagNode.colorIndex = colorIndex % colorPalette.length;
+        });
+      }
+
+      
+      function loadGraphData() {
+  const jsonPath = "\/index.json";
+  fetch(jsonPath)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            graphData = processHugoData(data);
+            initGraph();
+          })
+          .catch((error) => {
+            console.error("Error loading blog graph data:", error);
+            graphElement.innerHTML =
+              '<div style="padding: 20px; text-align: center;">Error loading blog graph data.</div>';
+          });
+      }
+
+      
+      window.addEventListener("resize", () => {
+        if (simulation) {
+          initGraph();
+        }
+      });
+
+      
+      function loadScript(url, callback) {
+        if (typeof d3 !== "undefined") {
+          callback();
+          return;
+        }
+
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = url;
+        script.onload = callback;
+        document.head.appendChild(script);
+      }
+
+      
+      loadScript(
+        "https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js",
+        loadGraphData,
+      );
+    })();
+</script>
+
+</div>
+
+<div id="graph-fab" class="graph-fab">
+  <img src="/images/graph_icon.png" alt="Graph" />
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const fab = document.getElementById("graph-fab");
+    const container = document.getElementById("graph-container");
+    let graphInitialized = false;
+    const isMobile = window.innerWidth <= 1500;
+
+    
+    if (!isMobile) {
+      setTimeout(function () {
+        window.dispatchEvent(new Event("resize"));
+        graphInitialized = true;
+      }, 500);
+    }
+
+    if (fab) {
+      fab.addEventListener("click", function () {
+        container.classList.toggle("active");
+
+        
+        if (!graphInitialized && container.classList.contains("active")) {
+          setTimeout(function () {
+            window.dispatchEvent(new Event("resize"));
+            graphInitialized = true;
+          }, 100);
+        }
+      });
+    }
+
+    
+    document.addEventListener("click", function (event) {
+      if (
+        isMobile &&
+        container &&
+        !container.contains(event.target) &&
+        fab &&
+        !fab.contains(event.target) &&
+        container.classList.contains("active")
+      ) {
+        container.classList.remove("active");
+      }
+    });
+  });
+</script>
+
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

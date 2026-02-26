@@ -1,0 +1,1942 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Creational Design Patterns in Golang | Uday Parmar</title>
+<meta name="keywords" content="golang, tech">
+<meta name="description" content="This is one the first blog in the design pattern series, and in this one, I&rsquo;ll be focusing on the creational design patterns. Creational Design pattern is one of the most intuitive design pattern if you ask me, dealing with the fundamental problem of how do we create objects the right way .
+But what is Creational Design Pattern and how does it help me with my work?
+Creational design pattern is basically an encapsulation hidden from the end user, hiding the implementation details, since for the user, they&rsquo;re only concerned with getting their object instance. This branch of design pattern try to give the user ready-to-user objects instead of asking for their creation, which could be complex in cases when the application gets bigger and complex.">
+<meta name="author" content="map[name:Uday]">
+<link rel="canonical" href="http://localhost:1313/archive/old_posts/creational-design-pattern-golang/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e4ab7bca89e92a434b6ee0659c4052124b24f15cc9bbfa80e5b5201587388aba.css" integrity="sha256-5Kt7yonpKkNLbuBlnEBSEksk8VzJu/qA5bUgFYc4iro=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/archive/old_posts/creational-design-pattern-golang/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript> 
+
+</head>
+
+<body class=" dark" id="top">
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Uday Parmar (Alt + H)">Uday Parmar</a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/projects/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/musings/" title="Essays">
+                    <span>Essays</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/search/" title="🔍 (Alt &#43; /)" accesskey=/>
+                    <span>🔍</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    
+    
+</header>
+<main class="main">
+<article class="post-single">
+    <header class="post-header">
+        
+        <h1 class="post-title entry-hint-parent">
+            Creational Design Patterns in Golang
+        </h1>
+        <div class="post-meta"><span title='2025-10-26 08:00:19 +0530 IST'>October 26, 2025</span>&nbsp;·&nbsp;13 min&nbsp;·&nbsp;map[name:Uday]
+
+</div>
+    </header> 
+<figure class="entry-cover"><a href="http://localhost:1313/images/creational_design.jpg" target="_blank"
+            rel="noopener noreferrer"><img loading="eager" src="http://localhost:1313/images/creational_design.jpg" alt=""></a>
+        
+</figure><div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#but-what-is-creational-design-pattern-and-how-does-it-help-me-with-my-work" aria-label="But what is Creational Design Pattern and how does it help me with my work?">But what is Creational Design Pattern and how does it help me with my work?</a></li>
+                <li>
+                    <a href="#thats-cool-and-all-but-whats-the-point-why-cant-we-just-create-object-as-we-like" aria-label="That&rsquo;s cool and all but what&rsquo;s the point? Why can&rsquo;t we just create object as we like?">That&rsquo;s cool and all but what&rsquo;s the point? Why can&rsquo;t we just create object as we like?</a></li>
+                <li>
+                    <a href="#factory-design-pattern" aria-label="Factory Design Pattern">Factory Design Pattern</a><ul>
+                        
+                <li>
+                    <a href="#okay-but-how-is-this-different-than-manually-creating-the-cars" aria-label="Okay but how is this different than manually creating the cars?">Okay but how is this different than manually creating the cars?</a></li></ul>
+                </li>
+                <li>
+                    <a href="#abstract-factory" aria-label="Abstract Factory">Abstract Factory</a><ul>
+                        
+                <li>
+                    <a href="#extending-our-hot-wheels-factory" aria-label="Extending Our Hot Wheels Factory">Extending Our Hot Wheels Factory</a></li>
+                <li>
+                    <a href="#why-abstract-factory-pattern" aria-label="Why Abstract Factory Pattern?">Why Abstract Factory Pattern?</a></li></ul>
+                </li>
+                <li>
+                    <a href="#builder-design-pattern" aria-label="Builder Design Pattern">Builder Design Pattern</a></li>
+                <li>
+                    <a href="#prototype-design-pattern" aria-label="Prototype Design Pattern">Prototype Design Pattern</a><ul>
+                        
+                <li>
+                    <a href="#why-use-prototype" aria-label="Why use Prototype??">Why use Prototype??</a></li></ul>
+                </li>
+                <li>
+                    <a href="#singleton-design-pattern" aria-label="Singleton Design Pattern">Singleton Design Pattern</a><ul>
+                        
+                <li>
+                    <a href="#why-singleton" aria-label="Why Singleton?">Why Singleton?</a></li></ul>
+                </li>
+                <li>
+                    <a href="#tldr" aria-label="TLDR;">TLDR;</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+    <div class="post-content"><p>This is one the first blog in the design pattern series, and in this one, I&rsquo;ll be focusing on the creational design patterns. Creational Design pattern is one of the most intuitive design pattern if you ask me, dealing with the fundamental problem of <em>how do we create objects the right way</em> .</p>
+<h2 id="but-what-is-creational-design-pattern-and-how-does-it-help-me-with-my-work">But what is Creational Design Pattern and how does it help me with my work?<a hidden class="anchor" aria-hidden="true" href="#but-what-is-creational-design-pattern-and-how-does-it-help-me-with-my-work">#</a></h2>
+<p>Creational design pattern is basically an encapsulation hidden from the end user, hiding the implementation details, since for the user, they&rsquo;re only concerned with getting their object instance. This branch of design pattern try to give the user ready-to-user objects instead of asking for their creation, which could be complex in cases when the application gets bigger and complex.</p>
+<p>The more you use these design patterns, you&rsquo;ll get to observe they follow two basic themes:</p>
+<ol>
+<li>All of them encapsulate the knowledge around which classes(structs in the case of golang) gets used.</li>
+<li>They hide how the classes are created and put together, all the end users know is the interfaces they have to use to get the job done.</li>
+</ol>
+<h2 id="thats-cool-and-all-but-whats-the-point-why-cant-we-just-create-object-as-we-like">That&rsquo;s cool and all but what&rsquo;s the point? Why can&rsquo;t we just <em>create</em> object as we like?<a hidden class="anchor" aria-hidden="true" href="#thats-cool-and-all-but-whats-the-point-why-cant-we-just-create-object-as-we-like">#</a></h2>
+<p>Imagine this scenario:
+You&rsquo;re building a first person shooter game, with lots of characters, weapon designs, in-game objects. Each instance of these objects would be different than the other. Let&rsquo;s say you write the object creation code each time you want it, i.e. duplicate the code a lot of times, you&rsquo;ll get screwed pretty easily if you decide to change the creation logic at a later point of your development cycle.</p>
+<p>This is where the Creational Design patterns come in. They <em>streamline</em> and <em>centralise</em> the object creations for you! so you don&rsquo;t have to worry about implementation details when creating your application objects.</p>
+<h2 id="factory-design-pattern">Factory Design Pattern<a hidden class="anchor" aria-hidden="true" href="#factory-design-pattern">#</a></h2>
+<p>Factory pattern is one of the most known design patterns. The purpose of this pattern is to abstract the user from the knowledge of the struct they need to achieve a specific purpose, such as retrieving some value, maybe from a web service or a database.</p>
+<p>Let&rsquo;s take the example of Hotwheels, i.e. a die-cast car manufacturing company. If you&rsquo;re not aware, whenever Hotwheels designers come up with a new design, they don&rsquo;t just build it the same for all the units. Instead, using the design as the base model, they make multiple variations of that model — with different colors, details, wheels, and sometimes even special editions.</p>
+<p>Now, not every car that rolls off the line is the same. Some are regular releases, some are Treasure Hunts (rare finds with special paint jobs), and a few are Super Treasure Hunts — the holy grail for collectors, featuring premium wheels and even more detailed finishes.</p>
+<p>And for that, they can&rsquo;t just create brand-new designs for every variation, because that would be redundant.
+This is where the Factory Design Pattern comes in handy.</p>
+<p>Let’s look at how the code would look without this design pattern and then with it:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">Car</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nx">Model</span><span class="w"> </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nx">Variant</span><span class="w"> </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nx">Color</span><span class="w"> </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nx">car1</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">Car</span><span class="p">{</span><span class="nx">Model</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;Mustang&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">Variant</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;Regular&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">Color</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;Red&#34;</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nx">car2</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">Car</span><span class="p">{</span><span class="nx">Model</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;Mustang&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">Variant</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;Treasure Hunt&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">Color</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;Gold&#34;</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nx">car3</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">Car</span><span class="p">{</span><span class="nx">Model</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;Mustang&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">Variant</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;Super Treasure Hunt&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">Color</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;Chrome&#34;</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">car1</span><span class="p">,</span><span class="w"> </span><span class="nx">car2</span><span class="p">,</span><span class="w"> </span><span class="nx">car3</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>Now, as you can imagine, this gets messy real fast. Every time you introduce a new variant or a model, you&rsquo;d have to rewrite the creation logic all over again.</p>
+<p>Here&rsquo;s how the same idea looks like using Creational Design Pattern:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nx">main</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="s">&#34;fmt&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">Car</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nf">Name</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nf">Details</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">RegularCar</span><span class="w"> </span><span class="kd">struct</span><span class="p">{</span><span class="w"> </span><span class="nx">Model</span><span class="p">,</span><span class="w"> </span><span class="nx">Color</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">RegularCar</span><span class="p">)</span><span class="w"> </span><span class="nf">Name</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w">   </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;Regular Edition&#34;</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">RegularCar</span><span class="p">)</span><span class="w"> </span><span class="nf">Details</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s %s - basic design, mass produced&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Color</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Model</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">TreasureHuntCar</span><span class="w"> </span><span class="kd">struct</span><span class="p">{</span><span class="w"> </span><span class="nx">Model</span><span class="p">,</span><span class="w"> </span><span class="nx">Color</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">TreasureHuntCar</span><span class="p">)</span><span class="w"> </span><span class="nf">Name</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w">   </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;Treasure Hunt&#34;</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">TreasureHuntCar</span><span class="p">)</span><span class="w"> </span><span class="nf">Details</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s %s - rare find with special paint and hidden logo&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Color</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Model</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">SuperTreasureHuntCar</span><span class="w"> </span><span class="kd">struct</span><span class="p">{</span><span class="w"> </span><span class="nx">Model</span><span class="p">,</span><span class="w"> </span><span class="nx">Color</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">SuperTreasureHuntCar</span><span class="p">)</span><span class="w"> </span><span class="nf">Name</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w">   </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;Super Treasure Hunt&#34;</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">SuperTreasureHuntCar</span><span class="p">)</span><span class="w"> </span><span class="nf">Details</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s %s - ultra-rare with rubber tires and metallic finish&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Color</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Model</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">HotWheelsFactory</span><span class="w"> </span><span class="kd">struct</span><span class="p">{}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">HotWheelsFactory</span><span class="p">)</span><span class="w"> </span><span class="nf">CreateCar</span><span class="p">(</span><span class="nx">variant</span><span class="p">,</span><span class="w"> </span><span class="nx">model</span><span class="p">,</span><span class="w"> </span><span class="nx">color</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">Car</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">switch</span><span class="w"> </span><span class="nx">variant</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">case</span><span class="w"> </span><span class="s">&#34;Regular&#34;</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="k">return</span><span class="w"> </span><span class="nx">RegularCar</span><span class="p">{</span><span class="nx">Model</span><span class="p">:</span><span class="w"> </span><span class="nx">model</span><span class="p">,</span><span class="w"> </span><span class="nx">Color</span><span class="p">:</span><span class="w"> </span><span class="nx">color</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">case</span><span class="w"> </span><span class="s">&#34;Treasure Hunt&#34;</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="k">return</span><span class="w"> </span><span class="nx">TreasureHuntCar</span><span class="p">{</span><span class="nx">Model</span><span class="p">:</span><span class="w"> </span><span class="nx">model</span><span class="p">,</span><span class="w"> </span><span class="nx">Color</span><span class="p">:</span><span class="w"> </span><span class="nx">color</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">case</span><span class="w"> </span><span class="s">&#34;Super Treasure Hunt&#34;</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="k">return</span><span class="w"> </span><span class="nx">SuperTreasureHuntCar</span><span class="p">{</span><span class="nx">Model</span><span class="p">:</span><span class="w"> </span><span class="nx">model</span><span class="p">,</span><span class="w"> </span><span class="nx">Color</span><span class="p">:</span><span class="w"> </span><span class="nx">color</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">default</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">factory</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">HotWheelsFactory</span><span class="p">{}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">cars</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[]</span><span class="nx">Car</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">factory</span><span class="p">.</span><span class="nf">CreateCar</span><span class="p">(</span><span class="s">&#34;Regular&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Mustang&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Red&#34;</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">factory</span><span class="p">.</span><span class="nf">CreateCar</span><span class="p">(</span><span class="s">&#34;Treasure Hunt&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Corvette&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Gold&#34;</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">factory</span><span class="p">.</span><span class="nf">CreateCar</span><span class="p">(</span><span class="s">&#34;Super Treasure Hunt&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Camaro&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Chrome&#34;</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">car</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">cars</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;[%s] → %s\n&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">car</span><span class="p">.</span><span class="nf">Name</span><span class="p">(),</span><span class="w"> </span><span class="nx">car</span><span class="p">.</span><span class="nf">Details</span><span class="p">())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="okay-but-how-is-this-different-than-manually-creating-the-cars">Okay but how is this different than manually creating the cars?<a hidden class="anchor" aria-hidden="true" href="#okay-but-how-is-this-different-than-manually-creating-the-cars">#</a></h3>
+<p>Let’s say you’re working on a large Hot Wheels catalog system, an API, or even a simulation game.
+You’re not just creating a handful of cars anymore — you’re creating hundreds, each with their own attributes and variations.</p>
+<p>If you create cars manually everywhere, you’ll start to see problems like:</p>
+<ol>
+<li>
+<p>Repetitive code – you’d be repeating the same “creation” logic all over.</p>
+</li>
+<li>
+<p>Tight coupling – your main code now depends on which struct to create and how it’s initialized.</p>
+</li>
+<li>
+<p>No central control – if tomorrow, “Super Treasure Hunt” cars require an extra property (say, a serialNumber or rarityScore), you’d have to update every place where they’re created.</p>
+</li>
+</ol>
+<p>In short,</p>
+<table>
+  <thead>
+      <tr>
+          <th>Without Factory</th>
+          <th>With Factory</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>You manually instantiate structs across the codebase.</td>
+          <td>All creation logic is encapsulated in one place.</td>
+      </tr>
+      <tr>
+          <td>Every new variant requires code changes everywhere.</td>
+          <td>New variants require updates only in the factory.</td>
+      </tr>
+      <tr>
+          <td>Code is harder to maintain and test.</td>
+          <td>Code is modular, testable, and easy to extend.</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="abstract-factory">Abstract Factory<a hidden class="anchor" aria-hidden="true" href="#abstract-factory">#</a></h2>
+<p>If the <strong>Factory Pattern</strong> is like having a single workstation that can produce one specific type of car (say <strong>Regular</strong>, <strong>Treasure Hunt</strong>, or <strong>Super Treasure Hunt</strong>),<br>
+then the <strong>Abstract Factory Pattern</strong> is like owning an <strong>entire production unit</strong> — where each workstation (factory) specializes in producing a <em>family</em> of related cars.</p>
+<p>It’s one level higher.<br>
+Instead of asking <em>“make me a car of type X”</em>, you say <em>“give me a factory that makes Hot Wheels cars”</em> — and that factory itself knows how to produce <strong>Regular</strong>, <strong>Treasure Hunt</strong>, and <strong>Super Treasure Hunt</strong> variants.</p>
+<h3 id="extending-our-hot-wheels-factory">Extending Our Hot Wheels Factory<a hidden class="anchor" aria-hidden="true" href="#extending-our-hot-wheels-factory">#</a></h3>
+<p>Imagine Hot Wheels has two main product lines:</p>
+<ol>
+<li><strong>Basic Series</strong> — your regular mainline cars found in most stores, basically toys, meant for children.</li>
+<li><strong>Premium Series</strong> — high-end cars with metal bodies, rubber tires, and collector packaging, for serious collectors.</li>
+</ol>
+<p>Each series can still have <strong>Regular</strong>, <strong>Treasure Hunt</strong>, and <strong>Super Treasure Hunt</strong> cars —<br>
+but the difference lies in the <em>series-level behavior</em> — how they’re <strong>built</strong>, <strong>packaged</strong>, and <strong>presented</strong>.</p>
+<h3 id="why-abstract-factory-pattern">Why Abstract Factory Pattern?<a hidden class="anchor" aria-hidden="true" href="#why-abstract-factory-pattern">#</a></h3>
+<p>This is where the <strong>Abstract Factory Pattern</strong> shines:<br>
+it lets you create entire <em>families of related objects</em> (like <strong>cars</strong> and their <strong>packages</strong>) without specifying their concrete classes.</p>
+<p>In our case:</p>
+<ul>
+<li>The <strong>Basic Series Factory</strong> knows how to build and package cars for the mainline series.</li>
+<li>The <strong>Premium Series Factory</strong> knows how to build and package high-end collector editions.</li>
+</ul>
+<p>You just pick the factory — it handles the rest.</p>
+<p>Let&rsquo;s look at the code example for this :</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nx">main</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="s">&#34;fmt&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">Car</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nf">Name</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nf">Details</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">Packaging</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nf">BoxType</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">BasicRegularCar</span><span class="w"> </span><span class="kd">struct</span><span class="p">{</span><span class="w"> </span><span class="nx">Model</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">BasicTreasureHuntCar</span><span class="w"> </span><span class="kd">struct</span><span class="p">{</span><span class="w"> </span><span class="nx">Model</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">BasicSuperTreasureHuntCar</span><span class="w"> </span><span class="kd">struct</span><span class="p">{</span><span class="w"> </span><span class="nx">Model</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">BasicRegularCar</span><span class="p">)</span><span class="w"> </span><span class="nf">Name</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w">          </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;Regular&#34;</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">BasicRegularCar</span><span class="p">)</span><span class="w"> </span><span class="nf">Details</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w">       </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s - Standard mainline car&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Model</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">BasicTreasureHuntCar</span><span class="p">)</span><span class="w"> </span><span class="nf">Name</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w">     </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;Treasure Hunt&#34;</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">BasicTreasureHuntCar</span><span class="p">)</span><span class="w"> </span><span class="nf">Details</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s - Hidden logo, rare paint&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Model</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">BasicSuperTreasureHuntCar</span><span class="p">)</span><span class="w"> </span><span class="nf">Name</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;Super Treasure Hunt&#34;</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">BasicSuperTreasureHuntCar</span><span class="p">)</span><span class="w"> </span><span class="nf">Details</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s - Metallic finish, rubber tires&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Model</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">BasicPackaging</span><span class="w"> </span><span class="kd">struct</span><span class="p">{}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">BasicPackaging</span><span class="p">)</span><span class="w"> </span><span class="nf">BoxType</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;Standard blister pack&#34;</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">PremiumRegularCar</span><span class="w"> </span><span class="kd">struct</span><span class="p">{</span><span class="w"> </span><span class="nx">Model</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">PremiumTreasureHuntCar</span><span class="w"> </span><span class="kd">struct</span><span class="p">{</span><span class="w"> </span><span class="nx">Model</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">PremiumSuperTreasureHuntCar</span><span class="w"> </span><span class="kd">struct</span><span class="p">{</span><span class="w"> </span><span class="nx">Model</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">PremiumRegularCar</span><span class="p">)</span><span class="w"> </span><span class="nf">Name</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w">          </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;Regular (Premium)&#34;</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">PremiumRegularCar</span><span class="p">)</span><span class="w"> </span><span class="nf">Details</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w">       </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s - Metal body, glossy paint&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Model</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">PremiumTreasureHuntCar</span><span class="p">)</span><span class="w"> </span><span class="nf">Name</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w">     </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;Treasure Hunt (Premium)&#34;</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">PremiumTreasureHuntCar</span><span class="p">)</span><span class="w"> </span><span class="nf">Details</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s - Collector decals and detailing&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Model</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">PremiumSuperTreasureHuntCar</span><span class="p">)</span><span class="w"> </span><span class="nf">Name</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;Super Treasure Hunt (Premium)&#34;</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="nx">PremiumSuperTreasureHuntCar</span><span class="p">)</span><span class="w"> </span><span class="nf">Details</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s - Elite collectible, limited edition packaging&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Model</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">PremiumPackaging</span><span class="w"> </span><span class="kd">struct</span><span class="p">{}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">PremiumPackaging</span><span class="p">)</span><span class="w"> </span><span class="nf">BoxType</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&#34;Collector box with display case&#34;</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">HotWheelsFactory</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nf">CreateRegular</span><span class="p">(</span><span class="nx">model</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">Car</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nf">CreateTreasureHunt</span><span class="p">(</span><span class="nx">model</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">Car</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nf">CreateSuperTreasureHunt</span><span class="p">(</span><span class="nx">model</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">Car</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nf">CreatePackaging</span><span class="p">()</span><span class="w"> </span><span class="nx">Packaging</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">BasicSeriesFactory</span><span class="w"> </span><span class="kd">struct</span><span class="p">{}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">BasicSeriesFactory</span><span class="p">)</span><span class="w"> </span><span class="nf">CreateRegular</span><span class="p">(</span><span class="nx">model</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">Car</span><span class="w">           </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">BasicRegularCar</span><span class="p">{</span><span class="nx">Model</span><span class="p">:</span><span class="w"> </span><span class="nx">model</span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">BasicSeriesFactory</span><span class="p">)</span><span class="w"> </span><span class="nf">CreateTreasureHunt</span><span class="p">(</span><span class="nx">model</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">Car</span><span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">BasicTreasureHuntCar</span><span class="p">{</span><span class="nx">Model</span><span class="p">:</span><span class="w"> </span><span class="nx">model</span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">BasicSeriesFactory</span><span class="p">)</span><span class="w"> </span><span class="nf">CreateSuperTreasureHunt</span><span class="p">(</span><span class="nx">model</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">Car</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">BasicSuperTreasureHuntCar</span><span class="p">{</span><span class="nx">Model</span><span class="p">:</span><span class="w"> </span><span class="nx">model</span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">BasicSeriesFactory</span><span class="p">)</span><span class="w"> </span><span class="nf">CreatePackaging</span><span class="p">()</span><span class="w"> </span><span class="nx">Packaging</span><span class="w">               </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">BasicPackaging</span><span class="p">{}</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">PremiumSeriesFactory</span><span class="w"> </span><span class="kd">struct</span><span class="p">{}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">PremiumSeriesFactory</span><span class="p">)</span><span class="w"> </span><span class="nf">CreateRegular</span><span class="p">(</span><span class="nx">model</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">Car</span><span class="w">           </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">PremiumRegularCar</span><span class="p">{</span><span class="nx">Model</span><span class="p">:</span><span class="w"> </span><span class="nx">model</span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">PremiumSeriesFactory</span><span class="p">)</span><span class="w"> </span><span class="nf">CreateTreasureHunt</span><span class="p">(</span><span class="nx">model</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">Car</span><span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">PremiumTreasureHuntCar</span><span class="p">{</span><span class="nx">Model</span><span class="p">:</span><span class="w"> </span><span class="nx">model</span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">PremiumSeriesFactory</span><span class="p">)</span><span class="w"> </span><span class="nf">CreateSuperTreasureHunt</span><span class="p">(</span><span class="nx">model</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">Car</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">PremiumSuperTreasureHuntCar</span><span class="p">{</span><span class="nx">Model</span><span class="p">:</span><span class="w"> </span><span class="nx">model</span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">PremiumSeriesFactory</span><span class="p">)</span><span class="w"> </span><span class="nf">CreatePackaging</span><span class="p">()</span><span class="w"> </span><span class="nx">Packaging</span><span class="w">               </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">PremiumPackaging</span><span class="p">{}</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="kd">var</span><span class="w"> </span><span class="nx">factory</span><span class="w"> </span><span class="nx">HotWheelsFactory</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">factory</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">BasicSeriesFactory</span><span class="p">{}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nf">displaySet</span><span class="p">(</span><span class="nx">factory</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Mustang&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">factory</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">PremiumSeriesFactory</span><span class="p">{}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nf">displaySet</span><span class="p">(</span><span class="nx">factory</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Mustang&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">displaySet</span><span class="p">(</span><span class="nx">factory</span><span class="w"> </span><span class="nx">HotWheelsFactory</span><span class="p">,</span><span class="w"> </span><span class="nx">model</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;=== Producing&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">model</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Set ===&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">c1</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">factory</span><span class="p">.</span><span class="nf">CreateRegular</span><span class="p">(</span><span class="nx">model</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">c2</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">factory</span><span class="p">.</span><span class="nf">CreateTreasureHunt</span><span class="p">(</span><span class="nx">model</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">c3</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">factory</span><span class="p">.</span><span class="nf">CreateSuperTreasureHunt</span><span class="p">(</span><span class="nx">model</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">p</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">factory</span><span class="p">.</span><span class="nf">CreatePackaging</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">c1</span><span class="p">.</span><span class="nf">Name</span><span class="p">(),</span><span class="w"> </span><span class="s">&#34;→&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">c1</span><span class="p">.</span><span class="nf">Details</span><span class="p">())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">c2</span><span class="p">.</span><span class="nf">Name</span><span class="p">(),</span><span class="w"> </span><span class="s">&#34;→&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">c2</span><span class="p">.</span><span class="nf">Details</span><span class="p">())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">c3</span><span class="p">.</span><span class="nf">Name</span><span class="p">(),</span><span class="w"> </span><span class="s">&#34;→&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">c3</span><span class="p">.</span><span class="nf">Details</span><span class="p">())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Packaging:&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nf">BoxType</span><span class="p">())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="builder-design-pattern">Builder Design Pattern<a hidden class="anchor" aria-hidden="true" href="#builder-design-pattern">#</a></h2>
+<p>Builder design pattern, as the name suggests, tries to <em>build</em> the object step-by-step.</p>
+<p>The <strong>Builder</strong> is responsible for <strong>assembling</strong> an object, and you can control the process by setting attributes one by one. Instead of pasing all parameters in a constructor, you pass only the ones you care about, and the builder takes care of the rest.</p>
+<p>If the Factory Deisng pattern decides what type of car to build, Builder Design Pattern decides &ldquo;how to assemble it&rdquo;.</p>
+<p>Let&rsquo;s take a look at the code for this design pattern :</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nx">main</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="s">&#34;fmt&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">HotWheelsCar</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">Model</span><span class="w">        </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">Color</span><span class="w">        </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">WheelType</span><span class="w">    </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">Decals</span><span class="w">       </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">TreasureType</span><span class="w"> </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="o">*</span><span class="nx">HotWheelsCar</span><span class="p">)</span><span class="w"> </span><span class="nf">ShowSpecs</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Model: %s\nColor: %s\nWheels: %s\nDecals: %s\nEdition: %s\n\n&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">c</span><span class="p">.</span><span class="nx">Model</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Color</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">WheelType</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Decals</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">TreasureType</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">CarBuilder</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nf">SetModel</span><span class="p">(</span><span class="nx">model</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">CarBuilder</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nf">SetColor</span><span class="p">(</span><span class="nx">color</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">CarBuilder</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nf">SetWheels</span><span class="p">(</span><span class="nx">wheelType</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">CarBuilder</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nf">SetDecals</span><span class="p">(</span><span class="nx">decals</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">CarBuilder</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nf">SetTreasureType</span><span class="p">(</span><span class="nx">tType</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">CarBuilder</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nf">Build</span><span class="p">()</span><span class="w"> </span><span class="nx">HotWheelsCar</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">HotWheelsCarBuilder</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">car</span><span class="w"> </span><span class="nx">HotWheelsCar</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">NewHotWheelsCarBuilder</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="nx">HotWheelsCarBuilder</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">HotWheelsCarBuilder</span><span class="p">{}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">b</span><span class="w"> </span><span class="o">*</span><span class="nx">HotWheelsCarBuilder</span><span class="p">)</span><span class="w"> </span><span class="nf">SetModel</span><span class="p">(</span><span class="nx">model</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">CarBuilder</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">b</span><span class="p">.</span><span class="nx">car</span><span class="p">.</span><span class="nx">Model</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">model</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">b</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">b</span><span class="w"> </span><span class="o">*</span><span class="nx">HotWheelsCarBuilder</span><span class="p">)</span><span class="w"> </span><span class="nf">SetColor</span><span class="p">(</span><span class="nx">color</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">CarBuilder</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">b</span><span class="p">.</span><span class="nx">car</span><span class="p">.</span><span class="nx">Color</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">color</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">b</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">b</span><span class="w"> </span><span class="o">*</span><span class="nx">HotWheelsCarBuilder</span><span class="p">)</span><span class="w"> </span><span class="nf">SetWheels</span><span class="p">(</span><span class="nx">wheelType</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">CarBuilder</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">b</span><span class="p">.</span><span class="nx">car</span><span class="p">.</span><span class="nx">WheelType</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">wheelType</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">b</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">b</span><span class="w"> </span><span class="o">*</span><span class="nx">HotWheelsCarBuilder</span><span class="p">)</span><span class="w"> </span><span class="nf">SetDecals</span><span class="p">(</span><span class="nx">decals</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">CarBuilder</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">b</span><span class="p">.</span><span class="nx">car</span><span class="p">.</span><span class="nx">Decals</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">decals</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">b</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">b</span><span class="w"> </span><span class="o">*</span><span class="nx">HotWheelsCarBuilder</span><span class="p">)</span><span class="w"> </span><span class="nf">SetTreasureType</span><span class="p">(</span><span class="nx">tType</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">CarBuilder</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">b</span><span class="p">.</span><span class="nx">car</span><span class="p">.</span><span class="nx">TreasureType</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">tType</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">b</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">b</span><span class="w"> </span><span class="o">*</span><span class="nx">HotWheelsCarBuilder</span><span class="p">)</span><span class="w"> </span><span class="nf">Build</span><span class="p">()</span><span class="w"> </span><span class="nx">HotWheelsCar</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">b</span><span class="p">.</span><span class="nx">car</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">CarDirector</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">builder</span><span class="w"> </span><span class="nx">CarBuilder</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">NewCarDirector</span><span class="p">(</span><span class="nx">b</span><span class="w"> </span><span class="nx">CarBuilder</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="nx">CarDirector</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">CarDirector</span><span class="p">{</span><span class="nx">builder</span><span class="p">:</span><span class="w"> </span><span class="nx">b</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">d</span><span class="w"> </span><span class="o">*</span><span class="nx">CarDirector</span><span class="p">)</span><span class="w"> </span><span class="nf">BuildRegularCar</span><span class="p">()</span><span class="w"> </span><span class="nx">HotWheelsCar</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">d</span><span class="p">.</span><span class="nx">builder</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nf">SetModel</span><span class="p">(</span><span class="s">&#34;Hot Wheels Racer&#34;</span><span class="p">).</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nf">SetColor</span><span class="p">(</span><span class="s">&#34;Red&#34;</span><span class="p">).</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nf">SetWheels</span><span class="p">(</span><span class="s">&#34;Standard Chrome&#34;</span><span class="p">).</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nf">SetDecals</span><span class="p">(</span><span class="s">&#34;Flame Decal&#34;</span><span class="p">).</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nf">SetTreasureType</span><span class="p">(</span><span class="s">&#34;Regular&#34;</span><span class="p">).</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nf">Build</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">d</span><span class="w"> </span><span class="o">*</span><span class="nx">CarDirector</span><span class="p">)</span><span class="w"> </span><span class="nf">BuildTreasureHuntCar</span><span class="p">()</span><span class="w"> </span><span class="nx">HotWheelsCar</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">d</span><span class="p">.</span><span class="nx">builder</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nf">SetModel</span><span class="p">(</span><span class="s">&#34;Hot Wheels Racer&#34;</span><span class="p">).</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nf">SetColor</span><span class="p">(</span><span class="s">&#34;Green&#34;</span><span class="p">).</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nf">SetWheels</span><span class="p">(</span><span class="s">&#34;Rubberized&#34;</span><span class="p">).</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nf">SetDecals</span><span class="p">(</span><span class="s">&#34;Hidden Flame Logo&#34;</span><span class="p">).</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nf">SetTreasureType</span><span class="p">(</span><span class="s">&#34;Treasure Hunt&#34;</span><span class="p">).</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nf">Build</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">d</span><span class="w"> </span><span class="o">*</span><span class="nx">CarDirector</span><span class="p">)</span><span class="w"> </span><span class="nf">BuildSuperTreasureHuntCar</span><span class="p">()</span><span class="w"> </span><span class="nx">HotWheelsCar</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">d</span><span class="p">.</span><span class="nx">builder</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nf">SetModel</span><span class="p">(</span><span class="s">&#34;Hot Wheels Racer&#34;</span><span class="p">).</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nf">SetColor</span><span class="p">(</span><span class="s">&#34;Spectraflame Gold&#34;</span><span class="p">).</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nf">SetWheels</span><span class="p">(</span><span class="s">&#34;Real Riders&#34;</span><span class="p">).</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nf">SetDecals</span><span class="p">(</span><span class="s">&#34;TH Logo&#34;</span><span class="p">).</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nf">SetTreasureType</span><span class="p">(</span><span class="s">&#34;Super Treasure Hunt&#34;</span><span class="p">).</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nf">Build</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">builder</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nf">NewHotWheelsCarBuilder</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">director</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nf">NewCarDirector</span><span class="p">(</span><span class="nx">builder</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">regular</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">director</span><span class="p">.</span><span class="nf">BuildRegularCar</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">treasure</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">director</span><span class="p">.</span><span class="nf">BuildTreasureHuntCar</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">superTreasure</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">director</span><span class="p">.</span><span class="nf">BuildSuperTreasureHuntCar</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Hot Wheels Collection:&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">regular</span><span class="p">.</span><span class="nf">ShowSpecs</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">treasure</span><span class="p">.</span><span class="nf">ShowSpecs</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">superTreasure</span><span class="p">.</span><span class="nf">ShowSpecs</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="prototype-design-pattern">Prototype Design Pattern<a hidden class="anchor" aria-hidden="true" href="#prototype-design-pattern">#</a></h2>
+<p>There will come a time when you would need to copy an already existing object with a very slight modification. In this case, creating a new object from scratch using the same constructor values would become redundant and inefficient.</p>
+<p>Think about it like this — Hot Wheels has already built a limited-edition Super Treasure Hunt car, but they want to make a few modified versions with slight tweaks (say a new color or special wheels) for a convention release.</p>
+<p>Instead of rebuilding everything from scratch, they can just clone the existing model and modify the necessary parts.</p>
+<p>That’s the Prototype Design Pattern in a nutshell —
+it lets you duplicate an existing object rather than creating a new instance manually, which can save time, memory, and effort, especially when the creation logic is expensive.</p>
+<p>Let&rsquo;s take a look how it will look in Go:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nx">main</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="s">&#34;fmt&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">CarPrototype</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nf">Clone</span><span class="p">()</span><span class="w"> </span><span class="nx">CarPrototype</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nf">Show</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">HotWheelsCar</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">Model</span><span class="w">        </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">Color</span><span class="w">        </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">WheelType</span><span class="w">    </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">Decals</span><span class="w">       </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">TreasureType</span><span class="w"> </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="o">*</span><span class="nx">HotWheelsCar</span><span class="p">)</span><span class="w"> </span><span class="nf">Clone</span><span class="p">()</span><span class="w"> </span><span class="nx">CarPrototype</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">clone</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">*</span><span class="nx">c</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">clone</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="w"> </span><span class="o">*</span><span class="nx">HotWheelsCar</span><span class="p">)</span><span class="w"> </span><span class="nf">Show</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;[%s] %s | Wheels: %s | Decals: %s | Edition: %s\n&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">c</span><span class="p">.</span><span class="nx">Color</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Model</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">WheelType</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Decals</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">TreasureType</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">superTH</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">HotWheelsCar</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">Model</span><span class="p">:</span><span class="w">        </span><span class="s">&#34;Ferrari F50&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">Color</span><span class="p">:</span><span class="w">        </span><span class="s">&#34;Spectraflame Gold&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">WheelType</span><span class="p">:</span><span class="w">    </span><span class="s">&#34;Real Riders&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">Decals</span><span class="p">:</span><span class="w">       </span><span class="s">&#34;TH Logo&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">TreasureType</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;Super Treasure Hunt&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Original:&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">superTH</span><span class="p">.</span><span class="nf">Show</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">clone</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">superTH</span><span class="p">.</span><span class="nf">Clone</span><span class="p">().(</span><span class="o">*</span><span class="nx">HotWheelsCar</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">clone</span><span class="p">.</span><span class="nx">Color</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#34;Spectraflame Blue&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">clone</span><span class="p">.</span><span class="nx">Decals</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&#34;Convention Edition Logo&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">clone</span><span class="p">.</span><span class="nf">Show</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>And this would be the output:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-md" data-lang="md"><span class="line"><span class="cl">Original:
+</span></span><span class="line"><span class="cl">[Spectraflame Gold] Hot Wheels Racer | Wheels: Real Riders | Decals: TH Logo | Edition: Super Treasure Hunt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Cloned and Modified:
+</span></span><span class="line"><span class="cl">[Spectraflame Blue] Hot Wheels Racer | Wheels: Real Riders | Decals: Convention Edition Logo | Edition: Super Treasure Hunt
+</span></span></code></pre></div><h3 id="why-use-prototype">Why use Prototype??<a hidden class="anchor" aria-hidden="true" href="#why-use-prototype">#</a></h3>
+<p>Because sometimes, copying is smarter than recreating.</p>
+<p>Instead of going through all the steps of the Builder again, the Prototype pattern lets you take a fully-configured object, make a few tweaks, and you’re done. It’s especially helpful when the object initialization involves deep structures, database calls, or heavy setup logic.</p>
+<p>So in essence:</p>
+<ul>
+<li>You use Factory when you need new objects frequently.</li>
+<li>You use Builder when the creation is step-by-step and complex.</li>
+<li>You use Prototype when you already have a configured object and just need variations.</li>
+</ul>
+<h2 id="singleton-design-pattern">Singleton Design Pattern<a hidden class="anchor" aria-hidden="true" href="#singleton-design-pattern">#</a></h2>
+<p>Finally, let’s talk about the one pattern that everyone seems to know — the Singleton Pattern.</p>
+<p>The Singleton ensures that only one instance of a particular struct exists throughout the entire program.
+You use this pattern when a global point of access is required — for example, a database connection, a logger, or a configuration manager.</p>
+<p>To bring back our Hot Wheels analogy — imagine there’s only one Master Production Controller overseeing the entire manufacturing process. Every department can access it, but there can only ever be one.</p>
+<p>That’s exactly what Singleton achieves.</p>
+<p>Let&rsquo;s see how it will look in golang:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nx">main</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;fmt&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="s">&#34;sync&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nx">MasterController</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">PlantName</span><span class="w"> </span><span class="kt">string</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">var</span><span class="w"> </span><span class="nx">instance</span><span class="w"> </span><span class="o">*</span><span class="nx">MasterController</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">var</span><span class="w"> </span><span class="nx">once</span><span class="w"> </span><span class="nx">sync</span><span class="p">.</span><span class="nx">Once</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">GetInstance</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="nx">MasterController</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">once</span><span class="p">.</span><span class="nf">Do</span><span class="p">(</span><span class="kd">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">instance</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">MasterController</span><span class="p">{</span><span class="nx">PlantName</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;Hot Wheels Main Factory - Malaysia&#34;</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="nx">instance</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">func</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">controller1</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nf">GetInstance</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">controller2</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nf">GetInstance</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Controller 1:&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">controller1</span><span class="p">.</span><span class="nx">PlantName</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Controller 2:&#34;</span><span class="p">,</span><span class="w"> </span><span class="nx">controller2</span><span class="p">.</span><span class="nx">PlantName</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="k">if</span><span class="w"> </span><span class="nx">controller1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">controller2</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Both controllers point to the same instance.&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="why-singleton">Why Singleton?<a hidden class="anchor" aria-hidden="true" href="#why-singleton">#</a></h3>
+<p>Because sometimes, you only need one of something —
+and having multiple instances could cause chaos.</p>
+<p>For example:</p>
+<ul>
+<li>Having multiple loggers might fragment your logs.</li>
+<li>Having multiple DB connections might overload your system.</li>
+<li>Having multiple production controllers… well, you can imagine the confusion at the Hot Wheels plant.</li>
+</ul>
+<h2 id="tldr">TLDR;<a hidden class="anchor" aria-hidden="true" href="#tldr">#</a></h2>
+<p>Creational Design Patterns, in essence, help you control how your objects come to life.
+They give structure to the otherwise chaotic process of object creation — keeping your code flexible, modular, and scalable as your application grows.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Pattern</th>
+          <th>Core Idea</th>
+          <th>Hot Wheels Analogy</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Factory</strong></td>
+          <td>Centralize object creation</td>
+          <td>One workstation producing car variants</td>
+      </tr>
+      <tr>
+          <td><strong>Abstract Factory</strong></td>
+          <td>Create families of related objects</td>
+          <td>Separate factories for Basic and Premium series</td>
+      </tr>
+      <tr>
+          <td><strong>Builder</strong></td>
+          <td>Build complex objects step-by-step</td>
+          <td>Assembling each car with fine control</td>
+      </tr>
+      <tr>
+          <td><strong>Prototype</strong></td>
+          <td>Clone existing objects with modifications</td>
+          <td>Copying a rare car for special editions</td>
+      </tr>
+      <tr>
+          <td><strong>Singleton</strong></td>
+          <td>Only one instance globally</td>
+          <td>The single master production controller</td>
+      </tr>
+  </tbody>
+</table>
+<p>Next in this series, we&rsquo;lll take a look at Behavioral design pattern</p>
+
+
+    </div>
+    <footer class="post-footer">
+        <ul class="post-tags">
+            <li>
+                <a href="http://localhost:1313/tags/golang/">Golang</a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/tech/">Tech</a>
+            </li>
+        </ul>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share Creational Design Patterns in Golang on x"
+           href="https://x.com/intent/tweet/?text=Creational%20Design%20Patterns%20in%20Golang&amp;url=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fcreational-design-pattern-golang%2f&amp;hashtags=golang%2ctech">
+            <svg version="1.1"
+                 viewBox="0 0 512 512"
+                 xml:space="preserve"
+                 height="30px"
+                 width="30px"
+                 fill="currentColor">
+                <path d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share Creational Design Patterns in Golang on linkedin"
+           href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fcreational-design-pattern-golang%2f&amp;title=Creational%20Design%20Patterns%20in%20Golang&amp;summary=Creational%20Design%20Patterns%20in%20Golang&amp;source=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fcreational-design-pattern-golang%2f">
+            <svg version="1.1"
+                 viewBox="0 0 512 512"
+                 xml:space="preserve"
+                 height="30px"
+                 width="30px"
+                 fill="currentColor">
+                <path d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share Creational Design Patterns in Golang on reddit"
+           href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fcreational-design-pattern-golang%2f&title=Creational%20Design%20Patterns%20in%20Golang">
+            <svg version="1.1"
+                 viewBox="0 0 512 512"
+                 xml:space="preserve"
+                 height="30px"
+                 width="30px"
+                 fill="currentColor">
+                <path d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share Creational Design Patterns in Golang on facebook"
+           href="https://facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fcreational-design-pattern-golang%2f">
+            <svg version="1.1"
+                 viewBox="0 0 512 512"
+                 xml:space="preserve"
+                 height="30px"
+                 width="30px"
+                 fill="currentColor">
+                <path d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share Creational Design Patterns in Golang on whatsapp"
+           href="https://api.whatsapp.com/send?text=Creational%20Design%20Patterns%20in%20Golang%20-%20http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fcreational-design-pattern-golang%2f">
+            <svg version="1.1"
+                 viewBox="0 0 512 512"
+                 xml:space="preserve"
+                 height="30px"
+                 width="30px"
+                 fill="currentColor">
+                <path d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share Creational Design Patterns in Golang on telegram"
+           href="https://telegram.me/share/url?text=Creational%20Design%20Patterns%20in%20Golang&amp;url=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fcreational-design-pattern-golang%2f">
+            <svg version="1.1"
+                 xml:space="preserve"
+                 viewBox="2 2 28 28"
+                 height="30px"
+                 width="30px"
+                 fill="currentColor">
+                <path d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank"
+           rel="noopener noreferrer"
+           aria-label="share Creational Design Patterns in Golang on ycombinator"
+           href="https://news.ycombinator.com/submitlink?t=Creational%20Design%20Patterns%20in%20Golang&u=http%3a%2f%2flocalhost%3a1313%2farchive%2fold_posts%2fcreational-design-pattern-golang%2f">
+            <svg version="1.1"
+                 xml:space="preserve"
+                 width="30px"
+                 height="30px"
+                 viewBox="0 0 512 512"
+                 fill="currentColor"
+                 xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+    </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    
+    <a href="http://localhost:1313/donate" class="donate-big">Liked my blog and want to support? Click this button to donate!</a>
+    <style>
+    .donate-big {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 1rem 1.25rem;
+      background: var(--primary);
+      color: var(--theme) !important;
+      border-radius: 0.75rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+
+      transition: background 0.2s ease;
+    }
+    </style>
+    
+    
+<style>
+   
+  input.autofill-fix:-webkit-autofill,
+  input.autofill-fix:-webkit-autofill:hover,
+  input.autofill-fix:-webkit-autofill:focus,
+  input.autofill-fix:-webkit-autofill:active {
+    -webkit-text-fill-color: var(--primary2) !important;
+    caret-color: var(--primary2) !important;
+    -webkit-box-shadow: 0 0 0px 1000px var(--entry) inset !important;
+    box-shadow: 0 0 0px 1000px var(--entry) inset !important;
+    background-color: var(--entry) !important;
+    transition: background-color 9999s ease-in-out 0s;
+  }
+</style>
+<div style="max-width: 100%;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            border: 0.5px solid var(--border);
+            border-radius: 12px;
+            background: var(--entry)">
+    <form action="https://buttondown.com/api/emails/embed-subscribe/jitesh117"
+          target="_blank"
+          method="post"
+          class="embeddable-buttondown-form"
+          style="text-align: left">
+        <label for="bd-email"
+               style="display: block;
+                      margin-bottom: 0.5rem;
+                      font-weight: 600;
+                      font-size: 1rem;
+                      color: var(--primary2)">Join the newsletter!</label>
+        <input type="email"
+               name="email"
+               id="bd-email"
+               class="autofill-fix"
+               placeholder="you@example.com"
+               required
+               style="width: 100%;
+                      padding: 0.65rem;
+                      border: 1px solid #ccc;
+                      border-radius: 8px;
+                      margin-bottom: 1rem;
+                      color: var(--primary2)" />
+        <input type="submit"
+               value="Subscribe"
+               style="width: 100%;
+                      padding: 0.75rem;
+                      background: var(--primary);
+                      color: var(--theme);
+                      border: none;
+                      border-radius: 8px;
+                      font-weight: 600;
+                      font-size: 1rem;
+                      cursor: pointer" />
+        <p style="font-size: 0.85rem; margin-top: 1rem; text-align: center"></p>
+    </form>
+</div>
+
+
+    <span>&copy; 2026 <a href="http://localhost:1313/">Uday Parmar</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/"
+           rel="noopener"
+           target="_blank">PaperMod</a>
+    </span>
+    <span>·</span>
+    <span>
+        <a target="_blank" href="https://jitesh117.github.io/index.xml">RSS Feed</a>
+    </span>
+    <span>·</span>
+    <span>
+        <a target="_blank" href="https://buymeacoffee.com/jitesh117">Support my writing!</a>
+    </span>
+</footer><style>
+  @media (max-width: 768px) {
+    #bmc-iframe {
+      border-radius: 0 !important;
+    }
+  }
+</style>
+<script
+  data-name="BMC-Widget"
+  data-cfasync="false"
+  src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+  data-id="jitesh117"
+  data-description="Support me on Buy me a coffee!"
+  data-message="Like what you're reading? You can donate to support my writing!"
+  data-color="#FFDD00"
+  data-position="Right"
+  data-x_margin="18"
+  data-y_margin="18"
+></script>
+<style>
+   
+  @media (max-width: 1500px) {
+    #bmc-iframe {
+      border-radius: 0 !important;
+    }
+
+     
+    .graph-fab {
+      position: fixed;
+      bottom: 18px;
+      left: 18px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+      transition: all 0.3s;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(2px);
+    }
+
+    .graph-fab:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    }
+
+    .graph-fab img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      filter: brightness(1.1);
+    }
+
+    .graph-container {
+      position: fixed;
+      bottom: 85px;
+      left: 18px;
+      width: 350px;
+      height: 350px;
+      background-color: var(--code-bg);
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+      padding: 15px;
+      z-index: 99;
+      display: none;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .graph-container.active {
+      display: block;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+  }
+
+   
+  @media (min-width: 1501px) {
+    .graph-fab {
+      display: none;  
+    }
+
+    .graph-container {
+      position: fixed;
+      top: 50%;
+      left: calc(((100% - 700px) / 2) / 2);  
+      transform: translateY(-50%) translateX(-50%);  
+      width: 350px;  
+      height: 350px;
+      background-color: var(--code-bg);
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+      padding: 15px;
+      z-index: 99;
+      display: block;  
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  }
+
+   
+  .graph-container svg {
+    display: block;
+    margin: 0 auto;
+    width: 100% !important;
+    height: calc(100% - 40px) !important;
+  }
+
+  .graph-container svg g {
+     
+     
+  }
+
+  .graph-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 0;
+    margin-bottom: 5px;
+    border-bottom: 1px solid rgba(125, 125, 125, 0.2);
+  }
+
+  .graph-title {
+    font-size: 14px;
+    color: var(--primary);
+    padding: 0 10px;
+    font-weight: 500;
+  }
+
+   
+  .zoom-instructions {
+    font-size: 12px;
+    font-style: italic;
+    opacity: 0.8;
+    font-weight: normal;
+    margin-left: 5px;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 400px) {
+    .graph-container {
+      width: calc(100% - 36px);
+    }
+  }
+</style>
+
+
+<div id="graph-container" class="graph-container">
+  <div class="graph-controls">
+    <div class="graph-title">
+      Topic Graph
+      <span class="zoom-instructions">(Use scroll wheel to zoom)</span>
+    </div>
+  </div>
+  <div class="component-graph-container" id="container-floating-graph">
+  <div class="component-graph" id="floating-graph"></div>
+</div>
+<style>
+  .component-graph-container {
+      position: relative;
+      width: 100%;
+      margin: 20px 0;
+      border-radius: 8px;
+  }
+
+  .component-graph {
+      width: 100%;
+        
+      aspect-ratio: 1;
+      border-radius: 16px;
+      background-color: var(--code-bg, #f5f5f5);
+      overflow: hidden;
+  }
+
+  .node-label {
+      font-size: 10px;
+      text-anchor: middle;
+      pointer-events: none;
+      font-family: sans-serif;
+      fill: #333;
+      user-select: none;
+      opacity: 0;  
+      transition: opacity 0.3s;
+  }
+
+  .node-label-background {
+      fill: rgba(255, 255, 255, 0.8);
+      rx: 3;
+      ry: 3;
+      pointer-events: none;
+      opacity: 0;  
+      transition: opacity 0.3s;
+  }
+
+  .tag-label {
+      font-size: 12px;
+      font-weight: bold;
+      text-anchor: middle;
+      pointer-events: none;
+      font-family: sans-serif;
+      fill: var(--primary);
+      user-select: none;
+  }
+
+  .node-tooltip {
+      position: absolute;
+      padding: 8px 12px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      border-radius: 4px;
+      font-size: 12px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 100;
+      max-width: 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+  }
+</style>
+<script>
+    (function () {
+      
+      let graphData = { nodes: [], links: [] };
+      let simulation;
+      let svg;
+      let g; 
+      let currentZoomScale = 1; 
+      const zoomThreshold = 1.5; 
+      const graphId = "floating-graph";
+      const jsonPath = "\/index.json";
+      const graphElement = document.getElementById(graphId);
+
+      
+      const colorPalette = [
+        "#f28e2c",
+        "#04ff00",
+        "#b342f5",
+        "#e6327a",
+        "#edc949",
+        "#76b7b2",
+        "#af7aa1",
+        "#9c755f",
+        "#bab0ab",
+        "#6b9ac4",
+        "#d7a763",
+        "#d37372",
+        "#a4ccc9",
+        "#8bb174",
+        "#f1d78c",
+      ];
+
+      
+      const tooltip = document.createElement("div");
+      tooltip.className = "node-tooltip";
+      document.getElementById(`container-${graphId}`).appendChild(tooltip);
+
+      
+      function initGraph() {
+        
+        const width = graphElement.clientWidth;
+        const height = graphElement.clientHeight;
+
+        
+        if (graphElement.querySelector("svg")) {
+          graphElement.querySelector("svg").remove();
+        }
+
+        
+        svg = d3
+          .select("#" + graphId)
+          .append("svg")
+          .attr("width", width)
+          .attr("height", height)
+          .attr("viewBox", `0 0 ${width} ${height}`);
+
+        
+        const zoom = d3
+          .zoom()
+          .scaleExtent([0.1, 10])
+          .on("zoom", (event) => {
+            g.attr("transform", event.transform);
+            currentZoomScale = event.transform.k;
+
+            
+            updateLabelsVisibility(currentZoomScale);
+
+            
+            if (simulation) {
+              adjustNodeSpacing(currentZoomScale);
+            }
+          });
+
+        svg.call(zoom);
+
+        
+        g = svg.append("g");
+
+        
+        const tagConnections = {};
+        graphData.nodes.forEach((node) => {
+          if (node.isTag) {
+            tagConnections[node.id] = 0;
+          }
+        });
+
+        graphData.links.forEach((link) => {
+          if (link.source.id) {
+            if (tagConnections[link.source.id] !== undefined) {
+              tagConnections[link.source.id]++;
+            }
+          } else if (tagConnections[link.source] !== undefined) {
+            tagConnections[link.source]++;
+          }
+        });
+
+        
+        graphData.nodes.forEach((node) => {
+          if (node.isTag) {
+            const connectionCount = tagConnections[node.id] || 1;
+            node.radius = Math.max(8, Math.min(14, 5 + connectionCount * 0.8));
+            node.connections = connectionCount;
+          } else {
+            node.radius = 5;
+          }
+        });
+
+        
+        simulation = d3
+          .forceSimulation(graphData.nodes)
+          .force(
+            "link",
+            d3
+              .forceLink(graphData.links)
+              .id((d) => d.id)
+              .distance((d) => {
+                
+                if (d.source.isTag) {
+                  return 80 + d.source.connections * 2;
+                }
+                return 50;
+              }),
+          )
+          .force(
+            "charge",
+            d3.forceManyBody().strength((d) => (d.isTag ? -300 : -50)),
+          )
+          .force("center", d3.forceCenter(width / 2, height / 2))
+          .force(
+            "collision",
+            d3.forceCollide().radius((d) => d.radius * 1.5),
+          )
+          .force("x", d3.forceX(width / 2).strength(0.1))
+          .force("y", d3.forceY(height / 2).strength(0.1));
+
+        
+        const link = g
+          .append("g")
+          .attr("class", "links")
+          .selectAll("line")
+          .data(graphData.links)
+          .enter()
+          .append("line")
+          .attr("stroke", "#888888") 
+          .attr("stroke-opacity", 0.6)
+          .attr("stroke-width", 1)
+          .attr("data-source", (d) => d.source.id || d.source)
+          .attr("data-target", (d) => d.target.id || d.target)
+          .style("transition", "opacity 0.3s, stroke 0.3s, stroke-width 0.3s"); 
+
+        
+        const nodeGroup = g
+          .append("g")
+          .attr("class", "nodes")
+          .selectAll("g")
+          .data(graphData.nodes)
+          .enter()
+          .append("g")
+          .attr("data-id", (d) => d.id)
+          .style("cursor", "pointer")
+          .call(drag(simulation))
+          .on("click", (event, d) => {
+            
+            handleNodeClick(d);
+
+            
+            if (!d.isTag && (d.link || d.permalink)) {
+              window.open(d.link || d.permalink, "_blank");
+            } else if (d.isTag) {
+                  
+                  const tagName = d.title.replace(/\s+/g, "-");
+                  const tagPermalink = 
+                    "http://localhost:1313/tags/" + tagName.toLowerCase()
+                  ;
+                  window.open(tagPermalink, "_blank");
+                }
+          })
+          .on("mouseover", (event, d) => {
+            
+            const tooltipText = d.isTag
+              ? `Tag: ${d.title} (${d.connections} posts)`
+              : d.title;
+            showTooltip(tooltipText, event.pageX, event.pageY);
+            highlightConnections(d);
+          })
+          .on("mousemove", (event) => {
+            
+            updateTooltipPosition(event.pageX, event.pageY);
+          })
+          .on("mouseout", () => {
+            
+            hideTooltip();
+            resetHighlighting();
+          });
+
+        
+        nodeGroup
+          .append("circle")
+          .attr("r", (d) => d.radius)
+          .attr("fill", (d) => {
+            if (d.isTag) {
+              return colorPalette[d.colorIndex];
+            }
+            return "#ffffff";
+          })
+          .attr("stroke", (d) => (d.isTag ? "#333333" : "#888888"))
+          .attr("stroke-width", (d) => (d.isTag ? 1.5 : 1))
+          .style("transition", "opacity 0.3s, fill 0.3s, stroke-width 0.3s");
+
+        
+        nodeGroup
+          .filter((d) => d.isTag)
+          .append("text")
+          .attr("class", "tag-label")
+          .attr("dy", (d) => d.radius + 12) 
+          .text((d) => d.title)
+          .style("opacity", 0.85)
+          .style("fill", (d) => {
+            
+            const color = d3.color(colorPalette[d.colorIndex]);
+          })
+          .each(function (d) {
+            d.hasTagLabel = true; 
+          });
+
+        
+        const labelGroups = nodeGroup
+          .filter((d) => !d.hasTagLabel) 
+          .append("g")
+          .attr("class", "label-group");
+
+        
+        labelGroups
+          .append("rect")
+          .attr("class", "node-label-background")
+          .attr("x", -40)
+          .attr("y", (d) => d.radius + 2)
+          .attr("width", 80) 
+          .attr("height", 16)
+          .style("opacity", 0);
+
+        
+        const labels = labelGroups
+          .append("text")
+          .attr("class", "node-label")
+          .attr("dy", (d) => d.radius + 14) 
+          .text((d) => d.title)
+          .style("opacity", 0); 
+
+        
+        labels.each(function () {
+          const bbox = this.getBBox();
+          const parent = d3.select(this.parentNode);
+          parent
+            .select("rect")
+            .attr("x", bbox.x - 2)
+            .attr("width", bbox.width + 4);
+        });
+
+        
+        function updateLabelsVisibility(scale) {
+          
+          nodeGroup
+            .selectAll(".node-label")
+            .style("opacity", scale >= zoomThreshold ? 1 : 0);
+          nodeGroup
+            .selectAll(".node-label-background")
+            .style("opacity", scale >= zoomThreshold ? 0.8 : 0);
+
+          
+          nodeGroup
+            .filter((d) => d.isTag)
+            .selectAll(".tag-label")
+            .style("opacity", 0.85);
+        }
+
+        
+        function adjustNodeSpacing(scale) {
+          
+          const zoomFactor = Math.max(0, (scale - 1) * 1.2);
+
+          
+          const collisionRadius = (d) => {
+            const baseRadius = d.radius * 1.5;
+            return baseRadius * (1 + zoomFactor);
+          };
+
+          
+          const linkDistance = (d) => {
+            const baseDistance = d.source.isTag
+              ? 80 + d.source.connections * 3
+              : 60;
+            return baseDistance * (1 + zoomFactor * 1.5);
+          };
+
+          
+          const chargeStrength = (d) => {
+            const baseCharge = d.isTag ? -300 : -50;
+            return baseCharge * (1 + zoomFactor);
+          };
+
+          
+          simulation
+            .force("collision", d3.forceCollide().radius(collisionRadius))
+            .force(
+              "link",
+              d3
+                .forceLink(graphData.links)
+                .id((d) => d.id)
+                .distance(linkDistance),
+            )
+            .force("charge", d3.forceManyBody().strength(chargeStrength))
+            .alpha(0.3) 
+            .restart();
+        }
+
+        
+        let isDragging = false;
+
+        
+        function handleNodeClick(d) {
+          
+          nodeGroup
+            .selectAll("circle")
+            .attr("fill", (n) => {
+              if (n.isTag) {
+                return colorPalette[n.colorIndex];
+              }
+              return "#ffffff";
+            })
+            .attr("stroke-width", (n) => (n.isTag ? 1.5 : 1));
+
+          link
+            .attr("stroke", "#888888")
+            .attr("stroke-width", 1)
+            .attr("stroke-opacity", 0.6);
+
+          
+          nodeGroup
+            .filter((n) => n.id === d.id)
+            .select("circle")
+            .attr("stroke-width", 2.5)
+            .attr("stroke", "#000000");
+
+          const connectedNodes = [];
+
+          if (d.isTag) {
+            
+            link.each(function (l) {
+              if (l.source.id === d.id || l.source === d.id) {
+                
+                d3.select(this)
+                  .attr("stroke", colorPalette[d.colorIndex])
+                  .attr("stroke-width", 2)
+                  .attr("stroke-opacity", 1);
+                connectedNodes.push(l.target.id || l.target);
+              }
+            });
+          } else {
+            
+            const connectedTagColors = {};
+
+            link.each(function (l) {
+              if (l.target.id === d.id || l.target === d.id) {
+                const sourceId = l.source.id || l.source;
+                const tagNode = graphData.nodes.find((n) => n.id === sourceId);
+                if (tagNode) {
+                  const tagColor = colorPalette[tagNode.colorIndex];
+                  connectedTagColors[sourceId] = tagColor;
+
+                  
+                  d3.select(this)
+                    .attr("stroke", tagColor)
+                    .attr("stroke-width", 2)
+                    .attr("stroke-opacity", 1);
+
+                  connectedNodes.push(sourceId);
+                }
+              }
+            });
+          }
+
+          
+          nodeGroup
+            .filter((n) => connectedNodes.includes(n.id))
+            .select("circle")
+            .attr("stroke-width", 2)
+            .attr("stroke", "#000000");
+        }
+
+        
+        function highlightConnections(d) {
+          if (isDragging) return; 
+
+          
+          nodeGroup.style("opacity", 0.4);
+          link.style("opacity", 0.1);
+
+          
+          nodeGroup.filter((n) => n.id === d.id).style("opacity", 1);
+
+          const connectedNodes = [];
+
+          if (d.isTag) {
+            
+            link.each(function (l) {
+              if (l.source.id === d.id || l.source === d.id) {
+                
+                d3.select(this)
+                  .style("opacity", 1)
+                  .attr("stroke", colorPalette[d.colorIndex])
+                  .attr("stroke-width", 1.5);
+                connectedNodes.push(l.target.id || l.target);
+              }
+            });
+          } else {
+            
+            link.each(function (l) {
+              if (l.target.id === d.id || l.target === d.id) {
+                const sourceId = l.source.id || l.source;
+                const tagNode = graphData.nodes.find((n) => n.id === sourceId);
+
+                if (tagNode) {
+                  
+                  d3.select(this)
+                    .style("opacity", 1)
+                    .attr("stroke", colorPalette[tagNode.colorIndex])
+                    .attr("stroke-width", 1.5);
+                  connectedNodes.push(sourceId);
+                }
+              }
+            });
+          }
+
+          
+          nodeGroup
+            .filter((n) => connectedNodes.includes(n.id))
+            .style("opacity", 1);
+        }
+
+        
+        function resetHighlighting() {
+          if (isDragging) return; 
+          nodeGroup.style("opacity", 1);
+          link
+            .style("opacity", 0.6)
+            .attr("stroke", "#888888")
+            .attr("stroke-width", 1);
+        }
+
+        
+        simulation.on("tick", () => {
+          link
+            .attr("x1", (d) => d.source.x)
+            .attr("y1", (d) => d.source.y)
+            .attr("x2", (d) => d.target.x)
+            .attr("y2", (d) => d.target.y);
+
+          nodeGroup.attr("transform", (d) => `translate(${d.x},${d.y})`);
+        });
+      }
+
+      
+      function showTooltip(text, x, y) {
+        tooltip.textContent = text;
+        tooltip.style.opacity = "1";
+        updateTooltipPosition(x, y);
+      }
+
+      function updateTooltipPosition(x, y) {
+        const rect = graphElement.getBoundingClientRect();
+        const offsetX = x - rect.left;
+        const offsetY = y - rect.top;
+
+        tooltip.style.left = `${offsetX + 15}px`;
+        tooltip.style.top = `${offsetY - 10}px`;
+      }
+
+      function hideTooltip() {
+        tooltip.style.opacity = "0";
+      }
+
+      
+      function drag(simulation) {
+        function dragstarted(event) {
+          if (!event.active) simulation.alphaTarget(0.3).restart();
+          event.subject.fx = event.subject.x;
+          event.subject.fy = event.subject.y;
+          isDragging = true;
+        }
+
+        function dragged(event) {
+          event.subject.fx = event.x;
+          event.subject.fy = event.y;
+        }
+
+        function dragended(event) {
+          if (!event.active) simulation.alphaTarget(0);
+          event.subject.fx = null;
+          event.subject.fy = null;
+          setTimeout(() => {
+            isDragging = false;
+          }, 100);
+        }
+
+        return d3
+          .drag()
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended);
+      }
+
+      
+      function processHugoData(data) {
+        const postNodes = data.map((post, index) => ({
+          id: "post-" + index,
+          title: post.title,
+          permalink: post.permalink,
+          link: post.link || post.permalink,
+          tags: post.tags || [],
+          isTag: false,
+        }));
+
+        
+        const allTags = new Set();
+        postNodes.forEach((post) => {
+          if (post.tags && post.tags.length > 0) {
+            post.tags.forEach((tag) => allTags.add(tag));
+          }
+        });
+
+        
+        const tagNodes = Array.from(allTags).map((tag) => ({
+          id: "tag-" + tag.replace(/\s+/g, "-").toLowerCase(),
+          title: tag,
+          isTag: true,
+          colorIndex: 0, 
+        }));
+
+        
+        const links = [];
+        postNodes.forEach((post) => {
+          if (post.tags && post.tags.length > 0) {
+            post.tags.forEach((tag) => {
+              const tagId = "tag-" + tag.replace(/\s+/g, "-").toLowerCase();
+              links.push({
+                source: tagId,
+                target: post.id,
+                value: 1,
+              });
+            });
+          }
+        });
+
+        
+        const tagAdjacencyMap = createTagAdjacencyMap(tagNodes, links);
+
+        
+        applyGraphColoring(tagNodes, tagAdjacencyMap);
+
+        
+        const nodes = [...tagNodes, ...postNodes];
+
+        return { nodes, links };
+      }
+
+      
+      function createTagAdjacencyMap(tagNodes, links) {
+        const tagIds = tagNodes.map((tag) => tag.id);
+        const adjacencyMap = {};
+
+        
+        tagIds.forEach((tagId) => {
+          adjacencyMap[tagId] = new Set();
+        });
+
+        
+        const postToTagsMap = {};
+
+        
+        links.forEach((link) => {
+          const sourceId = link.source.id || link.source;
+          const targetId = link.target.id || link.target;
+
+          
+          if (sourceId.startsWith("tag-") && !targetId.startsWith("tag-")) {
+            if (!postToTagsMap[targetId]) {
+              postToTagsMap[targetId] = [];
+            }
+            postToTagsMap[targetId].push(sourceId);
+          }
+        });
+
+        
+        Object.values(postToTagsMap).forEach((connectedTags) => {
+          if (connectedTags.length > 1) {
+            
+            for (let i = 0; i < connectedTags.length; i++) {
+              for (let j = 0; j < connectedTags.length; j++) {
+                if (i !== j) {
+                  adjacencyMap[connectedTags[i]].add(connectedTags[j]);
+                }
+              }
+            }
+          }
+        });
+
+        return adjacencyMap;
+      }
+
+      
+      function applyGraphColoring(tagNodes, adjacencyMap) {
+        
+        const sortedTags = [...tagNodes].sort((a, b) => {
+          const degreeA = adjacencyMap[a.id] ? adjacencyMap[a.id].size : 0;
+          const degreeB = adjacencyMap[b.id] ? adjacencyMap[b.id].size : 0;
+          return degreeB - degreeA; 
+        });
+
+        
+        sortedTags.forEach((tagNode) => {
+          const usedColors = new Set();
+
+          
+          if (adjacencyMap[tagNode.id]) {
+            adjacencyMap[tagNode.id].forEach((adjacentTagId) => {
+              
+              const adjacentTag = tagNodes.find((t) => t.id === adjacentTagId);
+              if (adjacentTag && adjacentTag.colorIndex !== undefined) {
+                usedColors.add(adjacentTag.colorIndex);
+              }
+            });
+          }
+
+          
+          let colorIndex = 0;
+          while (usedColors.has(colorIndex)) {
+            colorIndex++;
+          }
+          tagNode.colorIndex = colorIndex % colorPalette.length;
+        });
+      }
+
+      
+      function loadGraphData() {
+  const jsonPath = "\/index.json";
+  fetch(jsonPath)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            graphData = processHugoData(data);
+            initGraph();
+          })
+          .catch((error) => {
+            console.error("Error loading blog graph data:", error);
+            graphElement.innerHTML =
+              '<div style="padding: 20px; text-align: center;">Error loading blog graph data.</div>';
+          });
+      }
+
+      
+      window.addEventListener("resize", () => {
+        if (simulation) {
+          initGraph();
+        }
+      });
+
+      
+      function loadScript(url, callback) {
+        if (typeof d3 !== "undefined") {
+          callback();
+          return;
+        }
+
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = url;
+        script.onload = callback;
+        document.head.appendChild(script);
+      }
+
+      
+      loadScript(
+        "https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js",
+        loadGraphData,
+      );
+    })();
+</script>
+
+</div>
+
+<div id="graph-fab" class="graph-fab">
+  <img src="/images/graph_icon.png" alt="Graph" />
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const fab = document.getElementById("graph-fab");
+    const container = document.getElementById("graph-container");
+    let graphInitialized = false;
+    const isMobile = window.innerWidth <= 1500;
+
+    
+    if (!isMobile) {
+      setTimeout(function () {
+        window.dispatchEvent(new Event("resize"));
+        graphInitialized = true;
+      }, 500);
+    }
+
+    if (fab) {
+      fab.addEventListener("click", function () {
+        container.classList.toggle("active");
+
+        
+        if (!graphInitialized && container.classList.contains("active")) {
+          setTimeout(function () {
+            window.dispatchEvent(new Event("resize"));
+            graphInitialized = true;
+          }, 100);
+        }
+      });
+    }
+
+    
+    document.addEventListener("click", function (event) {
+      if (
+        isMobile &&
+        container &&
+        !container.contains(event.target) &&
+        fab &&
+        !fab.contains(event.target) &&
+        container.classList.contains("active")
+      ) {
+        container.classList.remove("active");
+      }
+    });
+  });
+</script>
+
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
