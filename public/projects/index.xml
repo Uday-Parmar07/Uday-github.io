@@ -1,1 +1,33 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Projects on Uday Parmar</title><link>https://uday-parmar07.github.io/Uday-github.io/projects/</link><description>Recent content in Projects on Uday Parmar</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 25 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://uday-parmar07.github.io/Uday-github.io/projects/index.xml" rel="self" type="application/rss+xml"/><item><title>AI Trip Planner</title><link>https://uday-parmar07.github.io/Uday-github.io/projects/ai_trip_planner/</link><pubDate>Wed, 25 Feb 2026 00:00:00 +0000</pubDate><guid>https://uday-parmar07.github.io/Uday-github.io/projects/ai_trip_planner/</guid><description>AI Trip Planner — repository and overview.</description></item><item><title>Papar Platform</title><link>https://uday-parmar07.github.io/Uday-github.io/projects/papar_platform/</link><pubDate>Wed, 25 Feb 2026 00:00:00 +0000</pubDate><guid>https://uday-parmar07.github.io/Uday-github.io/projects/papar_platform/</guid><description>A project: Papar Platform — repository and overview.</description></item><item><title>Shazam Algorithm</title><link>https://uday-parmar07.github.io/Uday-github.io/projects/shazam_algorithm/</link><pubDate>Wed, 25 Feb 2026 00:00:00 +0000</pubDate><guid>https://uday-parmar07.github.io/Uday-github.io/projects/shazam_algorithm/</guid><description>Shazam Algorithm implementation — repository and overview.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Projects on Uday Parmar</title>
+    <link>http://localhost:1313/Uday-github.io/projects/</link>
+    <description>Recent content in Projects on Uday Parmar</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 25 Feb 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/Uday-github.io/projects/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI Trip Planner</title>
+      <link>http://localhost:1313/Uday-github.io/projects/ai_trip_planner/</link>
+      <pubDate>Wed, 25 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/Uday-github.io/projects/ai_trip_planner/</guid>
+      <description>AI Trip Planner — repository and overview.</description>
+    </item>
+    <item>
+      <title>Papar Platform</title>
+      <link>http://localhost:1313/Uday-github.io/projects/papar_platform/</link>
+      <pubDate>Wed, 25 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/Uday-github.io/projects/papar_platform/</guid>
+      <description>A project: Papar Platform — repository and overview.</description>
+    </item>
+    <item>
+      <title>Shazam Algorithm</title>
+      <link>http://localhost:1313/Uday-github.io/projects/shazam_algorithm/</link>
+      <pubDate>Wed, 25 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/Uday-github.io/projects/shazam_algorithm/</guid>
+      <description>Shazam Algorithm implementation — repository and overview.</description>
+    </item>
+  </channel>
+</rss>

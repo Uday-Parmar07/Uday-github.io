@@ -1,88 +1,158 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Uday Parmar</title><link>https://uday-parmar07.github.io/Uday-github.io/</link><description>Recent content on Uday Parmar</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 25 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://uday-parmar07.github.io/Uday-github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Books</title><link>https://uday-parmar07.github.io/Uday-github.io/shelf/books/</link><pubDate>Sun, 31 Mar 2024 16:20:09 +0530</pubDate><guid>https://uday-parmar07.github.io/Uday-github.io/shelf/books/</guid><description>&lt;p&gt;Books that I read and enjoyed.&lt;/p&gt;
-&lt;h2 id="tech"&gt;Tech&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Uday Parmar</title>
+    <link>http://localhost:1313/Uday-github.io/</link>
+    <description>Recent content on Uday Parmar</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 25 Feb 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/Uday-github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Books</title>
+      <link>http://localhost:1313/Uday-github.io/shelf/books/</link>
+      <pubDate>Sun, 31 Mar 2024 16:20:09 +0530</pubDate>
+      <guid>http://localhost:1313/Uday-github.io/shelf/books/</guid>
+      <description>&lt;p&gt;Books that I read and enjoyed.&lt;/p&gt;
+&lt;h2 id=&#34;tech&#34;&gt;Tech&lt;/h2&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;a href="https://www.gopl.io/"&gt;The Go programming language&lt;/a&gt; by Alan A. A. Donovan&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.oreilly.com/library/view/http-the-definitive/1565925092/"&gt;HTTP The definitive guide&lt;/a&gt; by David Gourley and Brian Totty&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://quii.gitbook.io/learn-go-with-tests"&gt;Learn go with tests&lt;/a&gt; by Chris James&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/"&gt;Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow&lt;/a&gt; by Aurélien Géron&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.manning.com/books/deep-learning-with-pytorch"&gt;Deep Learning with PyTorch&lt;/a&gt; by Eli Stevens, Luca Antiga, and Thomas Viehmann&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://pragprog.com/titles/dnvim2/practical-vim-second-edition/"&gt;Practical Vim&lt;/a&gt; by Drew Neil&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.oreilly.com/library/view/rest-api-design/9781449317904/"&gt;REST-API Design Rulebook&lt;/a&gt; by Mark Massé&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.gopl.io/&#34;&gt;The Go programming language&lt;/a&gt; by Alan A. A. Donovan&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.oreilly.com/library/view/http-the-definitive/1565925092/&#34;&gt;HTTP The definitive guide&lt;/a&gt; by David Gourley and Brian Totty&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://quii.gitbook.io/learn-go-with-tests&#34;&gt;Learn go with tests&lt;/a&gt; by Chris James&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/&#34;&gt;Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow&lt;/a&gt; by Aurélien Géron&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.manning.com/books/deep-learning-with-pytorch&#34;&gt;Deep Learning with PyTorch&lt;/a&gt; by Eli Stevens, Luca Antiga, and Thomas Viehmann&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://pragprog.com/titles/dnvim2/practical-vim-second-edition/&#34;&gt;Practical Vim&lt;/a&gt; by Drew Neil&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.oreilly.com/library/view/rest-api-design/9781449317904/&#34;&gt;REST-API Design Rulebook&lt;/a&gt; by Mark Massé&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id="fiction"&gt;Fiction&lt;/h2&gt;
+&lt;h2 id=&#34;fiction&#34;&gt;Fiction&lt;/h2&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;a href="https://www.goodreads.com/book/show/61439040-1984"&gt;1984&lt;/a&gt; by George Orwell&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.goodreads.com/book/show/1428.By_the_River_Piedra_I_Sat_Down_and_Wept"&gt;By the River Piedra I sat down and wept&lt;/a&gt; by Paulo Coelho&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.goodreads.com/book/show/170448.Animal_Farm"&gt;Animal Farm&lt;/a&gt; By George Orwell&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Forerunner_Saga"&gt;Halo The Forerunner Saga series&lt;/a&gt; by Greg Bear&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.goodreads.com/book/show/61439040-1984&#34;&gt;1984&lt;/a&gt; by George Orwell&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.goodreads.com/book/show/1428.By_the_River_Piedra_I_Sat_Down_and_Wept&#34;&gt;By the River Piedra I sat down and wept&lt;/a&gt; by Paulo Coelho&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.goodreads.com/book/show/170448.Animal_Farm&#34;&gt;Animal Farm&lt;/a&gt; By George Orwell&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Forerunner_Saga&#34;&gt;Halo The Forerunner Saga series&lt;/a&gt; by Greg Bear&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id="non-fiction"&gt;Non-fiction&lt;/h2&gt;
+&lt;h2 id=&#34;non-fiction&#34;&gt;Non-fiction&lt;/h2&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;a href="https://www.goodreads.com/en/book/show/18290401"&gt;Show Your Work&lt;/a&gt; by Austin Kleon&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.goodreads.com/book/show/6900.Tuesdays_with_Morrie"&gt;Tuesdays with Morrie&lt;/a&gt; By Mitch Albom&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.goodreads.com/book/show/38315.Fooled_by_Randomness"&gt;Fooled by Randomness&lt;/a&gt; by Nassim Nicholas Taleb&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.goodreads.com/book/show/10534.The_Art_of_War"&gt;The Art of War&lt;/a&gt; by Sun Tzu&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.goodreads.com/book/show/41881472-the-psychology-of-money"&gt;The Psychology of Money&lt;/a&gt; by Morgan Housel&lt;/li&gt;
-&lt;/ol&gt;</description></item><item><title>Articles</title><link>https://uday-parmar07.github.io/Uday-github.io/shelf/articles/</link><pubDate>Sun, 31 Mar 2024 16:20:20 +0530</pubDate><guid>https://uday-parmar07.github.io/Uday-github.io/shelf/articles/</guid><description>&lt;p&gt;Some of the great articles I read and enjoyed.&lt;/p&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.goodreads.com/en/book/show/18290401&#34;&gt;Show Your Work&lt;/a&gt; by Austin Kleon&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.goodreads.com/book/show/6900.Tuesdays_with_Morrie&#34;&gt;Tuesdays with Morrie&lt;/a&gt; By Mitch Albom&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.goodreads.com/book/show/38315.Fooled_by_Randomness&#34;&gt;Fooled by Randomness&lt;/a&gt; by Nassim Nicholas Taleb&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.goodreads.com/book/show/10534.The_Art_of_War&#34;&gt;The Art of War&lt;/a&gt; by Sun Tzu&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.goodreads.com/book/show/41881472-the-psychology-of-money&#34;&gt;The Psychology of Money&lt;/a&gt; by Morgan Housel&lt;/li&gt;
+&lt;/ol&gt;</description>
+    </item>
+    <item>
+      <title>Articles</title>
+      <link>http://localhost:1313/Uday-github.io/shelf/articles/</link>
+      <pubDate>Sun, 31 Mar 2024 16:20:20 +0530</pubDate>
+      <guid>http://localhost:1313/Uday-github.io/shelf/articles/</guid>
+      <description>&lt;p&gt;Some of the great articles I read and enjoyed.&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;a href="https://nowherethis.svs.io/2023/10/05/the-invitation"&gt;The Invitation&lt;/a&gt; by svs&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://paulgraham.com/noob.html"&gt;Being a Noob&lt;/a&gt; by Paul Graham&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://adityatelange.in/blog/papermod-went-viral/"&gt;My GitHub Project went viral&lt;/a&gt; by Aditya Lenge&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://arpitbhayani.me/blogs/keep-yourself-unblocked"&gt;How to keep yourself unblocked&lt;/a&gt; by Arpit Bhayani&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://commandcenter.blogspot.com/2024/01/what-we-got-right-what-we-got-wrong.html"&gt;What we got right, What we got wrong&lt;/a&gt; by Rob Pike&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.bytesizego.com/blog/one-billion-row-challenge-go"&gt;One Billion Rows Challenge in golang&lt;/a&gt; by Shraddha Agrawal&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://lelouch.dev/blog/you-are-probably-not-dumb/"&gt;You are not dumb, you just lack prerequisites&lt;/a&gt; by &lt;a href="https://x.com/lelouchdaily"&gt;lelouch&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://medium.com/@anferneeck/the-red-car-theory-steering-your-way-to-unseen-opportunities-a45dd1f10cf3"&gt;The Red Car Theory&lt;/a&gt; by &lt;a href="https://medium.com/@anferneeck"&gt;Anfernee&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</description></item><item><title>AI Trip Planner</title><link>https://uday-parmar07.github.io/Uday-github.io/projects/ai_trip_planner/</link><pubDate>Wed, 25 Feb 2026 00:00:00 +0000</pubDate><guid>https://uday-parmar07.github.io/Uday-github.io/projects/ai_trip_planner/</guid><description>AI Trip Planner — repository and overview.</description></item><item><title>Papar Platform</title><link>https://uday-parmar07.github.io/Uday-github.io/projects/papar_platform/</link><pubDate>Wed, 25 Feb 2026 00:00:00 +0000</pubDate><guid>https://uday-parmar07.github.io/Uday-github.io/projects/papar_platform/</guid><description>A project: Papar Platform — repository and overview.</description></item><item><title>Shazam Algorithm</title><link>https://uday-parmar07.github.io/Uday-github.io/projects/shazam_algorithm/</link><pubDate>Wed, 25 Feb 2026 00:00:00 +0000</pubDate><guid>https://uday-parmar07.github.io/Uday-github.io/projects/shazam_algorithm/</guid><description>Shazam Algorithm implementation — repository and overview.</description></item><item><title>Papers</title><link>https://uday-parmar07.github.io/Uday-github.io/shelf/papers/</link><pubDate>Sun, 31 Mar 2024 16:20:40 +0530</pubDate><guid>https://uday-parmar07.github.io/Uday-github.io/shelf/papers/</guid><description>&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://nowherethis.svs.io/2023/10/05/the-invitation&#34;&gt;The Invitation&lt;/a&gt; by svs&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://paulgraham.com/noob.html&#34;&gt;Being a Noob&lt;/a&gt; by Paul Graham&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://adityatelange.in/blog/papermod-went-viral/&#34;&gt;My GitHub Project went viral&lt;/a&gt; by Aditya Lenge&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://arpitbhayani.me/blogs/keep-yourself-unblocked&#34;&gt;How to keep yourself unblocked&lt;/a&gt; by Arpit Bhayani&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://commandcenter.blogspot.com/2024/01/what-we-got-right-what-we-got-wrong.html&#34;&gt;What we got right, What we got wrong&lt;/a&gt; by Rob Pike&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.bytesizego.com/blog/one-billion-row-challenge-go&#34;&gt;One Billion Rows Challenge in golang&lt;/a&gt; by Shraddha Agrawal&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://lelouch.dev/blog/you-are-probably-not-dumb/&#34;&gt;You are not dumb, you just lack prerequisites&lt;/a&gt; by &lt;a href=&#34;https://x.com/lelouchdaily&#34;&gt;lelouch&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://medium.com/@anferneeck/the-red-car-theory-steering-your-way-to-unseen-opportunities-a45dd1f10cf3&#34;&gt;The Red Car Theory&lt;/a&gt; by &lt;a href=&#34;https://medium.com/@anferneeck&#34;&gt;Anfernee&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</description>
+    </item>
+    <item>
+      <title>AI Trip Planner</title>
+      <link>http://localhost:1313/Uday-github.io/projects/ai_trip_planner/</link>
+      <pubDate>Wed, 25 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/Uday-github.io/projects/ai_trip_planner/</guid>
+      <description>AI Trip Planner — repository and overview.</description>
+    </item>
+    <item>
+      <title>Papar Platform</title>
+      <link>http://localhost:1313/Uday-github.io/projects/papar_platform/</link>
+      <pubDate>Wed, 25 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/Uday-github.io/projects/papar_platform/</guid>
+      <description>A project: Papar Platform — repository and overview.</description>
+    </item>
+    <item>
+      <title>Shazam Algorithm</title>
+      <link>http://localhost:1313/Uday-github.io/projects/shazam_algorithm/</link>
+      <pubDate>Wed, 25 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/Uday-github.io/projects/shazam_algorithm/</guid>
+      <description>Shazam Algorithm implementation — repository and overview.</description>
+    </item>
+    <item>
+      <title>Papers</title>
+      <link>http://localhost:1313/Uday-github.io/shelf/papers/</link>
+      <pubDate>Sun, 31 Mar 2024 16:20:40 +0530</pubDate>
+      <guid>http://localhost:1313/Uday-github.io/shelf/papers/</guid>
+      <description>&lt;ol&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;a href="https://arxiv.org/pdf/1706.03762.pdf"&gt;Attention is all you need&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://arxiv.org/pdf/1706.03762.pdf&#34;&gt;Attention is all you need&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;a href="https://arxiv.org/pdf/2302.03735.pdf"&gt;Pre-train, Prompt and Recommendation: A Comprehensive Survey of Language Modelling Paradigm Adaptations in Recommender Systems&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://arxiv.org/pdf/2302.03735.pdf&#34;&gt;Pre-train, Prompt and Recommendation: A Comprehensive Survey of Language Modelling Paradigm Adaptations in Recommender Systems&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;a href="https://static.googleusercontent.com/media/research.google.com/en//archive/mapreduce-osdi04.pdf"&gt;MapReduce: Simplified Data Processing on Large clusters&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://static.googleusercontent.com/media/research.google.com/en//archive/mapreduce-osdi04.pdf&#34;&gt;MapReduce: Simplified Data Processing on Large clusters&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Implementation: archived blog post (see /archive/old_posts/implementing-mapreduce-in-golang/)&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;a href="https://dl.acm.org/doi/pdf/10.1145/2408776.2408794"&gt;The Tail at Scale&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://dl.acm.org/doi/pdf/10.1145/2408776.2408794&#34;&gt;The Tail at Scale&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Implementation: archived blog post (see /archive/old_posts/implementing-tail-at-scale-in-golang/)&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ol&gt;</description></item><item><title/><link>https://uday-parmar07.github.io/Uday-github.io/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://uday-parmar07.github.io/Uday-github.io/about/</guid><description>&lt;h1 id="hahahugoshortcode4s0hbhb"&gt;&lt;div class="terminal-prompt"&gt;
-&lt;code&gt;[~]$ whoami &lt;span class="cursor"&gt;&lt;/span&gt;&lt;/code&gt;
+&lt;/ol&gt;</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/Uday-github.io/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/Uday-github.io/about/</guid>
+      <description>&lt;h1 id=&#34;hahahugoshortcode50s0hbhb&#34;&gt;&lt;div class=&#34;terminal-prompt&#34;&gt;
+  &lt;code&gt;[~]$ whoami &lt;span class=&#34;cursor&#34;&gt;&lt;/span&gt;&lt;/code&gt;
 &lt;/div&gt;
+
 &lt;style&gt;
-.terminal-prompt code {
-color: #f8f8f8;
-font-family: monospace;
-background: transparent;
-font-size: 1em;
-}
-.cursor {
-display: inline-block;
-width: 0.3em;
-height: 0.75em;
-margin-left: 2px;
-background-color: #f8f8f8;
-vertical-align: middle;
-animation: blink 1s step-start infinite;
-}
-@keyframes blink {
-50% {
-opacity: 0;
-}
-}
+  .terminal-prompt code {
+    color: #f8f8f8;
+    font-family: monospace;
+    background: transparent;
+    font-size: 1em;
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 0.3em;
+    height: 0.75em;
+    margin-left: 2px;
+    background-color: #f8f8f8;
+    vertical-align: middle;
+    animation: blink 1s step-start infinite;
+  }
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
 &lt;/style&gt;
 &lt;/h1&gt;
 &lt;p&gt;Hi, I&amp;rsquo;m &lt;strong&gt;Uday&lt;/strong&gt; 👋&lt;/p&gt;
 &lt;p&gt;Welcome — this site is where I share projects, technical notes, and experiments.&lt;/p&gt;
-&lt;p&gt;You can explore archived posts on the &lt;a href="https://uday-parmar07.github.io/Uday-github.io/archive/"&gt;Archive&lt;/a&gt; page.&lt;/p&gt;
+&lt;p&gt;You can explore archived posts on the &lt;a href=&#34;http://localhost:1313/Uday-github.io/archive/&#34;&gt;Archive&lt;/a&gt; page.&lt;/p&gt;
 &lt;p&gt;If you&amp;rsquo;re looking for something specific, try the&lt;br&gt;
-&lt;a href="https://uday-parmar07.github.io/Uday-github.io/search/"&gt;Search&lt;/a&gt; or browse by &lt;a href="https://uday-parmar07.github.io/Uday-github.io/tags/"&gt;Tags&lt;/a&gt;.&lt;/p&gt;</description></item><item><title/><link>https://uday-parmar07.github.io/Uday-github.io/donate/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://uday-parmar07.github.io/Uday-github.io/donate/</guid><description>&lt;h2 id="support-my-work"&gt;Support my work&lt;/h2&gt;
+&lt;a href=&#34;http://localhost:1313/Uday-github.io/search/&#34;&gt;Search&lt;/a&gt; or browse by &lt;a href=&#34;http://localhost:1313/Uday-github.io/tags/&#34;&gt;Tags&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/Uday-github.io/donate/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/Uday-github.io/donate/</guid>
+      <description>&lt;h2 id=&#34;support-my-work&#34;&gt;Support my work&lt;/h2&gt;
 &lt;p&gt;If you&amp;rsquo;d like to support what I build and write, here are direct links you can edit with your details:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;UPI: 9179262906-2@ybl&lt;/li&gt;
 &lt;li&gt;PayPal: @UdayParmar628&lt;/li&gt;
-&lt;li&gt;Buy Me a Coffee: &lt;a href="https://buymeacoffee.com/udayparmar6845"&gt;https://buymeacoffee.com/udayparmar6845&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Buy Me a Coffee: &lt;a href=&#34;https://buymeacoffee.com/udayparmar6845&#34;&gt;https://buymeacoffee.com/udayparmar6845&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Want another option? Email me: &lt;a href="mailto:udayparmar21014002@gmail.com"&gt;udayparmar21014002@gmail.com&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;Want another option? Email me: &lt;a href=&#34;mailto:udayparmar21014002@gmail.com&#34;&gt;udayparmar21014002@gmail.com&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
