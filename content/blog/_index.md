@@ -7,9 +7,8 @@ Hi — I'm Uday.
 
 This section is where I'll publish the things I care about. Expect the following:
 
-- Technical deep-dives and tutorials (Go, systems, and backend engineering)
+- Technical deep-dives and tutorials (Java, systems, and backend engineering)
 - Machine learning notes and practical experiments
-- Tooling and workflow tips (vim, tmux, fzf, productivity)
 - Project writeups and code walkthroughs
 - Short essays on software engineering and learning
 
@@ -23,9 +22,8 @@ Hi — I'm Uday.
 
 This section is where I'll publish the things I care about. Expect the following:
 
-- Technical deep-dives and tutorials (Go, systems, and backend engineering)
+- Technical deep-dives and tutorials (Java, systems, and backend engineering)
 - Machine learning notes and practical experiments
-- Tooling and workflow tips (vim, tmux, fzf, productivity)
 - Project writeups and code walkthroughs
 - Short essays on software engineering and learning
 
