@@ -1,19 +1,10 @@
 ---
 title: "AI Trip Planner"
-date: 2026-02-25
-description: "AI Trip Planner — repository and overview."
+date: 2026-01-17
+description: "AI Trip Planner - Overview"
 tags: [projects, ai]
 ---
 
-+++
-title = "How I Built an AI Trip Planner That Plans Trips in Seconds"
-date = 2026-02-27
-draft = false
-description = "Building an AI Trip Planner that creates personalized travel itineraries in seconds."
-tags = ["AI", "Machine Learning", "Web Development", "Projects"]
-categories = ["Projects"]
-showReadingTime = true
-+++
 
 # How I Built an AI Trip Planner That Plans Trips in Seconds
 
