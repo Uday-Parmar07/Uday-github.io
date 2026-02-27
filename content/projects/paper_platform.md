@@ -1,7 +1,7 @@
 ---
 title: "Papar Platform"
 date: 2026-02-25
-description: "A project: Papar Platform — repository and overview."
+description: "A project: Paper Platform — repository and overview."
 tags: [projects, Java]
 ---
 

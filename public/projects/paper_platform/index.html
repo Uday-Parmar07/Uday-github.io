@@ -5,11 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
-<title>AI Trip Planner | Uday Parmar</title>
-<meta name="keywords" content="projects, ai">
-<meta name="description" content="AI Trip Planner - Overview">
+<title>Papar Platform | Uday Parmar</title>
+<meta name="keywords" content="projects, Java">
+<meta name="description" content="A project: Paper Platform — repository and overview.">
 <meta name="author" content="map[name:Uday]">
-<link rel="canonical" href="http://localhost:1313/Uday-github.io/projects/ai_trip_planner/">
+<link rel="canonical" href="http://localhost:1313/Uday-github.io/projects/paper_platform/">
 <link crossorigin="anonymous" href="/Uday-github.io/assets/css/stylesheet.015c4587a8404659dcb6d20b70be88428b17aaa8d09f88fa3a681f504b4b49b5.css" integrity="sha256-AVxFh6hARlncttILcL6IQosXqqjQn4j6OmgfUEtLSbU=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/Uday-github.io/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/Uday-github.io/favicon-16x16.png">
@@ -18,7 +18,7 @@
 <link rel="mask-icon" href="http://localhost:1313/Uday-github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://localhost:1313/Uday-github.io/projects/ai_trip_planner/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/Uday-github.io/projects/paper_platform/">
 <noscript>
     <style>
         #theme-toggle,
@@ -86,112 +86,31 @@
     <header class="post-header">
         
         <h1 class="post-title entry-hint-parent">
-            AI Trip Planner
+            Papar Platform
         </h1>
-        <div class="post-description">AI Trip Planner - Overview</div>
-        <div class="post-meta"><span title='2026-01-17 00:00:00 +0000 UTC'>January 17, 2026</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;map[name:Uday]
+        <div class="post-description">A project: Paper Platform — repository and overview.</div>
+        <div class="post-meta"><span title='2026-02-25 00:00:00 +0000 UTC'>February 25, 2026</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;map[name:Uday]
 
 </div>
     </header> 
-    <div class="post-content"><h1 id="how-i-built-an-ai-trip-planner-that-plans-trips-in-seconds">How I Built an AI Trip Planner That Plans Trips in Seconds<a hidden class="anchor" aria-hidden="true" href="#how-i-built-an-ai-trip-planner-that-plans-trips-in-seconds">#</a></h1>
-<p>Planning a trip sounds fun — until you actually start doing it.</p>
-<p>You open multiple tabs, search for places to visit, calculate budgets, check distances, and try to fit everything into a schedule. What starts as excitement often turns into hours of research.</p>
-<p>I faced the same problem while planning a trip and thought:</p>
-<p><strong>What if a system could plan the entire trip automatically?</strong></p>
-<p>That idea led me to build my <strong>AI Trip Planner</strong> — a simple web application that creates personalized travel plans in seconds.</p>
-<p>Instead of manually searching for everything, the system generates a complete trip plan based on a few inputs.</p>
-<hr>
-<h2 id="the-idea">The Idea<a hidden class="anchor" aria-hidden="true" href="#the-idea">#</a></h2>
-<p>Most travel websites give you <strong>information</strong>, but they don&rsquo;t really <strong>plan a trip for you</strong>.</p>
-<p>You still need to:</p>
+    <div class="post-content"><h2 id="exam-platform--rethinking-the-way-we-practice">Exam Platform – Rethinking the Way We Practice<a hidden class="anchor" aria-hidden="true" href="#exam-platform--rethinking-the-way-we-practice">#</a></h2>
+<p>While preparing for exams, I realized something important — it’s not about solving more questions, it’s about solving the <em>right</em> questions in the right order.</p>
+<p>The Exam Platform is a project born out of my own preparation journey. I often found myself spending too much time searching for quality problems instead of actually practicing them. Questions were either too easy, randomly arranged, or not aligned with exam-level difficulty.</p>
+<p>So I decided to build a system that organizes preparation in a structured and meaningful way.</p>
+<p>This platform focuses on:</p>
 <ul>
-<li>Decide where to go</li>
-<li>Choose attractions</li>
-<li>Plan each day</li>
-<li>Estimate costs</li>
-<li>Organize everything</li>
+<li>Topic-wise structured question sets</li>
+<li>Gradual increase in difficulty</li>
+<li>A balanced mix of conceptual and numerical problems</li>
+<li>Logical ranking of questions based on importance</li>
 </ul>
-<p>I wanted to build something that could do this automatically.</p>
-<p>The goal was simple:</p>
-<blockquote>
-<p>Enter a few details → Get a complete travel plan.</p>
-</blockquote>
-<hr>
-<h2 id="how-it-works">How It Works<a hidden class="anchor" aria-hidden="true" href="#how-it-works">#</a></h2>
-<p>The trip planner asks for a few basic details:</p>
-<ul>
-<li>Destination</li>
-<li>Number of days</li>
-<li>Budget</li>
-<li>Travel preferences</li>
-</ul>
-<p>Once the user enters this information, the system generates a <strong>day-by-day travel plan</strong>.</p>
-<p>For example, instead of showing a long list of places, the planner organizes them like this:</p>
-<p><strong>Day 1</strong></p>
-<ul>
-<li>Arrival and hotel check-in</li>
-<li>Local sightseeing</li>
-<li>Recommended food spots</li>
-</ul>
-<p><strong>Day 2</strong></p>
-<ul>
-<li>Popular attractions</li>
-<li>Activities</li>
-<li>Evening exploration</li>
-</ul>
-<p>This makes the trip easier to visualize and follow.</p>
-<hr>
-<h2 id="why-i-built-this-project">Why I Built This Project<a hidden class="anchor" aria-hidden="true" href="#why-i-built-this-project">#</a></h2>
-<p>I enjoy building projects that solve real problems, and travel planning is something almost everyone struggles with.</p>
-<p>This project was also a way for me to explore how <strong>Artificial Intelligence can be used in everyday life</strong>, not just in research or complex systems.</p>
-<p>Instead of building something complicated, I wanted to create a tool that is:</p>
-<ul>
-<li>Useful</li>
-<li>Simple</li>
-<li>Fast</li>
-<li>Easy to use</li>
-</ul>
-<hr>
-<h2 id="challenges-i-faced">Challenges I Faced<a hidden class="anchor" aria-hidden="true" href="#challenges-i-faced">#</a></h2>
-<p>One of the biggest challenges was making the plans <strong>feel realistic</strong>.</p>
-<p>It is easy to generate random suggestions, but a good travel plan needs:</p>
-<ul>
-<li>Logical scheduling</li>
-<li>Balanced activities</li>
-<li>Practical timing</li>
-</ul>
-<p>I spent time improving the logic so the plans would actually make sense for a real trip.</p>
-<p>Another challenge was keeping the system simple while still making it intelligent.</p>
-<p>I didn&rsquo;t want users to feel overwhelmed. The idea was that anyone should be able to use it without instructions.</p>
-<hr>
-<h2 id="what-i-learned">What I Learned<a hidden class="anchor" aria-hidden="true" href="#what-i-learned">#</a></h2>
-<p>This project taught me a lot about building complete applications from scratch.</p>
-<p>More importantly, it showed me how technology can solve small everyday problems in meaningful ways.</p>
-<p>I learned how to:</p>
-<ul>
-<li>Turn an idea into a working product</li>
-<li>Design simple and clean interfaces</li>
-<li>Build intelligent features without making things complicated</li>
-<li>Think from a user&rsquo;s perspective</li>
-</ul>
-<hr>
-<h2 id="what-i-want-to-add-next">What I Want to Add Next<a hidden class="anchor" aria-hidden="true" href="#what-i-want-to-add-next">#</a></h2>
-<p>This project is still evolving, and there are many improvements I want to make.</p>
-<p>Some ideas include:</p>
-<ul>
-<li>Real-time hotel and flight suggestions</li>
-<li>Map integration</li>
-<li>Weather-based planning</li>
-<li>Saving trip plans</li>
-<li>Smarter recommendations</li>
-</ul>
-<p>I also want to make the planner more personalized over time.</p>
-<hr>
-<h2 id="final-thoughts">Final Thoughts<a hidden class="anchor" aria-hidden="true" href="#final-thoughts">#</a></h2>
-<p>The AI Trip Planner started as a small idea — just a way to make travel planning easier.</p>
-<p>But it turned into one of my favorite projects because it combines <strong>problem-solving, creativity, and technology</strong>.</p>
-<p>Instead of spending hours planning a trip, you can now generate a structured plan in seconds.</p>
-<p>And that is exactly what I wanted to build — <strong>something simple, useful, and intelligent.</strong></p>
+<p>Instead of overwhelming students with a large collection of random problems, the goal is to guide them step by step — strengthening fundamentals first, then moving toward advanced and exam-level questions.</p>
+<p>The idea behind the platform is simple:</p>
+<p>Practice should feel focused, not chaotic.</p>
+<p>By arranging questions thoughtfully and ranking them properly, preparation becomes more efficient and less stressful. You know what to solve first, what to focus on next, and how to steadily improve.</p>
+<p>In the long run, I want this platform to grow into something that can adapt to individual preparation styles — helping students identify weak areas and practice smarter.</p>
+<p>This project reflects a simple belief: good preparation is structured preparation.</p>
+<p>And in many ways, I’m building the tool I wish I had when I started.</p>
 
 
     </div>
@@ -201,19 +120,19 @@
                 <a href="http://localhost:1313/Uday-github.io/tags/projects/">Projects</a>
             </li>
             <li>
-                <a href="http://localhost:1313/Uday-github.io/tags/ai/">Ai</a>
+                <a href="http://localhost:1313/Uday-github.io/tags/java/">Java</a>
             </li>
         </ul>
 <nav class="paginav">
-  <a class="prev" href="http://localhost:1313/Uday-github.io/projects/paper_platform/">
+  <a class="prev" href="http://localhost:1313/Uday-github.io/shelf/articles/">
     <span class="title">« Prev</span>
     <br>
-    <span>Papar Platform</span>
+    <span>Articles</span>
   </a>
-  <a class="next" href="http://localhost:1313/Uday-github.io/projects/shazam_algorithm/">
+  <a class="next" href="http://localhost:1313/Uday-github.io/projects/ai_trip_planner/">
     <span class="title">Next »</span>
     <br>
-    <span>Shazam Algorithm</span>
+    <span>AI Trip Planner</span>
   </a>
 </nav>
 
@@ -222,8 +141,8 @@
     <li>
         <a target="_blank"
            rel="noopener noreferrer"
-           aria-label="share AI Trip Planner on x"
-           href="https://x.com/intent/tweet/?text=AI%20Trip%20Planner&amp;url=http%3a%2f%2flocalhost%3a1313%2fUday-github.io%2fprojects%2fai_trip_planner%2f&amp;hashtags=projects%2cai">
+           aria-label="share Papar Platform on x"
+           href="https://x.com/intent/tweet/?text=Papar%20Platform&amp;url=http%3a%2f%2flocalhost%3a1313%2fUday-github.io%2fprojects%2fpaper_platform%2f&amp;hashtags=projects%2cJava">
             <svg version="1.1"
                  viewBox="0 0 512 512"
                  xml:space="preserve"
@@ -237,8 +156,8 @@
     <li>
         <a target="_blank"
            rel="noopener noreferrer"
-           aria-label="share AI Trip Planner on linkedin"
-           href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2flocalhost%3a1313%2fUday-github.io%2fprojects%2fai_trip_planner%2f&amp;title=AI%20Trip%20Planner&amp;summary=AI%20Trip%20Planner&amp;source=http%3a%2f%2flocalhost%3a1313%2fUday-github.io%2fprojects%2fai_trip_planner%2f">
+           aria-label="share Papar Platform on linkedin"
+           href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2flocalhost%3a1313%2fUday-github.io%2fprojects%2fpaper_platform%2f&amp;title=Papar%20Platform&amp;summary=Papar%20Platform&amp;source=http%3a%2f%2flocalhost%3a1313%2fUday-github.io%2fprojects%2fpaper_platform%2f">
             <svg version="1.1"
                  viewBox="0 0 512 512"
                  xml:space="preserve"
@@ -252,8 +171,8 @@
     <li>
         <a target="_blank"
            rel="noopener noreferrer"
-           aria-label="share AI Trip Planner on reddit"
-           href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fUday-github.io%2fprojects%2fai_trip_planner%2f&title=AI%20Trip%20Planner">
+           aria-label="share Papar Platform on reddit"
+           href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fUday-github.io%2fprojects%2fpaper_platform%2f&title=Papar%20Platform">
             <svg version="1.1"
                  viewBox="0 0 512 512"
                  xml:space="preserve"
@@ -267,8 +186,8 @@
     <li>
         <a target="_blank"
            rel="noopener noreferrer"
-           aria-label="share AI Trip Planner on facebook"
-           href="https://facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fUday-github.io%2fprojects%2fai_trip_planner%2f">
+           aria-label="share Papar Platform on facebook"
+           href="https://facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fUday-github.io%2fprojects%2fpaper_platform%2f">
             <svg version="1.1"
                  viewBox="0 0 512 512"
                  xml:space="preserve"
@@ -282,8 +201,8 @@
     <li>
         <a target="_blank"
            rel="noopener noreferrer"
-           aria-label="share AI Trip Planner on whatsapp"
-           href="https://api.whatsapp.com/send?text=AI%20Trip%20Planner%20-%20http%3a%2f%2flocalhost%3a1313%2fUday-github.io%2fprojects%2fai_trip_planner%2f">
+           aria-label="share Papar Platform on whatsapp"
+           href="https://api.whatsapp.com/send?text=Papar%20Platform%20-%20http%3a%2f%2flocalhost%3a1313%2fUday-github.io%2fprojects%2fpaper_platform%2f">
             <svg version="1.1"
                  viewBox="0 0 512 512"
                  xml:space="preserve"
@@ -297,8 +216,8 @@
     <li>
         <a target="_blank"
            rel="noopener noreferrer"
-           aria-label="share AI Trip Planner on telegram"
-           href="https://telegram.me/share/url?text=AI%20Trip%20Planner&amp;url=http%3a%2f%2flocalhost%3a1313%2fUday-github.io%2fprojects%2fai_trip_planner%2f">
+           aria-label="share Papar Platform on telegram"
+           href="https://telegram.me/share/url?text=Papar%20Platform&amp;url=http%3a%2f%2flocalhost%3a1313%2fUday-github.io%2fprojects%2fpaper_platform%2f">
             <svg version="1.1"
                  xml:space="preserve"
                  viewBox="2 2 28 28"
@@ -312,8 +231,8 @@
     <li>
         <a target="_blank"
            rel="noopener noreferrer"
-           aria-label="share AI Trip Planner on ycombinator"
-           href="https://news.ycombinator.com/submitlink?t=AI%20Trip%20Planner&u=http%3a%2f%2flocalhost%3a1313%2fUday-github.io%2fprojects%2fai_trip_planner%2f">
+           aria-label="share Papar Platform on ycombinator"
+           href="https://news.ycombinator.com/submitlink?t=Papar%20Platform&u=http%3a%2f%2flocalhost%3a1313%2fUday-github.io%2fprojects%2fpaper_platform%2f">
             <svg version="1.1"
                  xml:space="preserve"
                  width="30px"
