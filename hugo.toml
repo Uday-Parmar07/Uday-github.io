@@ -20,7 +20,7 @@ facebook_admin = ""
 
 # Site Parameters
 [params]
-  mainSections = ["projects"]
+  mainSections = ["projects", "shelf"]
   hideSummary = true
   comments = true
   archives = true
@@ -95,11 +95,18 @@ name = "Projects"
 url = "/projects/"
 weight = 3.5
 
+
+[[menu.main]]
+identifier = "shelf"
+name = "Shelf"
+url = "/shelf/"
+weight = 4
+
 [[menu.main]]
 identifier = "musings"
 name = "Essays"
 url = "/musings/"
-weight = 4
+weight = 4.5
 
 
 [[menu.main]]

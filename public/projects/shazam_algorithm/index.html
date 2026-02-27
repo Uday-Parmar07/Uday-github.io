@@ -62,6 +62,11 @@
                 </a>
             </li>
             <li>
+                <a href="http://localhost:1313/Uday-github.io/shelf/" title="Shelf">
+                    <span>Shelf</span>
+                </a>
+            </li>
+            <li>
                 <a href="http://localhost:1313/Uday-github.io/search/" title="🔍 (Alt &#43; /)" accesskey=/>
                     <span>🔍</span>
                 </a>
@@ -79,15 +84,100 @@
             Shazam Algorithm
         </h1>
         <div class="post-description">Shazam Algorithm implementation — repository and overview.</div>
-        <div class="post-meta"><span title='2026-02-25 00:00:00 +0000 UTC'>February 25, 2026</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;map[name:Uday]
+        <div class="post-meta"><span title='2025-12-26 00:00:00 +0000 UTC'>December 26, 2025</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;map[name:Uday]
 
 </div>
     </header> 
-    <div class="post-content"><p>Shazam Algorithm — brief description and links.</p>
+    <div class="post-content"><p>+++
+title = &ldquo;Building a Shazam-Like Music Recognition System&rdquo;
+date = 2026-02-27
+draft = false
+description = &ldquo;How I built a music recognition system inspired by Shazam using audio fingerprinting.&rdquo;
+tags = [&ldquo;Signal Processing&rdquo;, &ldquo;Python&rdquo;, &ldquo;Projects&rdquo;, &ldquo;Algorithms&rdquo;]
+categories = [&ldquo;Projects&rdquo;]
+showReadingTime = true
++++</p>
+<h1 id="building-a-shazam-like-music-recognition-system">Building a Shazam-Like Music Recognition System<a hidden class="anchor" aria-hidden="true" href="#building-a-shazam-like-music-recognition-system">#</a></h1>
+<p>Have you ever heard a song somewhere and wondered:</p>
+<p><strong>&ldquo;What song is this?&rdquo;</strong></p>
+<p>Apps like Shazam can identify a song within seconds, even in noisy environments. I always found this fascinating and wanted to understand <strong>how a computer can recognize music so quickly.</strong></p>
+<p>That curiosity led me to build my own <strong>Shazam-like music recognition system</strong>, a project that identifies songs from short audio recordings.</p>
+<p>The goal was not just to build a working system, but to understand the ideas behind <strong>audio fingerprinting and signal processing</strong>.</p>
+<hr>
+<h2 id="the-idea">The Idea<a hidden class="anchor" aria-hidden="true" href="#the-idea">#</a></h2>
+<p>Music recognition might sound complicated, but the basic idea is surprisingly intuitive.</p>
+<p>Every song has a unique <strong>audio pattern</strong>, almost like a fingerprint.</p>
+<p>If we can extract these fingerprints and store them in a database, then we can compare a new recording against them and find the matching song.</p>
+<p>The system works like this:</p>
+<blockquote>
+<p>Record audio → Extract fingerprint → Search database → Identify song</p>
+</blockquote>
+<p>This simple idea is what powers music recognition systems.</p>
+<hr>
+<h2 id="how-it-works">How It Works<a hidden class="anchor" aria-hidden="true" href="#how-it-works">#</a></h2>
+<p>The system listens to a short audio clip and tries to match it with songs stored in the database.</p>
+<p>Instead of comparing entire audio files (which would be slow), the algorithm extracts <strong>important sound features</strong> that uniquely identify each song.</p>
+<p>The process works in four steps:</p>
+<h3 id="1-audio-input">1. Audio Input<a hidden class="anchor" aria-hidden="true" href="#1-audio-input">#</a></h3>
+<p>The system takes a short audio sample recorded from a microphone or an audio file.</p>
+<p>Even a few seconds of audio is enough to identify a song.</p>
+<hr>
+<h3 id="2-converting-sound-into-data">2. Converting Sound into Data<a hidden class="anchor" aria-hidden="true" href="#2-converting-sound-into-data">#</a></h3>
+<p>Sound is a wave, but computers work with numbers.</p>
+<p>So the first step is converting the audio signal into a form that the computer can analyze.</p>
+<p>This allows the system to see which frequencies are present at different times in the song.</p>
+<hr>
+<h3 id="3-creating-audio-fingerprints">3. Creating Audio Fingerprints<a hidden class="anchor" aria-hidden="true" href="#3-creating-audio-fingerprints">#</a></h3>
+<p>Instead of storing full songs, the system stores <strong>compact fingerprints</strong>.</p>
+<p>These fingerprints capture the most important features of the music while ignoring noise and small distortions.</p>
+<p>This makes matching faster and more reliable.</p>
+<hr>
+<h3 id="4-matching-songs">4. Matching Songs<a hidden class="anchor" aria-hidden="true" href="#4-matching-songs">#</a></h3>
+<p>When a new audio clip is given, its fingerprint is compared with the database.</p>
+<p>If enough fingerprint patterns match, the system identifies the song.</p>
+<p>The matching process is surprisingly fast even with multiple songs stored.</p>
+<hr>
+<h2 id="why-i-built-this-project">Why I Built This Project<a hidden class="anchor" aria-hidden="true" href="#why-i-built-this-project">#</a></h2>
+<p>This project started from curiosity.</p>
+<p>I wanted to understand how real-world applications like music recognition systems actually work behind the scenes.</p>
+<p>It was also a great opportunity to explore <strong>signal processing concepts in a practical way.</strong></p>
+<p>Instead of only studying theory, I wanted to build something real and interactive.</p>
+<hr>
+<h2 id="challenges-i-faced">Challenges I Faced<a hidden class="anchor" aria-hidden="true" href="#challenges-i-faced">#</a></h2>
+<p>One of the biggest challenges was handling <strong>noisy audio recordings.</strong></p>
+<p>Real-world audio is rarely perfect. Background noise, echoes, and microphone quality can affect recordings.</p>
+<p>I had to design the fingerprinting process carefully so that the system could still recognize songs even when the audio wasn&rsquo;t clean.</p>
+<p>Another challenge was optimizing the matching process so the system could identify songs quickly.</p>
+<hr>
+<h2 id="what-i-learned">What I Learned<a hidden class="anchor" aria-hidden="true" href="#what-i-learned">#</a></h2>
+<p>This project helped me understand how audio processing works in real applications.</p>
+<p>I learned about:</p>
 <ul>
-<li>Repository: <a href="https://github.com/Uday-Parmar07/Shazam_Algorithm">https://github.com/Uday-Parmar07/Shazam_Algorithm</a></li>
-<li>Short summary: (add your summary here)</li>
+<li>Audio signal processing</li>
+<li>Frequency analysis</li>
+<li>Pattern matching</li>
+<li>Building efficient algorithms</li>
+<li>Working with audio data</li>
 </ul>
+<p>More importantly, I learned how powerful simple ideas can be when implemented properly.</p>
+<hr>
+<h2 id="what-i-want-to-add-next">What I Want to Add Next<a hidden class="anchor" aria-hidden="true" href="#what-i-want-to-add-next">#</a></h2>
+<p>There are many ways this project can be improved.</p>
+<p>Some ideas include:</p>
+<ul>
+<li>Larger song database</li>
+<li>Faster search algorithms</li>
+<li>Real-time microphone recognition</li>
+<li>Better noise handling</li>
+<li>A web interface</li>
+</ul>
+<p>I would also like to make the system work in real-time like commercial music recognition apps.</p>
+<hr>
+<h2 id="final-thoughts">Final Thoughts<a hidden class="anchor" aria-hidden="true" href="#final-thoughts">#</a></h2>
+<p>Building a Shazam-like system was one of the most interesting projects I have worked on.</p>
+<p>It showed me how mathematics and programming can combine to solve real-world problems in surprising ways.</p>
+<p>Something that looks like magic from the outside turns out to be a clever combination of <strong>signal processing and algorithms.</strong></p>
+<p>And that is what made this project especially rewarding — turning curiosity into a working system.</p>
 
 
     </div>
@@ -101,10 +191,15 @@
             </li>
         </ul>
 <nav class="paginav">
-  <a class="prev" href="http://localhost:1313/Uday-github.io/projects/papar_platform/">
+  <a class="prev" href="http://localhost:1313/Uday-github.io/projects/ai_trip_planner/">
     <span class="title">« Prev</span>
     <br>
-    <span>Papar Platform</span>
+    <span>AI Trip Planner</span>
+  </a>
+  <a class="next" href="http://localhost:1313/Uday-github.io/shelf/papers/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Papers</span>
   </a>
 </nav>
 

@@ -1,6 +1,6 @@
 ---
 title: "Shazam Algorithm"
-date: 2026-02-25
+date: 2025-12-26
 description: "Shazam Algorithm implementation — repository and overview."
 tags: [projects, audio]
 ---

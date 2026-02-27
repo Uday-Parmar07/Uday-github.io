@@ -9,13 +9,6 @@
     <lastBuildDate>Wed, 25 Feb 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/Uday-github.io/projects/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>AI Trip Planner</title>
-      <link>http://localhost:1313/Uday-github.io/projects/ai_trip_planner/</link>
-      <pubDate>Wed, 25 Feb 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/Uday-github.io/projects/ai_trip_planner/</guid>
-      <description>AI Trip Planner — repository and overview.</description>
-    </item>
-    <item>
       <title>Papar Platform</title>
       <link>http://localhost:1313/Uday-github.io/projects/papar_platform/</link>
       <pubDate>Wed, 25 Feb 2026 00:00:00 +0000</pubDate>
@@ -23,9 +16,16 @@
       <description>A project: Papar Platform — repository and overview.</description>
     </item>
     <item>
+      <title>AI Trip Planner</title>
+      <link>http://localhost:1313/Uday-github.io/projects/ai_trip_planner/</link>
+      <pubDate>Sat, 17 Jan 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/Uday-github.io/projects/ai_trip_planner/</guid>
+      <description>AI Trip Planner - Overview</description>
+    </item>
+    <item>
       <title>Shazam Algorithm</title>
       <link>http://localhost:1313/Uday-github.io/projects/shazam_algorithm/</link>
-      <pubDate>Wed, 25 Feb 2026 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 26 Dec 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/Uday-github.io/projects/shazam_algorithm/</guid>
       <description>Shazam Algorithm implementation — repository and overview.</description>
     </item>
