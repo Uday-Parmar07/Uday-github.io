@@ -10,10 +10,10 @@
     <atom:link href="http://localhost:1313/Uday-github.io/projects/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Papar Platform</title>
-      <link>http://localhost:1313/Uday-github.io/projects/papar_platform/</link>
+      <link>http://localhost:1313/Uday-github.io/projects/paper_platform/</link>
       <pubDate>Wed, 25 Feb 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/Uday-github.io/projects/papar_platform/</guid>
-      <description>A project: Papar Platform — repository and overview.</description>
+      <guid>http://localhost:1313/Uday-github.io/projects/paper_platform/</guid>
+      <description>A project: Paper Platform — repository and overview.</description>
     </item>
     <item>
       <title>AI Trip Planner</title>
