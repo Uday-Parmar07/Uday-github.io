@@ -20,16 +20,9 @@ If you're looking for something specific, try the
 ---
 ## Highlights
 
-- Electrical Engineering undergraduate at **NIT Bhopal**
+- B.Tech EE at **NIT Bhopal**
 - Strong foundation in **Machine Learning, Deep Learning, and Data Science**
-- Experience building projects in **Machine Learning, Embedded Systems, and Software Development**
-- Working toward **Software Engineering / Data Science internships**
-- Preparing for **GATE 2027 (Electrical Engineering + Data Science)**
-- Hands-on experience with:
-  - Machine Learning models (RNN, LSTM, NLP basics)
-  - Arduino + Python hardware projects
-  - Algorithmic problem solving (DSA)
-  - C++ and Python development
+- Experience building projects in **Machine Learning, and Software Development**
 
 ---
 
