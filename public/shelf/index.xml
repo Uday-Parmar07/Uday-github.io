@@ -63,20 +63,8 @@
       <pubDate>Sun, 31 Mar 2024 16:20:40 +0530</pubDate>
       <guid>http://localhost:1313/Uday-github.io/shelf/papers/</guid>
       <description>&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&#34;https://arxiv.org/pdf/1706.03762.pdf&#34;&gt;Attention is all you need&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&#34;https://arxiv.org/pdf/2302.03735.pdf&#34;&gt;Pre-train, Prompt and Recommendation: A Comprehensive Survey of Language Modelling Paradigm Adaptations in Recommender Systems&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&#34;https://static.googleusercontent.com/media/research.google.com/en//archive/mapreduce-osdi04.pdf&#34;&gt;MapReduce: Simplified Data Processing on Large clusters&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Implementation: archived blog post (see /archive/old_posts/implementing-mapreduce-in-golang/)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href=&#34;https://dl.acm.org/doi/pdf/10.1145/2408776.2408794&#34;&gt;The Tail at Scale&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Implementation: archived blog post (see /archive/old_posts/implementing-tail-at-scale-in-golang/)&lt;/p&gt;
-&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://arxiv.org/pdf/1706.03762.pdf&#34;&gt;Attention is all you need&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://arxiv.org/pdf/2302.03735.pdf&#34;&gt;Pre-train, Prompt and Recommendation: A Comprehensive Survey of Language Modelling Paradigm Adaptations in Recommender Systems&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;</description>
     </item>
   </channel>

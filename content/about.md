@@ -33,7 +33,42 @@ If you're looking for something specific, try the
 
 ---
 
-## Want to Work Together?
+
+## I’m Proud Of
+
+<div class="gallery">
+  <figure>
+    <img src="/Uday-github.io/images/SIH_Finalist.jpeg" alt="SIH_Finalist" />
+    <figcaption>Smart India hackathon Finalist</figcaption>
+  </figure>
+  <figure>
+    <img src="/Uday-github.io/images/WorldQuant_Gold.png" alt="WorldQuant" />
+    <figcaption>Gold Medalist at World Quant Championship</figcaption>
+  </figure>
+</div>
+
+---
+
+## Photography
+
+I shoot street, travel, and campus life whenever I'm away from code.
+
+<div class="gallery">
+  <figure>
+    <img src="/Uday-github.io/images/photography/Mela.jpg" alt="Mela" />
+    <figcaption>Mela</figcaption>
+  </figure>
+  <figure>
+    <img src="/Uday-github.io/images/photography/Dharamshala.jpeg" alt="Dharamshala" />
+    <figcaption>Dharamshala</figcaption>
+  </figure>
+</div>
+
+---
+
+
+
+## Want to Work Together??
 
 If something on this blog made you think *"We should work together"*, I'd love to hear from you.
 

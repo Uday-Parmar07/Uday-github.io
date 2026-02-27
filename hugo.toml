@@ -103,6 +103,12 @@ url = "/shelf/"
 weight = 4
 
 [[menu.main]]
+identifier = "photos"
+name = "Photos"
+url = "/photography/"
+weight = 4.2
+
+[[menu.main]]
 identifier = "musings"
 name = "Essays"
 url = "/musings/"
@@ -124,3 +130,6 @@ weight = 6
   guessSyntax = true
   lineNos = false
   noClasses = false
+
+[markup.goldmark.renderer]
+  unsafe = true

@@ -92,6 +92,37 @@
   text-decoration: line-through;
 }
 
+/* Simple gallery layout for photography section */
+.post-content .gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 12px 0 8px;
+}
+
+.post-content .gallery figure {
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--entry);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.post-content .gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.post-content .gallery figcaption {
+  padding: 8px 10px;
+  font-size: 14px;
+  color: var(--secondary);
+}
+
 .post-content dl,
 .post-content ol,
 .post-content p,
