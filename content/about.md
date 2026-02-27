@@ -16,13 +16,6 @@ You can explore archived posts on the [Archive]({{< relref "/archive/" >}}) page
 If you're looking for something specific, try the  
 [Search]({{< relref "/search/" >}}) or browse by [Tags]({{< relref "/tags" >}}).
 
----
-
-## Recent Projects
-
-- [Papar Platform]({{< relref "/projects/papar_platform/" >}}) — Repository: https://github.com/Uday-Parmar07/Papar_Platform
-- [AI Trip Planner]({{< relref "/projects/ai_trip_planner/" >}}) — Repository: https://github.com/Uday-Parmar07/AI_Trip_Planner
-- [Shazam Algorithm]({{< relref "/projects/shazam_algorithm/" >}}) — Repository: https://github.com/Uday-Parmar07/Shazam_Algorithm
 
 ---
 ## Highlights
