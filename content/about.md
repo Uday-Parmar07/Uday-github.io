@@ -18,6 +18,12 @@ If you're looking for something specific, try the
 
 
 ---
+## Quote of the Day
+
+{{< quote-of-day >}}
+
+
+---
 ## Highlights
 
 - B.Tech EE at **NIT Bhopal**
